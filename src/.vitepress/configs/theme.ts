@@ -1,4 +1,5 @@
 import { DefaultTheme } from 'vitepress';
+import { zhNavbar } from '../navbar/index';
 import { GitHubConfigConstants } from '../utils/constants';
 import { localSearchOptions } from '../configs/search/local-search'
 
@@ -8,6 +9,8 @@ export const themeConfig: DefaultTheme.Config = {
         light: '/images/gif/blob-sunglasses.gif',
         dark: '/images/gif/blob-sun.gif'
     },
+    // 中文导航
+    nav: zhNavbar,
     // 右侧大纲配置
     outline: {
         level: 'deep',
