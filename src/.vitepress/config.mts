@@ -1,0 +1,23 @@
+import { defineConfig } from 'vitepress';
+import { themeConfig } from './configs/theme';
+
+export default defineConfig({
+  // head配置
+  head: [
+    // favicon设置
+    ['link', { rel: 'icon', href: 'go-logo.svg' }],
+    // 控制台信息
+    ['script', { src: '/js/console-info.js' }],
+    // SEO
+    ['meta', { name: 'author', content: 'MagicGopher' }],
+    ['meta', { name: 'keywords', content: '编程语言,数据库,微服务,云原生,容器编排,渗透测试' }],
+  ],
+  // 标题
+  title: "MagicGopher Blog",
+  // 描述
+  description: "开源笔记、记录日常开发问题",
+  // build输出目录
+  outDir: './dist',
+  // 主题
+  themeConfig: themeConfig
+})

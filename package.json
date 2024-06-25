@@ -1,0 +1,19 @@
+{
+  "author": {
+    "name": "MagicGopher",
+    "email": "gopher997@gmail.com"
+  },
+  "name": "magicgopher-blog",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "MagicGopher Blog",
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "^1.2.3"
+  },
+  "scripts": {
+    "dev": "vitepress dev src",
+    "build": "vitepress build src",
+    "preview": "vitepress preview src"
+  }
+}
