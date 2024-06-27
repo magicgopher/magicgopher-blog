@@ -1,5 +1,6 @@
 import { DefaultTheme } from 'vitepress';
 import { zhNavbar } from '../navbar/index';
+import { zhSidebar } from '../sidebar/index';
 import { GitHubConfigConstants } from '../utils/constants';
 import { localSearchOptions } from '../configs/search/local-search'
 
@@ -11,6 +12,8 @@ export const themeConfig: DefaultTheme.Config = {
     },
     // 中文导航
     nav: zhNavbar,
+    // 中文侧边栏
+    sidebar: zhSidebar,
     // 右侧大纲配置
     outline: {
         level: 'deep',
