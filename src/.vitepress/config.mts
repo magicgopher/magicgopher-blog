@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress';
 import { themeConfig } from './configs/theme';
+import { markdownConfig } from './configs/markdown'
 
 export default defineConfig({
   // head配置
@@ -19,5 +20,7 @@ export default defineConfig({
   // build输出目录
   outDir: './dist',
   // 主题
-  themeConfig: themeConfig
+  themeConfig: themeConfig,
+  // markdown配置
+  markdown: markdownConfig,
 })
