@@ -243,3 +243,40 @@ docker rm [OPTIONS] CONTAINER [CONTAINER...]
 # --link【简写：-l】：移除指定链接。
 # --volumes【简写：-v】：删除与容器关联的匿名卷。
 ```
+
+*示例*：
+
+```sh
+# 根据容器名称删除容器（该容器的状态必须是停止状态）
+docker rm postgres
+
+# 根据容器ID删除容器（该容器的状态必须是停止状态）
+docker rm 容器ID
+```
+
+## 查看容器详细信息
+
+使用 `docker inspect` 命令查看容器详细信息。
+
+*语法格式*：
+
+```sh
+# OPTIONS：选项
+# NAME|ID：容器ID或容器名称
+docker inspect [OPTIONS] NAME|ID [NAME|ID...]
+
+# OPTIONS：选项详细说明
+# --format string【简写：-f】：使用自定义模板格式化输出。
+# --size【简写：-s】：如果类型为容器，则显示文件总大小。
+# --type string：返回指定类型的 JSON。
+```
+
+*示例*：
+
+```sh
+# 查看容器详细信息
+docker inspect 容器名称或者容器ID
+
+# 获取容器的 IP 地址
+docker inspect --format='{{.NetworkSettings.IPAddress}}' 容器名称或者容器ID
+```
