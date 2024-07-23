@@ -49,6 +49,6 @@ export const themeConfig: DefaultTheme.Config = {
     // 编辑链接
     editLink: {
         text: '在 GitHub 上编辑此页',
-        pattern: `https://github.com/${GitHubConfigConstants.UserName}/${GitHubConfigConstants.ProjectName}/edit/main/docs/:path`,
+        pattern: `https://github.com/${GitHubConfigConstants.UserName}/${GitHubConfigConstants.ProjectName}/edit/main/src/:path`,
     },
 }
