@@ -43,8 +43,8 @@ export const themeConfig: DefaultTheme.Config = {
     ],
     // 页脚
     footer: {
-        message: '基于 MIT 许可发布',
-        copyright: `版权所有 © 2020-${new Date().getFullYear()} <a href="https://github.com/${GitHubConfigConstants.UserName}">${GitHubConfigConstants.UserName}</a>`
+        message: '根据 MIT 许可证发布',
+        copyright: `版权所有 © 2020-${new Date().getFullYear()} MagicGopher`
     },
     // 编辑链接
     editLink: {

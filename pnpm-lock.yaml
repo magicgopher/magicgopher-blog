@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      busuanzi.pure.js:
+        specifier: ^1.0.3
+        version: 1.0.3
       vue:
         specifier: ^3.4.27
         version: 3.4.30
@@ -545,6 +548,9 @@ packages:
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
+
+  busuanzi.pure.js@1.0.3:
+    resolution: {integrity: sha512-tPULdyx+8NNb9geZYDpktKmHAYx9f2LEOBaHyWCaM7iPEMIa/43KgYAUluuU7YG9UFSOFpj4dO7Nj2Vlu3V9Rg==}
 
   camelcase-keys@6.2.2:
     resolution: {integrity: sha512-YrwaA0vEKazPBkn0ipTiMpSajYDSe+KjQfrjhcBMxJt/znbvlHd8Pw/Vamaz5EB4Wfhs3SUR3Z9mwRu/P3s3Yg==}
@@ -1777,6 +1783,8 @@ snapshots:
   braces@3.0.3:
     dependencies:
       fill-range: 7.1.1
+
+  busuanzi.pure.js@1.0.3: {}
 
   camelcase-keys@6.2.2:
     dependencies:
