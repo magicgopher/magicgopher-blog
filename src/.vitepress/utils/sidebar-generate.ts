@@ -42,38 +42,31 @@ export function generateSidebar(baseDir: string): SidebarItem[] {
         }
         const filePath = path.join(dirPath, file);
         const stat = fs.statSync(filePath);
+        // 如果是目录，则递归处理
         if (stat.isDirectory()) {
             const subDirSidebarItems = generateSidebar(path.join(baseDir, file));
             if (subDirSidebarItems.length > 0) {
                 const directoryItem: SidebarItem = {
                     text: extractDirectoryName(file),
-                    collapsed: true,
+                    collapsed: false,
                     link: '',
                     items: subDirSidebarItems,
                 };
                 sidebar.push(directoryItem);
             }
         } else if (file.endsWith('.md')) {
+            // 如果当前文件是一个 Markdown 文件的处理逻辑
             const subFilePath = path.join(baseDir, file);
             const text = extractTextFromFileName(file);
             let sidebarItem = addedItems[text];
-            if (!sidebarItem) {
-                sidebarItem = {
-                    text,
-                    collapsed: false,
-                    link: `${subFilePath.slice(0, -3)}`,
-                    items: [],
-                };
-                sidebar.push(sidebarItem);
-                addedItems[text] = sidebarItem;
-            } else {
-                sidebarItem.items.push({
-                    text: file.slice(0, -3),
-                    collapsed: false,
-                    link: `${subFilePath.slice(0, -3)}`,
-                    items: [],
-                });
-            }
+            sidebarItem = {
+                text,
+                collapsed: true,
+                link: `${subFilePath.slice(0, -3)}`,
+                items: [],
+            };
+            sidebar.push(sidebarItem);
+            addedItems[text] = sidebarItem;
         }
     });
     return sidebar;

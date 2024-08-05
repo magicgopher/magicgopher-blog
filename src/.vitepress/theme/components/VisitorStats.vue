@@ -1,13 +1,13 @@
 <template>
     <div class="visitor-stats">
         <div class="left-content">
-            <span>本站总访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
+            <span>✨本站总访问量 <span id="busuanzi_value_site_pv"></span> 次✨</span>
         </div>
         <div class="center-content">
-            <img src="../../public/images/gif/cat-roomba.gif" alt="Visitor Stats GIF" width="40" />
+            <img src="/images/gif/cat-roomba.gif" alt="Visitor Stats GIF" width="40" />
         </div>
         <div class="right-content">
-            <span>本站访客数 <span id="busuanzi_value_site_uv"></span> 人次</span>
+            <span>✨本站访客数 <span id="busuanzi_value_site_uv"></span> 人次✨</span>
         </div>
     </div>
 </template>

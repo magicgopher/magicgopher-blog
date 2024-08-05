@@ -4,17 +4,10 @@
     "email": "gopher997@gmail.com"
   },
   "name": "magicgopher-blog",
-  "version": "1.3.1",
+  "version": "1.4.1",
   "type": "module",
   "description": "MagicGopher Blog",
   "license": "MIT",
-  "devDependencies": {
-    "@types/node": "^18.19.32",
-    "conventional-changelog-cli": "^3.0.0",
-    "husky": "^9.0.11",
-    "sass": "^1.77.6",
-    "vitepress": "^1.2.3"
-  },
   "scripts": {
     "dev": "vitepress dev src",
     "build": "vitepress build src",
@@ -22,11 +15,20 @@
     "prepare": "husky install",
     "log": "conventional-changelog -p angular -i ./src/docs/zh/关于我/更新日志.md -s -r 0 -n ./changelog.ts"
   },
-  "volta": {
-    "node": "18.20.3"
-  },
   "dependencies": {
+    "@escook/vitepress-theme": "^1.3.1",
     "busuanzi.pure.js": "^1.0.3",
     "vue": "^3.4.27"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.32",
+    "conventional-changelog-cli": "^3.0.0",
+    "husky": "^9.0.11",
+    "sass": "^1.77.6",
+    "vite": "^5.3.5",
+    "vitepress": "^1.2.3"
+  },
+  "volta": {
+    "node": "18.20.3"
   }
 }

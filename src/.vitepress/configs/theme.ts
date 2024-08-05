@@ -2,7 +2,7 @@ import { DefaultTheme } from 'vitepress';
 import { zhNavbar } from '../navbar/index';
 import { zhSidebar } from '../sidebar/index';
 import { GitHubConfigConstants } from '../utils/constants';
-import { localSearchOptions } from '../configs/search/local-search'
+import { localSearchOptions } from '../configs/search/local-search';
 
 export const themeConfig: DefaultTheme.Config = {
     // logo

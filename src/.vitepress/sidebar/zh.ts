@@ -1,5 +1,5 @@
 import { DefaultTheme } from 'vitepress';
-import { SidebarConstants } from '../utils/constants'
+import { SidebarConstants } from '../utils/constants';
 import { generateSidebar } from '../utils/sidebar-generate';
 
 // 中文侧边栏配置

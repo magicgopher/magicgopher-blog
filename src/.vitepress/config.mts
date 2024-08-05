@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitepress';
 import { themeConfig } from './configs/theme';
-import { markdownConfig } from './configs/markdown'
+import { markdownConfig } from './configs/markdown';
 
 export default defineConfig({
   // head配置
@@ -25,4 +25,10 @@ export default defineConfig({
   themeConfig: themeConfig,
   // markdown配置
   markdown: markdownConfig,
+  // vite
+  vite: {
+    ssr: {
+      noExternal: ['@escook/vitepress-theme', 'vitepress']
+    }
+  }
 })
