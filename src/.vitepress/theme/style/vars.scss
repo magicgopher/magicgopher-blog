@@ -54,7 +54,7 @@
 
 :root {
     /* 标题 */
-    --vp-home-hero-name-color: transparent;
+    // --vp-home-hero-name-color: transparent;
     // --vp-home-hero-name-background: linear-gradient(135deg, #00BFFF 30%, #9400D3 100%);
     --vp-home-hero-name-background: -webkit-linear-gradient(120deg,
             var(--vp-c-brand) 30%,
@@ -65,31 +65,7 @@
     --vp-home-hero-image-background-image: linear-gradient(-45deg,
             var(--vp-c-brand) 30%,
             var(--vp-c-brand-next));
-    --vp-home-hero-image-filter: blur(150px);
-}
-
-/* 当屏幕宽度大于等于 640px 时应用以下样式 */
-@media (min-width: 640px) {
-    :root {
-        --vp-home-hero-image-background-image: linear-gradient(-45deg,
-                var(--vp-c-brand) 30%,
-                var(--vp-c-brand-next));
-        --vp-home-hero-image-filter: blur(120px);
-    }
-}
-
-/* 当屏幕宽度大于等于 960px 时应用以下样式 */
-@media (min-width: 960px) {
-    :root {
-        --vp-home-hero-image-filter: blur(140px);
-    }
-}
-
-/* 当屏幕宽度大于等于 1280px 时应用以下样式 */
-@media (min-width: 1280px) {
-    :root {
-        --vp-home-hero-image-filter: blur(160px);
-    }
+    // --vp-home-hero-image-filter: blur(150px);
 }
 
 /**
@@ -148,6 +124,8 @@
 }
 
 /* 调整 h3 至 h6 标题之间的间距 */
-h4, h5, h6 {
+h4,
+h5,
+h6 {
     margin-top: 1rem;
 }

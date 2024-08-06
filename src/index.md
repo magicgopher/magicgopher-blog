@@ -9,6 +9,12 @@ hero:
     src: /images/png/gopher-astronaut_dribbble.png
     alt: MagicGopher Blog
   actions:
+    - theme: brand
+      text: 开始学习
+      link: /docs/zh/编程语言/01-Go语言/
+    - theme: alt
+      text: 更新日志
+      link: /docs/zh/关于我/更新日志
     - theme: sponsor
       text: 可以通过邮件📮联系我
       link: mailto:gopher997@gmail.com
