@@ -6,7 +6,8 @@ hero:
   text: "个人博客"
   tagline: 开源笔记、记录日常开发问题
   image:
-    src: /images/png/gopher-astronaut_dribbble.png
+    light: /images/png/light-gopher-astronaut_dribbble.png
+    dark: /images/png/dark-gopher-astronaut_dribbble.png
     alt: MagicGopher Blog
   actions:
     - theme: brand
