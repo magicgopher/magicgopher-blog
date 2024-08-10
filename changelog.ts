@@ -106,8 +106,8 @@ const options = {
             return commit
         },
         groupBy: "type",
-        commitGroupsSort: "sortTime",
-        commitsSort: ["sortTime", "scope", "subject"],
+        commitGroupsSort: "committerDate",
+        commitsSort: ["committerDate", "scope", "subject"],
         noteGroupsSort: "sortTime",
     },
 }
