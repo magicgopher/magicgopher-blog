@@ -1,3 +1,9 @@
+---
+title: Docker其他命令
+author: MagicGopher
+keywords: Docker,docker
+---
+
 # Docker其他命令
 
 ## docker cp 命令
@@ -140,6 +146,26 @@ docker logs -t mycontainer
 # 显示在 2023-04-15 18:00:00 之前和 1 小时之前的日志
 docker logs --until "2023-04-15T18:00:00" mycontainer
 docker logs --until "1h" mycontainer
+```
+
+## docker system 命令
+
+> docker system：命令是 Docker 提供的一组管理 Docker 系统的命令。
+
+*语法格式*：
+
+```shell
+docker system --help
+
+Usage:  docker system COMMAND
+
+Manage Docker
+
+Commands:
+  df：显示 Docker 镜像、容器、卷等所占用的磁盘空间。可以帮助用户了解 Docker 系统中各个组件的占用情况，方便进行磁盘管理。
+  events：监控 Docker 系统中发生的事件，包括容器、镜像、网络、卷等各种资源的创建、修改、删除等操作。可用于系统监控和故障排查。
+  info：显示 Docker 系统的详细信息，包括版本、操作系统、CPUs、内存、存储驱动等。可以帮助用户了解 Docker 系统的当前状态。
+  prune：清理 Docker 系统中未使用的资源，包括停止的容器、未使用的镜像、卷和网络。可以帮助用户释放磁盘空间。
 ```
 
 ::: tip 提示
