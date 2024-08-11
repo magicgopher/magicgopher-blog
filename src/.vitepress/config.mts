@@ -3,6 +3,8 @@ import { themeConfig } from './configs/theme';
 import { markdownConfig } from './configs/markdown';
 
 export default defineConfig({
+  // 网站的基础路径
+  base: '/',
   // head配置
   head: [
     // favicon设置
