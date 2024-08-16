@@ -10,7 +10,7 @@ const specificPaths = [
 ];
 
 // 不需要插入 <BackTop /> 组件的文件路径黑名单
-const blacklistPaths = [
+const blacklistPaths: string[] = [
     // 格式：'docs/zh/program/go/01-Go语言基础/08-字符串处理.md'
     // 'docs/zh/program/go/01-Go语言基础/08-字符串处理.md'
 ];

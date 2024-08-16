@@ -12,7 +12,11 @@
     </div>
 </template>
 
-<script>
+<script setup lang="ts">
+// 如果需要导入任何模块或定义任何变量/函数，可以在这里添加
+// 例如：
+// import { ref } from 'vue';
+// const someValue = ref(0);
 </script>
 
 <style>
@@ -41,8 +45,6 @@
 
 .center-content img {
     max-width: 100px;
-    /* 设置图片的最大宽度 */
     height: auto;
-    /* 保持图片的长宽比 */
 }
 </style>

@@ -7,10 +7,14 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Giscus from '@giscus/vue';
 import { useRoute, useData } from 'vitepress';
+import { computed } from 'vue';
 
 const route = useRoute();
 const { isDark } = useData();
+
+// 计算fullPath属性
+const fullPath = computed(() => route.path);
 </script>

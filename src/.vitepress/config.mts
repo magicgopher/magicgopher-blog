@@ -1,3 +1,4 @@
+import { resolve } from 'path';
 import { defineConfig } from 'vitepress';
 import { themeConfig } from './configs/theme';
 import { markdownConfig } from './configs/markdown';
@@ -29,9 +30,19 @@ export default defineConfig({
   themeConfig: themeConfig,
   // markdown配置
   markdown: markdownConfig,
-  // vite
+  // vite配置
   vite: {
+    // 解析配置
+    resolve: {
+      // 别名配置
+      alias: {
+        // 将 "@" 映射到项目根目录
+        "@": resolve(__dirname, "./"),
+      }
+    },
+    // ssr配置
     ssr: {
+      // 指定不进行外部化处理的包
       noExternal: ['@escook/vitepress-theme', 'vitepress']
     }
   }

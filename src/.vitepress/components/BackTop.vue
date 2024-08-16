@@ -16,65 +16,56 @@
   </div>
 </template>
 
-<script>
-export default {
-  // 组件名称
+<script lang="ts">
+import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue';
+
+export default defineComponent({
   name: 'BackTop',
-  // 数据
-  data() {
-    return {
-      // 滚动进度值
-      progress: 0,
-      // 是否为移动端
-      isMobile: false,
-      // 是否显示返回顶部按钮
-      showBackTop: false,
-      // 环形进度条的周长
-      circumference: 2 * Math.PI * 45,
-      // 是否已经滚动到页面底部
-      isAtBottom: false,
-    }
-  },
-  // 挂载
-  mounted() {
-    // 检查是否为移动端
-    this.checkIsMobile();
-    // 添加滚动事件监听
-    window.addEventListener('scroll', this.handleScroll);
-  },
-  // 组件实例即将被卸载和销毁之前被调用。
-  beforeUnmount() {
-    // 在组件卸载前移除滚动事件监听
-    window.removeEventListener('scroll', this.handleScroll);
-  },
-  // 方法
-  methods: {
-    // 检查是否为移动端
-    checkIsMobile() {
-      this.isMobile = window.innerWidth < 768;
-    },
-    // 处理滚动事件
-    handleScroll() {
+  setup() {
+    const progress = ref(0);
+    const isMobile = ref(false);
+    const showBackTop = ref(false);
+    const circumference = 2 * Math.PI * 45;
+    const isAtBottom = ref(false);
+
+    const checkIsMobile = () => {
+      isMobile.value = window.innerWidth < 768;
+    };
+
+    const handleScroll = () => {
       const scrollTop = window.pageYOffset;
       const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      // 计算滚动进度
-      this.progress = scrollTop / scrollHeight;
-      // 判断是否显示返回顶部按钮
-      this.showBackTop = scrollTop > 300;
-      // 判断是否已经滚动到页面底部
-      this.isAtBottom = scrollTop >= scrollHeight;
-      // 当滚动到页面底部时,进度条不再重新开始
-      if (this.isAtBottom) {
-        this.progress = 1;
+      progress.value = scrollTop / scrollHeight;
+      showBackTop.value = scrollTop > 300;
+      isAtBottom.value = scrollTop >= scrollHeight;
+      if (isAtBottom.value) {
+        progress.value = 1;
       }
-    },
-    // 平滑滚动到顶部
-    scrollToTop() {
-      // 使用window.scrollTo()方法平滑滚动到顶部
+    };
+
+    const scrollToTop = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    },
+    };
+
+    onMounted(() => {
+      checkIsMobile();
+      window.addEventListener('scroll', handleScroll);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener('scroll', handleScroll);
+    });
+
+    return {
+      progress,
+      isMobile,
+      showBackTop,
+      circumference,
+      isAtBottom,
+      scrollToTop
+    };
   }
-}
+});
 </script>
 
 <style>
