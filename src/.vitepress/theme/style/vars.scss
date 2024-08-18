@@ -58,31 +58,15 @@
     // --vp-home-hero-name-background: linear-gradient(135deg, #00BFFF 30%, #9400D3 100%);
     --vp-home-hero-name-background: -webkit-linear-gradient(120deg,
             var(--vp-c-brand) 10%,
-            var(--vp-c-brand-next) 100%);
+            var(--vp-c-brand-next));
 
     /* 图标背景 */
     // --vp-home-hero-image-background-image: linear-gradient(135deg, #00BFFF 50%, #FF00FF 50%);
     --vp-home-hero-image-background-image: -webkit-linear-gradient(-45deg,
             var(--vp-c-brand) 10%,
-            var(--vp-c-brand-next) 100%);
+            var(--vp-c-brand-next));
     // --vp-home-hero-image-filter: blur(150px);
 }
-
-// 头像背景 图像应用高斯模糊效果 背景颜色大小
-.image-bg[data-v-9f08db28] {
-    width: 245px;
-    height: 245px;
-}
-
-
-// @keyframes filter_blur {
-//     0% {
-//         --blur: 40px;
-//     }
-//     100% {
-//         --blur: 120px;
-//     }
-// }
 
 /**
    * Component: Blockquote
@@ -120,6 +104,15 @@
     --vp-home-hero-image-filter: '';
 }
 
+/* 针对支持 -webkit-backdrop-filter 的浏览器应用动画效果 */
+@supports (-webkit-backdrop-filter: none) {
+    .VPHome .image-bg {
+        -webkit-backdrop-filter: blur(var(--blur));
+        backdrop-filter: blur(var(--blur));
+        animation: filter_blur 8s ease-in infinite alternate-reverse;
+    }
+}
+
 /**
    * Component: Custom Block
    * -------------------------------------------------------------------------- */
@@ -137,6 +130,18 @@
 
 .DocSearch {
     --docsearch-primary-color: var(--vp-c-brand) !important;
+}
+
+/* 重新定义theme主题的 h1 至 h4 的样式 */
+.vp-doc h1, 
+.vp-doc h2, 
+.vp-doc h3, 
+.vp-doc h4,
+.dark .vp-doc h1, 
+.dark .vp-doc h2, 
+.dark .vp-doc h3, 
+.dark .vp-doc h4 {
+    text-decoration-color: transparent;
 }
 
 /* 调整 h3 至 h6 标题之间的间距 */
