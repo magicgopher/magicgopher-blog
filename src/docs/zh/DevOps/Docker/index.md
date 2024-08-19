@@ -10,7 +10,7 @@ keywords: Docker,Docker学习笔记,Docker应用实战,Docker源码解析
 
 > Docker学习笔记是一份学习文档，旨在介绍和记录关于Docker的学习过程、概念和使用方法。无论你是Docker新手还是希望巩固已有知识的开发者，都能在这里找到有用的信息。
 
-Docker学习笔记文档涵盖了以下内容:
+Docker学习笔记文档涵盖了以下内容：
 - [Docker简介](./01-Docker学习笔记/01-Docker简介.md)
 - [Docker安装](./01-Docker学习笔记/02-Docker安装.md)
 - [Docker镜像管理](./01-Docker学习笔记/03-Docker镜像管理.md)
@@ -25,7 +25,7 @@ Docker学习笔记文档涵盖了以下内容:
 
 > Docker应用实战是一个实际应用案例的文档，旨在展示如何使用Docker来构建、部署和管理应用程序。
 
-Docker应用实战文档涵盖了以下内容:
+Docker应用实战文档涵盖了以下内容：
 - [Docker应用实战-部署MySQL数据库](./02-Docker应用实战/01-部署MySQL数据库.md)
 - [Docker应用实战-部署PostgreSQL数据库](./02-Docker应用实战/02-部署PostgreSQL数据库.md)
 - [Docker应用实战-部署Redis数据库](./02-Docker应用实战/03-部署Redis数据库.md)
