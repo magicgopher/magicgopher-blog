@@ -12,8 +12,6 @@ export default defineConfig({
     ['link', { rel: 'icon', href: 'go-logo.svg' }],
     // 控制台信息
     ['script', { src: '/js/console-info.js' }],
-    // 鼠标轨迹
-    ['script', { src: '/js/mouse-trail.js' }],
     // SEO
     ['meta', { name: 'author', content: 'MagicGopher' }],
     ['meta', { name: 'keywords', content: '编程语言,数据库,微服务,云原生,容器编排,渗透测试' }],
