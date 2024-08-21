@@ -19,6 +19,8 @@ const options = {
                 commit.type = '✨ Features | 新功能'
             } else if (commit.type === 'fix') {
                 commit.type = '🐛 Bug Fixes | Bug 修复'
+            } else if (commit.type === 'remove') {
+                commit.type = '🗑️ Removal | 功能移除'
             } else if (commit.type === 'perf') {
                 commit.type = '⚡ Performance Improvements | 性能优化'
             } else if (commit.type === 'revert' || commit.revert) {
