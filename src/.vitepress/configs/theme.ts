@@ -48,7 +48,8 @@ export const themeConfig: DefaultTheme.Config = {
     },
     // 社交链接
     socialLinks: [
-        { icon: 'github', link: `https://github.com/${GitHubConfigConstants.UserName}` }
+        { icon: 'github', link: `https://github.com/${GitHubConfigConstants.UserName}` },
+        { icon: 'discord', link: `https://discord.gg/43H642zaUt` },
     ],
     // 页脚
     footer: {
