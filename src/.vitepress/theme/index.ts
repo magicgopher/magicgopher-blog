@@ -1,5 +1,6 @@
-import { h } from 'vue';
-import { inBrowser, Theme } from 'vitepress';
+import mediumZoom from 'medium-zoom';
+import { h, onMounted, watch, nextTick } from 'vue';
+import { inBrowser, Theme, useRoute } from 'vitepress';
 import escookTheme from '@escook/vitepress-theme';
 import BackTop from '@/components/BackTop.vue';
 import VisitorStats from '@/components/VisitorStats.vue';
@@ -25,7 +26,20 @@ export default {
                 busuanzi.fetch()
             }
         }
-    }
+    },
+    setup() {
+        const route = useRoute();
+        const initZoom = () => {
+            mediumZoom('.main img', { background: 'var(--vp-c-bg)' });
+        };
+        onMounted(() => {
+            initZoom();
+        });
+        watch(
+            () => route.path,
+            () => nextTick(() => initZoom())
+        )
+    },
 } satisfies Theme;
 
 // 检查代码是否在浏览器环境中运行(而不是在服务器端环境如 Node.js 中运行)

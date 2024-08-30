@@ -135,3 +135,12 @@ h5,
 h6 {
     margin-top: 1rem;
 }
+
+/* 图片点击放大 */
+.medium-zoom-overlay {
+    z-index: 30;
+}
+.medium-zoom-image {
+    /* 给的值是21，但是实测盖不住，直接999 */
+    z-index: 9999 !important;
+}

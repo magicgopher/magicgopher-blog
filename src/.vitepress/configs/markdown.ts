@@ -49,7 +49,6 @@ export const markdownConfig: MarkdownOptions = {
                 const result = render(src, env);
                 return `<BackTop />\n${result}`;
             }
-
             return render(src, env);
         };
     },
