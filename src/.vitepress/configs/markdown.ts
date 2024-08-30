@@ -52,5 +52,12 @@ export const markdownConfig: MarkdownOptions = {
 
             return render(src, env);
         };
+    },
+    // 你可以使用 langAlias 选项注册自定义的语言别名
+    languageAlias: {
+        // 注册 .gitignore 为 html
+        '.gitignore': 'html',
+        // 注册 .md 为 html
+        'txt': 'html',
     }
 }
