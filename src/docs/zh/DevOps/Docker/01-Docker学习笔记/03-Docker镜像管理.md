@@ -208,7 +208,7 @@ Successfully tagged iteblog-docker:latest
 
 如果用图片表示的话，这个过程如下：
 
-![image-06](./assets/image-06.png)
+![image-06](/images/docs/Docker/Docker学习笔记/assets/image-06.png)
 
 ## 分层镜像原理
 
@@ -216,7 +216,7 @@ Successfully tagged iteblog-docker:latest
 
 因为centos镜像使用了宿主机的内核。
 
-![image-07](./assets/image-07.png)
+![image-07](/images/docs/Docker/Docker学习笔记/assets/image-07.png)
 
 **base镜像的定义**
 1. 不依赖其他镜像，从scratch构建。
@@ -232,17 +232,17 @@ Linux操作系统由用户空间和内核空间构成。
 
 > 为什么jdk的镜像有500多MB？
 
-![image-08](./assets/image-08.png)
+![image-08](/images/docs/Docker/Docker学习笔记/assets/image-08.png)
 
 jdk镜像包含了rootfs和jdk本身，所以jdk的镜像要加上rootfs的大小，才是jdk镜像的大小。
 
 > 为什么tomcat正常下载几十MB，镜像却要几百MB？
 
-![image-09](./assets/image-09.png)
+![image-09](/images/docs/Docker/Docker学习笔记/assets/image-09.png)
 
 **分层说明**
 
-![image-10](./assets/image-10.png)
+![image-10](/images/docs/Docker/Docker学习笔记/assets/image-10.png)
 
 **修改时复制策略（copy-on-write）**
 

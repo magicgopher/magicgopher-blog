@@ -10,11 +10,11 @@
 
 > LXC 是 Docker 的底层基石，但是在 Docker 0.9 版本的时候，Docker 见异思迁了，引入了基于 Go 语言构建的 Libcontainer 的 execution driver。有了 Libcontainer 这个项目，Docker 不再需要依赖于 Linux 部件（LXC，libvirt，systemd-nspawn...）就可以处理 namespaces、control groups、capabilities、apparmor profiles、network interfaces。这下，LXC 沦为可选项。
 
-![image-01](./assets/image-01.jpg)
+![image-01](/images/docs/Docker/Docker学习笔记/assets/image-01.jpg)
 
 在 Docker 1.8 中 LXC 被 deprecated，`在 Docker 1.10，LXC 彻底出局`。Docker 推出 Libcontainer 自己集成了 Linux 内核中的很多特性，作为一个独特、稳定且不受制于 Linux 的 Library，独立的时代终于到来了。
 
-![image-02](./assets/image-02.jpg)
+![image-02](/images/docs/Docker/Docker学习笔记/assets/image-02.jpg)
 
 如同 Docker 的 Logo 一样，Docker 的思想来源于集装箱。集装箱解决了什么问题？在一艘大船上，可以把货物规整的摆放起来，并且各种各样的货物被集装箱标准化，集装箱与集装箱之间互不影响。那么就不需要专门运送水果的船和专门运送化学用品的船了。只要这些货物封装在不同的集装箱里，就可以用一艘大船把它们都运走。
 
@@ -40,11 +40,11 @@ Docker 利用 Linux 核心中的资源分脱机制，例如 cgroups，以及 Lin
 
 对于新手来说，第一个觉得困惑的地方可能就是不清楚 Docker 和虚拟机之间到底是什么关系。以下两张图分别介绍了虚拟机与 Docker 容器的结构。
 
-![image-03](./assets/image-03.png)
+![image-03](/images/docs/Docker/Docker学习笔记/assets/image-03.png)
 
 对于虚拟机技术来说，传统的虚拟机需要模拟整台机器包括硬件，每台虚拟机都需要有自己的操作系统，虚拟机一旦被开启，预分配给他的资源将全部被占用。每一个虚拟机包括应用，必要的二进制和库，以及一个完整的用户操作系统。
 
-![image-04](./assets/image-04.png)
+![image-04](/images/docs/Docker/Docker学习笔记/assets/image-04.png)
 
 容器技术和我们的宿主机共享硬件资源及操作系统，可以实现资源的动态分配。容器包含应用和其所有的依赖包，但是与其他容器共享内核。容器在宿主机操作系统中，在用户空间以分离的进程运行。容器内没有自己的内核，也没有进行硬件虚拟。
 
@@ -61,7 +61,7 @@ Docker 利用 Linux 核心中的资源分脱机制，例如 cgroups，以及 Lin
 
 ## Docker架构
 
-![Docker架构图](./assets/image-05.webp)
+![Docker架构图](/images/docs/Docker/Docker学习笔记/assets/image-05.webp)
 
 **Docker 的架构主要由以下几个核心组件组成**：
 - **Docker 客户端(Docker Client)**：这是用户与 Docker 交互的主要界面，用户通过客户端发送各种命令和请求，例如创建镜像、启动容器等操作。

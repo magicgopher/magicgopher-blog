@@ -4,7 +4,7 @@
 
 > 当项目大规模使用 Docker 容器时，容器之间通信的问题也就产生了，要解决容器通信问题，必须先了解很多关于网络的知识，我们需要了解Docker 的网络知识，以满足更高的网络需求。
 
-![image-11](./assets/image-11.png)
+![image-11](/images/docs/Docker/Docker学习笔记/assets/image-11.png)
 
 Docker 容器需要网络来实现以下功能：
 
@@ -14,7 +14,7 @@ Docker 容器需要网络来实现以下功能：
 - 容器IP寻址：容器需要有自己的 IP 地址，这样其他容器或外部设备才能通过 IP 找到并访问该容器。
 - 网络隔离和安全性：Docker 的网络模型支持容器之间的隔离，以及容器与宿主机之间的隔离，提高了整体的安全性。
 
-![image-12](./assets/image-12.png)
+![image-12](/images/docs/Docker/Docker学习笔记/assets/image-12.png)
 
 总之 Docker 容器需要网络来实现容器间通信、容器与外部通信、服务暴露、IP 寻址以及网络隔离等基本功能。这些网络功能对于 Docker 容器的运行和应用部署都是非常关键的。
 
@@ -47,35 +47,35 @@ b15021bed953   host      host      local
 
 veth是linux的一种虚拟网络设备，它有点类似于两张网卡中间用一条网线连着，veth设备总是成对出现，通常用来连接不同网络命名空间（下面开始简称NS），一端连着NS1的内核协议栈，另一端连着NS2的内核协议栈，一端发送的数据会立刻被另一端接收。
 
-![image-13](./assets/image-13.png)
+![image-13](/images/docs/Docker/Docker学习笔记/assets/image-13.png)
 
 比如我运行一个基于 `busybox` 镜像构建的容器 `bbox01`，查看 `ip addr`：
 
 然后宿主机通过 `ip addr` 查看信息如下：
 
-![image-14](./assets/image-14.png)
+![image-14](/images/docs/Docker/Docker学习笔记/assets/image-14.png)
 
 然后宿主机通过 `ip addr` 查看信息如下：
 
-![image-15](./assets/image-15.png)
+![image-15](/images/docs/Docker/Docker学习笔记/assets/image-15.png)
 
 通过以上的比较可以发现，证实了之前所说的：守护进程会创建一对对等虚拟设备接口 `veth pair`，将其中一个接口设置为容器的 `eth0` 接口（容器的网卡），另一个接口放置在宿主机的命名空间中，以类似 `vethxxx` 这样的名字命名。
 
 同时，守护进程还会从网桥 `docker0` 的私有地址空间中分配一个 IP 地址和子网给该容器，并设置 docker0 的 IP 地址为容器的默认网关。也可以安装 `apt-get install -y bridge-utils` 以后，通过 `brctl show` 命令查看网桥信息。
 
-![image-16](./assets/image-16.png)
+![image-16](/images/docs/Docker/Docker学习笔记/assets/image-16.png)
 
 对于每个容器的 IP 地址和 Gateway 信息，我们可以通过 `docker inspect 容器名称|ID` 进行查看，在 `NetworkSettings` 节点中可以看到详细信息。
 
-![image-17](./assets/image-17.png)
+![image-17](/images/docs/Docker/Docker学习笔记/assets/image-17.png)
 
 我们可以通过 `docker network inspect bridge` 查看所有 `bridge` 网络模式下的容器，在 `Containers` 节点中可以看到容器名称。
 
-![image-18](./assets/image-18.png)
+![image-18](/images/docs/Docker/Docker学习笔记/assets/image-18.png)
 
 关于 `bridge` 网络模式的使用，只需要在创建容器时通过参数 `--net bridge` 或者 `--network bridge` 指定即可，当然这也是创建容器默认使用的网络模式，也就是说这个参数是可以省略的。
 
-![bridge](./assets/image-19.png)
+![bridge](/images/docs/Docker/Docker学习笔记/assets/image-19.png)
 
 bridge 桥接模式的实现步骤主要如下：
 - Docker Daemon 利用 veth pair 技术，在宿主机上创建一对对等虚拟网络接口设备，假设为 veth0 和 veth1。而 veth pair 技术的特性可以保证无论哪一个 veth 接收到网络报文，都会将报文传输给另一方。
@@ -84,7 +84,7 @@ bridge 桥接模式的实现步骤主要如下：
 
 ### host 网络模式
 
-![host](./assets/image-20.png)
+![host](/images/docs/Docker/Docker学习笔记/assets/image-20.png)
 
 host 网络模式的实现步骤主要如下：
 - host 网络模式需要在创建容器时通过参数 `--net host` 或者 `--network host` 指定；
@@ -93,15 +93,15 @@ host 网络模式的实现步骤主要如下：
 
 比如我基于 `host` 网络模式创建了一个基于 `busybox` 镜像构建的容器 `bbox02`，查看 `ip addr`：
 
-![image-21](./assets/image-21.png)
+![image-21](/images/docs/Docker/Docker学习笔记/assets/image-21.png)
 
 然后宿主机通过 `ip addr` 查看信息如下：
 
-![image-22](./assets/image-22.png)
+![image-22](/images/docs/Docker/Docker学习笔记/assets/image-22.png)
 
 我们可以通过 `docker network inspect host` 查看所有 `host` 网络模式下的容器，在 `Containers` 节点中可以看到容器名称。
 
-![image-23](./assets/image-23.png)
+![image-23](/images/docs/Docker/Docker学习笔记/assets/image-23.png)
 
 ### none 网络模式
 
@@ -111,15 +111,15 @@ none 网络模式的实现步骤主要如下：
 
 比如我基于 `none` 网络模式创建了一个基于 `busybox` 镜像构建的容器 `bbox03`，查看 `ip addr`：
 
-![image-24](./assets/image-24.png)
+![image-24](/images/docs/Docker/Docker学习笔记/assets/image-24.png)
 
 我们可以通过 `docker network inspect none` 查看所有 `none` 网络模式下的容器，在 `Containers` 节点中可以看到容器名称。
 
-![image-25](./assets/image-25.png)
+![image-25](/images/docs/Docker/Docker学习笔记/assets/image-25.png)
 
 ### container 网络模式
 
-![container网络模式](./assets/image-26.png)
+![container网络模式](/images/docs/Docker/Docker学习笔记/assets/image-26.png)
 
 container 网络模式的实现步骤主要如下：
 - Container 网络模式是 Docker 中一种较为特别的网络的模式。在创建容器时通过参数 `--net container:已运行的容器名称|ID` 或者 `--network container:已运行的容器名称|ID` 指定；
@@ -129,21 +129,21 @@ container 网络模式的实现步骤主要如下：
 
 比如我基于容器 `bbox01` 创建了 `container` 网络模式的容器 `bbox04`，查看 `ip addr`：
 
-![image-27](./assets/image-27.png)
+![image-27](/images/docs/Docker/Docker学习笔记/assets/image-27.png)
 
 宿主机的 `ip addr` 信息如下：
 
-![image-28](./assets/image-28.png)
+![image-28](/images/docs/Docker/Docker学习笔记/assets/image-28.png)
 
 通过以上测试可以发现，Docker 守护进程只创建了一对对等虚拟设备接口用于连接 bbox01 容器和宿主机，而 bbox04 容器则直接使用了 bbox01 容器的网卡信息。
 
 这个时候如果将 bbox01 容器停止，会发现 bbox04 容器就只剩下 lo 接口了。
 
-![image-29](./assets/image-29.png)
+![image-29](/images/docs/Docker/Docker学习笔记/assets/image-29.png)
 
 然后 bbox01 容器重启以后，bbox04 容器也重启一下，就又可以获取到网卡信息了。
 
-![image-30](./assets/image-30.png)
+![image-30](/images/docs/Docker/Docker学习笔记/assets/image-30.png)
 
 ## link
 
@@ -221,7 +221,7 @@ docker run -di --name bbox05 --net custom_network busybox
 
 通过 `docker inspect 容器名称|ID` 查看容器的网络信息，在 `NetworkSettings` 节点中可以看到详细信息。
 
-![image-31](./assets/image-31.png)
+![image-31](/images/docs/Docker/Docker学习笔记/assets/image-31.png)
 
 ### 连接网络
 
@@ -254,7 +254,7 @@ docker network connect bridge bbox05
 
 通过 `docker inspect 容器名称|ID` 再次查看容器的网络信息，多增加了默认的 `bridge`。
 
-![image-32](./assets/image-32.png)
+![image-32](/images/docs/Docker/Docker学习笔记/assets/image-32.png)
 
 ### 断开网络
 
@@ -282,7 +282,7 @@ docker network disconnect custom_network bbox05
 
 通过 `docker inspect 容器名称|ID` 再次查看容器的网络信息，发现只剩下默认的 `bridge`。
 
-![image-33](./assets/image-33.png)
+![image-33](/images/docs/Docker/Docker学习笔记/assets/image-33.png)
 
 ### 移除网络
 
@@ -336,15 +336,15 @@ docker run -di --name default_bbox02 busybox
 
 通过 `docker network inspect bridge` 查看两容器的具体 IP 信息。
 
-![image-34](./assets/image-34.png)
+![image-34](/images/docs/Docker/Docker学习笔记/assets/image-34.png)
 
 然后测试两容器间是否可以进行网络通信。
 
-![image-35](./assets/image-35.png)
+![image-35](/images/docs/Docker/Docker学习笔记/assets/image-35.png)
 
 经过测试，从结果得知两个属于同一个网络的容器是可以进行网络通信的，但是 IP 地址可能是不固定的，有被更改的情况发生，那容器内所有通信的 IP 地址也需要进行更改，能否使用容器名称进行网络通信？继续测试。
 
-![image-36](./assets/image-36.png)
+![image-36](/images/docs/Docker/Docker学习笔记/assets/image-36.png)
 
 经过测试，从结果得知使用容器进行网络通信是不行的，那怎么实现这个功能呢？
 - 从 Docker 1.10 版本开始，docker daemon 实现了一个内嵌的 DNS server，使容器可以直接通过容器名称通信。方法很简单，只要在创建容器时使用 `--name` 为容器命名即可。
@@ -363,11 +363,11 @@ docker run -di --name custom_bbox02 --net custom_network busybox
 
 通过 `docker network inspect custom_network` 查看两容器的具体 IP 信息。
 
-![image-37](./assets/image-37.png)
+![image-37](/images/docs/Docker/Docker学习笔记/assets/image-37.png)
 
 然后测试两容器间是否可以进行网络通信，分别使用具体 IP 和容器名称进行网络通信。
 
-![image-38](./assets/image-38.png)
+![image-38](/images/docs/Docker/Docker学习笔记/assets/image-38.png)
 
 ::: tip 笔记内容来源
 码神之路知识体系：[码神之路](https://www.mszlu.com/)

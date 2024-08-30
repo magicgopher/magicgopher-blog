@@ -122,7 +122,7 @@ docker run -p 8080:8080 --name rocketmq-dashboard \
 
 然后访问 `http://IP地址:8080`
 
-![image-01](./assets/image-01.png)
+![image-01](/images/docs/Docker/Docker应用实战/assets/image-01.png)
 
 ### Docker Compose 部署
 

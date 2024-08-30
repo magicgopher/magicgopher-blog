@@ -20,7 +20,7 @@ HTML 不是一门编程语言，而是一种用于定义内容结构的标记语
 
 让我们深入探索一下这个段落元素。
 
-![HTML 元素](./assets/grumpy-cat-small.png)
+![HTML 元素](/images/docs/前端基础/HTML5/assets/image-01.png)
 
 这个元素的主要部分有：
 
@@ -31,7 +31,7 @@ HTML 不是一门编程语言，而是一种用于定义内容结构的标记语
 
 元素也可以有属性（Attribute）：
 
-![HTML 属性](./assets/grumpy-cat-attribute-small.png)
+![HTML 属性](/images/docs/前端基础/HTML5/assets/image-02.png)
 
 属性包含了关于元素的一些额外信息，这些信息本身不应显现在内容中。本例中，`class` 是属性名称，`editor-note` 是属性的值。`class` 属性可为元素提供一个标识名称，以便进一步为元素指定样式或进行其他操作时使用。
 
