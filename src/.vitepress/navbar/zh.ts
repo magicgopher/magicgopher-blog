@@ -12,6 +12,8 @@ export const zhNavbar: DefaultTheme.Config['nav'] = [
     generateNavbar(NavbarConstants.Frontend),
     // 导航栏（DevOps）
     generateNavbar(NavbarConstants.DevOps),
+    // 导航栏（常用工具）
+    generateNavbar(NavbarConstants.Tools),
     // 导航栏（关于我）
     generateNavbar(NavbarConstants.About)
 ]
