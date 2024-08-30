@@ -2,6 +2,7 @@ import { resolve } from 'path';
 import { defineConfig } from 'vitepress';
 import { themeConfig } from './configs/theme';
 import { markdownConfig } from './configs/markdown';
+import MarkdownPreview from 'vite-plugin-markdown-preview';
 
 export default defineConfig({
   // 网站的基础路径
@@ -42,6 +43,11 @@ export default defineConfig({
     ssr: {
       // 指定不进行外部化处理的包
       noExternal: ['@escook/vitepress-theme', 'vitepress']
-    }
+    },
+    // 插件 
+    plugins: [
+      // 组件预览插件
+      MarkdownPreview(),
+    ]
   }
 })
