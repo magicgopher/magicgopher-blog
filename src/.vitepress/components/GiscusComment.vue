@@ -2,7 +2,7 @@
     <div style="margin-top: 24px">
         <Giscus
             id="comments"
-            repo="MagicGopher/MagicGopher-Blog"
+            repo="MagicGopher/MagicGopher-Blog" 
             repoid="R_kgDOMNveng"
             category="General"
             categoryid="DIC_kwDOMNvens4ChhfK"
@@ -12,13 +12,14 @@
             emitmetadata="0"
             inputposition="top"
             loading="lazy"
+            lang="zh-CN"
             :theme="isDark ? 'dark' : 'light'"
             :key="route.path"
         ></Giscus>
     </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import Giscus from '@giscus/vue';
 import { useRoute, useData } from 'vitepress';
 

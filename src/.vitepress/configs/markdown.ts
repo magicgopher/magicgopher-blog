@@ -1,19 +1,5 @@
 import type { MarkdownOptions } from 'vitepress';
-
-// 要插入 <BackTop /> 组件的路径数组
-const specificPaths = [
-    // 格式：'docs/zh/program'
-    'src/docs/zh/编程语言',
-    'src/docs/zh/前端技术',
-    'src/docs/zh/DevOps',
-    'src/docs/zh/关于我',
-];
-
-// 不需要插入 <BackTop /> 组件的文件路径黑名单
-const blacklistPaths: string[] = [
-    // 格式：'docs/zh/program/go/01-Go语言基础/08-字符串处理.md'
-    // 'docs/zh/program/go/01-Go语言基础/08-字符串处理.md'
-];
+import { specificPaths, blacklistPaths } from '../utils/constants';
 
 // 将路径字符串转换为正则表达式
 const toRegex = (path: string) => new RegExp(path.replace(/\//g, '\\/'));
@@ -37,18 +23,24 @@ export const markdownConfig: MarkdownOptions = {
     image: {
         lazyLoading: true
     },
-    // 自定义渲染markdown组件
+    // 自定义Markdown渲染
     config: (md) => {
+        // 配置函数，接受参数md（Markdown实例）
         const render = md.render.bind(md);
+        // 绑定md.render方法到变量render上
         md.render = (...args) => {
+            // 重写md.render方法，接受任意数量的参数args
             const [src, env] = args;
-            const filePath = env.path; // 获取当前渲染的文件路径
-
+            // 获取当前渲染的文件路径
+            const filePath = env.path;
             // 检查文件路径，决定是否插入 <BackTop /> 组件
             if (filePath && specificPathsRegex.some(path => path.test(filePath)) && !blacklistPathsRegex.some(path => path.test(filePath))) {
+                // 检查文件路径是否包含在 specificPathsRegex 中，且不在 blacklistPathsRegex 中
                 const result = render(src, env);
+                // 将 <BackTop /> 组件插入到渲染结果之前
                 return `<BackTop />\n${result}`;
             }
+            // 否则，返回原始的渲染结果
             return render(src, env);
         };
     },

@@ -55,3 +55,19 @@ export const SidebarBlacklist: string[] = [
     // index.md文件在侧边栏不显示
     'index.md',
 ];
+
+// 要插入 <BackTop /> 组件的路径数组
+export const specificPaths = [
+    // 格式：'/src/docs/zh/编程语言/'
+    '/src/docs/zh/编程语言/',
+    '/src/docs/zh/前端技术/',
+    '/src/docs/zh/DevOps/',
+    '/src/docs/zh/常用工具/',
+    '/src/docs/zh/关于我/',
+];
+
+// 不需要插入 <BackTop /> 组件的文件路径黑名单
+export const blacklistPaths: string[] = [
+    // 格式：'docs/zh/program/go/01-Go语言基础/08-字符串处理.md'
+    // 'docs/zh/program/go/01-Go语言基础/08-字符串处理.md'
+];

@@ -16,55 +16,41 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue';
+<script lang="ts" setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
-export default defineComponent({
-  name: 'BackTop',
-  setup() {
-    const progress = ref(0);
-    const isMobile = ref(false);
-    const showBackTop = ref(false);
-    const circumference = 2 * Math.PI * 45;
-    const isAtBottom = ref(false);
+const progress = ref(0);
+const isMobile = ref(false);
+const showBackTop = ref(false);
+const circumference = 2 * Math.PI * 45;
+const isAtBottom = ref(false);
 
-    const checkIsMobile = () => {
-      isMobile.value = window.innerWidth < 768;
-    };
+const checkIsMobile = () => {
+  isMobile.value = window.innerWidth < 768;
+};
 
-    const handleScroll = () => {
-      const scrollTop = window.pageYOffset;
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      progress.value = scrollTop / scrollHeight;
-      showBackTop.value = scrollTop > 300;
-      isAtBottom.value = scrollTop >= scrollHeight;
-      if (isAtBottom.value) {
-        progress.value = 1;
-      }
-    };
-
-    const scrollToTop = () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
-    onMounted(() => {
-      checkIsMobile();
-      window.addEventListener('scroll', handleScroll);
-    });
-
-    onBeforeUnmount(() => {
-      window.removeEventListener('scroll', handleScroll);
-    });
-
-    return {
-      progress,
-      isMobile,
-      showBackTop,
-      circumference,
-      isAtBottom,
-      scrollToTop
-    };
+const handleScroll = () => {
+  const scrollTop = window.scrollY;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  progress.value = scrollTop / scrollHeight;
+  showBackTop.value = scrollTop > 300;
+  isAtBottom.value = scrollTop >= scrollHeight;
+  if (isAtBottom.value) {
+    progress.value = 1;
   }
+};
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+onMounted(() => {
+  checkIsMobile();
+  window.addEventListener('scroll', handleScroll);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll);
 });
 </script>
 
