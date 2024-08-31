@@ -15,7 +15,14 @@ export default defineConfig({
     ['script', { src: '/js/console-info.js' }],
     // SEO
     ['meta', { name: 'author', content: 'MagicGopher' }],
-    ['meta', { name: 'keywords', content: '编程语言,数据库,微服务,云原生,容器编排,渗透测试' }],
+    ['meta', { name: 'description', content: 'Go,Java,C++,Python,Vue,React,开源笔记,算法,数据结构,数据库,Docker,Kubernetes,微服务,云原生,容器编排,渗透测试,人工智能,网站导航,工具分享,软件分享' }],
+    ['meta', { name: 'keywords', content: 'Go,Java,C++,Python,Vue,React,开源笔记,算法,数据结构,数据库,Docker,Kubernetes,微服务,云原生,容器编排,渗透测试,人工智能,网站导航,工具分享,软件分享' }],
+    // 百度
+    ['meta', { name: 'baidu-site-verification', content: 'codeva-KxJ1Ol95rj' }],
+    // bing
+    ['meta', { name: 'msvalidate.01', content: 'C6716D54A56D5BA9D9D54F71353BFEE6' }],
+    // google
+    ['meta', { name: 'google-site-verification', content: 'egfIVStn9QImuDTotp7bEa2XKq-5E8AvRgk6TFaI-Y0' }]
   ],
   // 标题
   title: "MagicGopher Blog",
