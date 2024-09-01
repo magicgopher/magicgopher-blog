@@ -3,14 +3,14 @@
         <Giscus
             id="comments"
             repo="MagicGopher/MagicGopher-Blog" 
-            repoid="R_kgDOMNveng"
+            repoId="R_kgDOMNveng"
             category="General"
-            categoryid="DIC_kwDOMNvens4ChhfK"
+            categoryId="DIC_kwDOMNvens4ChhfK"
             mapping="title"
             term="Welcome to giscus!"
-            reactionsenabled="1"
-            emitmetadata="0"
-            inputposition="top"
+            reactionsEnabled="1"
+            emitMetadata="0"
+            inputPosition="top"
             loading="lazy"
             lang="zh-CN"
             :theme="isDark ? 'dark' : 'light'"
@@ -23,6 +23,8 @@
 import Giscus from '@giscus/vue';
 import { useRoute, useData } from 'vitepress';
 
+// 使用 useRoute() 获取当前路由信息
 const route = useRoute();
+// 使用 useData() 获取数据，这里示例中获取了 isDark 属性
 const { isDark } = useData();
 </script>
