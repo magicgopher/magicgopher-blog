@@ -118,13 +118,13 @@
 }
 
 /* 重新定义theme主题的 h1 至 h4 的样式 */
-.vp-doc h1, 
-.vp-doc h2, 
-.vp-doc h3, 
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
 .vp-doc h4,
-.dark .vp-doc h1, 
-.dark .vp-doc h2, 
-.dark .vp-doc h3, 
+.dark .vp-doc h1,
+.dark .vp-doc h2,
+.dark .vp-doc h3,
 .dark .vp-doc h4 {
     text-decoration-color: transparent;
 }
@@ -140,7 +140,15 @@ h6 {
 .medium-zoom-overlay {
     z-index: 30;
 }
+
 .medium-zoom-image {
     /* 给的值是21，但是实测盖不住，直接999 */
     z-index: 9999 !important;
+}
+
+/* Live2D看板娘当屏幕宽度小于等于 768px 时隐藏 */
+@media only screen and (max-width: 768px) {
+    #oml2d-canvas {
+        display: none;
+    }
 }
