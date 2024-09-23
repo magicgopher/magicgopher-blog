@@ -71,3 +71,14 @@ export const blacklistPaths: string[] = [
     // 格式：'docs/zh/program/go/01-Go语言基础/08-字符串处理.md'
     // 'docs/zh/program/go/01-Go语言基础/08-字符串处理.md'
 ];
+
+// Live2D模型配置
+export const live2dModels = [
+    {
+        path: '/live2d/abeikelongbi_3/abeikelongbi_3.model3.json',
+        scale: 0.05,
+        stageStyle: {
+            height: 350
+        }
+    }
+]
