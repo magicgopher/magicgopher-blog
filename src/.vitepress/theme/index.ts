@@ -27,6 +27,7 @@ export default {
                 busuanzi.fetch();
             };
         }
+        // Live2D看板娘
         if (!import.meta.env.SSR) {
             const { loadOml2d } = await import('oh-my-live2d');
             loadOml2d({
