@@ -152,3 +152,12 @@ h6 {
         display: none;
     }
 }
+
+/* info容器背景颜色（白天） */
+.custom-block.info {
+    background-color: #E6F6E6;
+}
+/* info容器背景颜色（黑夜） */
+.dark .custom-block.info {
+    background-color: #003100;
+}
