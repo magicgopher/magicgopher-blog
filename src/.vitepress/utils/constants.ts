@@ -10,8 +10,11 @@ export const GitHubConfigConstants = {
 export const CustomTextMap: Record<string, string> = {
     // 将导航栏和侧边栏的英文文本内容映射为对应中文文本内容
     // 导航栏（编程语言）
-    '01-go语言': 'Go语言',
+    '01-go': 'Go',
+    '02-java': 'Java',
+    // 导航栏（前端技术）
     '01-前端基础': '前端基础',
+    // 导航栏（DevOps）
     'devops': 'DevOps',
     'docker': 'Docker'
 }
@@ -41,7 +44,7 @@ export const NavbarConstants = {
 // 侧边栏常量枚举
 export const SidebarConstants = {
     // Go语言侧边栏
-    Golang: '/docs/zh/编程语言/01-Go语言/',
+    Golang: '/docs/zh/编程语言/01-Go/',
     // 前端基础侧边栏
     FrontendBase: '/docs/zh/前端技术/01-前端基础/',
     // Docker侧边栏
