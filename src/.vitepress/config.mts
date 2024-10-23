@@ -22,7 +22,7 @@ export default defineConfig({
     // bing
     ['meta', { name: 'msvalidate.01', content: 'C6716D54A56D5BA9D9D54F71353BFEE6' }],
     // google
-    ['meta', { name: 'google-site-verification', content: 'egfIVStn9QImuDTotp7bEa2XKq-5E8AvRgk6TFaI-Y0' }]
+    ['meta', { name: 'google-site-verification', content: 'egfIVStn9QImuDTotp7bEa2XKq-5E8AvRgk6TFaI-Y0' }],
   ],
   // 标题
   title: "MagicGopher Blog",
@@ -49,7 +49,7 @@ export default defineConfig({
     // ssr配置
     ssr: {
       // 指定不进行外部化处理的包
-      noExternal: ['@escook/vitepress-theme', 'vitepress']
+      noExternal: ['@escook/vitepress-theme', 'vitepress'],
     },
     // 插件 
     plugins: [

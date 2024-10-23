@@ -11,7 +11,10 @@ hero:
   actions:
     - theme: brand
       text: 开始学习
-      link: /docs/zh/编程语言/01-Go语言/
+      link: /docs/zh/编程语言/01-Go/
+    - theme: sponsor
+      text: 仓库地址
+      link: https://github.com/MagicGopher/MagicGopher-Blog/
     - theme: alt
       text: 更新日志
       link: /docs/zh/关于我/更新日志
