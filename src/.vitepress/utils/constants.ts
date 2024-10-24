@@ -45,6 +45,8 @@ export const NavbarConstants = {
 export const SidebarConstants = {
     // Go语言侧边栏
     Golang: '/docs/zh/编程语言/01-Go/',
+    // Java侧边栏
+    Java: '/docs/zh/编程语言/02-Java/',
     // 前端基础侧边栏
     FrontendBase: '/docs/zh/前端技术/01-前端基础/',
     // Docker侧边栏

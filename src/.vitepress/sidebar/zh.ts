@@ -6,6 +6,7 @@ import { generateSidebar } from '../utils/sidebar-generate';
 export const zhSidebar: DefaultTheme.Config['sidebar'] = {
     // 侧边栏 编程语言导航栏 （Go语言）
     [SidebarConstants.Golang]: generateSidebar(SidebarConstants.Golang),
+    [SidebarConstants.Java]: generateSidebar(SidebarConstants.Java),
     // 侧边栏 前端技术导航栏（前端基础）
     [SidebarConstants.FrontendBase]: generateSidebar(SidebarConstants.FrontendBase),
     // 侧边栏 DevOps（Docker）
