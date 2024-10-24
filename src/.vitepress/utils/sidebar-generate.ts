@@ -48,7 +48,7 @@ export function generateSidebar(baseDir: string): SidebarItem[] {
             if (subDirSidebarItems.length > 0) {
                 const directoryItem: SidebarItem = {
                     text: extractDirectoryName(file),
-                    collapsed: false,
+                    collapsed: true,
                     link: '',
                     items: subDirSidebarItems,
                 };
