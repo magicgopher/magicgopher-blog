@@ -31,7 +31,8 @@ export default {
         if (!import.meta.env.SSR) {
             const { loadOml2d } = await import('oh-my-live2d');
             loadOml2d({
-                models: live2dModels
+                models: live2dModels,
+                initialStatus: "sleep",
             });
         }
     },
