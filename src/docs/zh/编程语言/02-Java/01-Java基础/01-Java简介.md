@@ -104,15 +104,117 @@ JVM 由以下重要组件：
 
 ### Linux
 
-略
+这里以 Linux 发行版本手动安装为例说明。
+
+下载好对应平台的JDK【这里是Linux平台的】，可以使用 [Oracle JDK](https://www.oracle.com/sg/java/technologies/downloads/) 或者 [ZuluJDK](https://www.azul.com/downloads/?package=jdk#zulu)，需要注意的是处理器的架构是`X86`架构还是`ARM`架构。
+
+下载完成 JDK 之后，就可以使用 scp 命令将其上传至远程 Linux 服务器，无需上传可以直接忽略这一步。
+
+```shell
+# 用户名是远程计算机的用户名，有操作权限的用户
+# IP地址是远程计算机的IP地址
+# scp上传文件命令格式如下：
+scp 本地文件路径 用户名@IP地址:远程计算机文件路径（远程服务器文件路径）
+
+# 示例
+# 将 /Users/MagicGopher/ 目录下jdk21.0.5-linux_aarch64.tar.gz文件
+# 上传到192.168.10.100的IP地址的远程计算机（linux发行版本操作系统的计算机）
+# 使用 root 用户，上传到的路径是远程计算机的 /home/ 目录下
+scp /Users/MagicGopher/jdk21.0.5-linux_aarch64.tar.gz root@192.168.10.100:/home/
+```
+
+当jdk下载好或者是上传完成后，将其解压到当前目录。
+
+```shell
+# 解压到当前目录
+tar -zxvf 压缩包
+
+# 示例
+tar -zxvf jdk21.0.5-linux_aarch64.tar.gz
+
+# 解压到指定目录
+tar -zxvf 压缩包 -C 指定目录路径
+
+# 示例：将其解压到 /usr/local/java/ 目录下
+tar -zxvf jdk21.0.5-linux_aarch64.tar.gz -C /usr/local/java/
+
+# 解压后通过 mv 命令来重新命名
+# mv 原来的目录名称 新的目录名称
+mv zulu21.38.21-ca-jdk21.0.5-linux_aarch64 jdk21.0.5
+```
+
+开始配置系统环境变量，使用 `vim` 编辑 `/etc/profile` 文件，在末尾添加上以下内容：
+
+```shell
+export JAVA_HOME=/usr/local/java/jdk21.0.5 # 这里是jdk所在的路径
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export PATH=$JAVA_HOME/bin:$PATH
+```
+
+保存文件后，运行以下命令使更改立即生效。
+
+```shell
+source /etc/profile
+```
+
+你可以通过以下命令检查 Java 是否正确安装和配置。
+
+```shell
+java -version
+
+# 输出如下：
+openjdk version "21.0.5" 2024-10-15 LTS
+OpenJDK Runtime Environment Zulu21.38+21-CA (build 21.0.5+11-LTS)
+OpenJDK 64-Bit Server VM Zulu21.38+21-CA (build 21.0.5+11-LTS, mixed mode, sharing)
+```
 
 ### MacOS
 
-略
+下载好对应平台的JDK【这里是Linux平台的】，可以使用 [Oracle JDK](https://www.oracle.com/sg/java/technologies/downloads/) 或者 [ZuluJDK](https://www.azul.com/downloads/?package=jdk#zulu)，需要注意的是处理器的架构是`X86`架构还是`ARM`架构。
+
+在 MacOS 系统的 JDK 安装包是 Xxxx.dmg 格式的，如下所示：
+
+![MacOS版本JDK图片1](/images/docs/Java/Java基础/assets/image-04.png)
+
+点击 `.dmg` 格式的安装包安装：如下图所示：
+
+![MacOS版本JDK安装图1](/images/docs/Java/Java基础/assets/image-05.png)
+
+![MacOS版本JDK安装图2](/images/docs/Java/Java基础/assets/image-06.png)
+
+安装完成 JDK 之后，通过以下命令获取 JDK 安装的路径。
+
+```shell
+# 这个V是大写
+/usr/libexec/java_home -V
+```
+
+使用 vim 编辑 `~/.bash_profile` 配置文件。
+
+```shell
+export JAVA_HOME=/usr/local/java/jdk21.0.5 # 这里是jdk所在的路径
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export PATH=$JAVA_HOME/bin:$PATH
+```
+
+然后编辑 `~/.zshrc` （自macOS Catalina（10.15）开始，Zsh成为了默认的shell）
+
+```shell
+# 加载 .bash_profile 配置环境
+source ~/.bash_profile
+```
+
+使 `~/.bash_profile` 配置和 `~/.zshrc` 配置生效，需要执行以下命令：
+
+```shell
+# 使 ~/.bash_profile 配置文件配置的内容生效
+source ~/.bash_profile
+
+# 使 ~/.zshrc 配置文件配置的内容生效
+source ~/.zshrc
+```
 
 ### Windows
-
-略
 
 ## 入门程序
 
@@ -144,10 +246,11 @@ java HelloWorld
 Hello World!
 ```
 
+::: warning 注意事项
+1. 类名称需要和文件名称一致，案例上的 class HelloWorld 这个 HelloWorld 就是类名称，而 HelloWorld.java 文件中的 HelloWorld 是文件名。
+2. 执行 javac 和 java 命令其实都是在执行 JDK 安装目录下 bin 目录的 javac 和 java 的二进制可执行文件，这里需要配置好 Java 环境变量为前提才可以在终端中有 javac 和 java 命令。
+:::
+
 ## 参考资料
 
 - [https://www.anseon.cn/java/threshold/history-trait.html#发展历程](https://www.anseon.cn/java/threshold/history-trait.html#发展历程)
-
-::: tip 提示
-文档正在更新中...
-:::
