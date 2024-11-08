@@ -16,7 +16,8 @@ export const CustomTextMap: Record<string, string> = {
     '01-前端基础': '前端基础',
     // 导航栏（DevOps）
     'devops': 'DevOps',
-    'docker': 'Docker',
+    '01-docker': 'Docker',
+    '02-kubernetes': 'Kubernetes',
 }
 
 // 特殊的导航栏处理数组常量，
@@ -50,7 +51,7 @@ export const SidebarConstants = {
     // 前端基础侧边栏
     FrontendBase: '/docs/zh/前端技术/01-前端基础/',
     // Docker侧边栏
-    Docker: '/docs/zh/DevOps/Docker/',
+    Docker: '/docs/zh/DevOps/01-Docker/',
     // 常用工具侧边栏
     Tools: '/docs/zh/常用工具/',
 }
