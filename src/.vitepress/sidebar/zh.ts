@@ -11,6 +11,8 @@ export const zhSidebar: DefaultTheme.Config['sidebar'] = {
     [SidebarConstants.FrontendBase]: generateSidebar(SidebarConstants.FrontendBase),
     // 侧边栏 DevOps（Docker）
     [SidebarConstants.Docker]: generateSidebar(SidebarConstants.Docker),
+    // 侧边栏 DevOps（Kubernetes）
+    [SidebarConstants.Kubernetes]: generateSidebar(SidebarConstants.Kubernetes),
     // 侧边栏 常用工具
     [SidebarConstants.Tools]: generateSidebar(SidebarConstants.Tools),
 }

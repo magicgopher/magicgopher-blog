@@ -52,6 +52,8 @@ export const SidebarConstants = {
     FrontendBase: '/docs/zh/前端技术/01-前端基础/',
     // Docker侧边栏
     Docker: '/docs/zh/DevOps/01-Docker/',
+    // Kubernetes侧边栏
+    Kubernetes: '/docs/zh/DevOps/02-Kubernetes/',
     // 常用工具侧边栏
     Tools: '/docs/zh/常用工具/',
 }
