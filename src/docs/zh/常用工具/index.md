@@ -5,11 +5,11 @@
 > Git 是一个免费的开源 分布式版本控制系统，旨在快速高效地处理从小型到大型的所有项目。
 
 Git工具文档涵盖了以下内容：
-- [01-Git起步](./Git/01-Git起步.md)
-- [02-Git基础](./Git/02-Git基础.md)
-- [03-Git分支](./Git/03-Git分支.md)
-- [04-Git配置](./Git/04-Git配置.md)
-- [05-Git常用命令总结](./Git/05-Git常用命令总结.md)
+- [Git起步](./Git/01-Git起步.md)
+- [Git基础](./Git/02-Git基础.md)
+- [Git分支](./Git/03-Git分支.md)
+- [Git配置](./Git/04-Git配置.md)
+- [Git常用命令总结](./Git/05-Git常用命令总结.md)
 
 ## Navicat
 
