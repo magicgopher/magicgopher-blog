@@ -49,7 +49,7 @@ Calico的GitHub仓库地址：[https://github.com/projectcalico/calico](https://
 创建 calico 目录用于存放 tigera-operator.yaml、custom-resources.yaml 配置文件。
 
 ```shell
-mkdir /usr/local/calico && cd /usr/local/calico
+mkdir -p /usr/local/calico && cd /usr/local/calico
 ```
 
 下载operator与custom-resource
@@ -67,6 +67,8 @@ wget https://raw.githubusercontent.com/projectcalico/calico/v3.29.0/manifests/cu
 ## 修改custom-resources.yaml
 
 ```yaml
+# This section includes base Calico installation configuration.
+# For more information, see: https://docs.tigera.io/calico/latest/reference/installation/api#operator.tigera.io/v1.Installation
 apiVersion: operator.tigera.io/v1
 kind: Installation
 metadata:
@@ -107,21 +109,22 @@ kubectl create -f tigera-operator.yaml
 kubectl get ns
 
 # 输出如下
-default            Active   8m54s
-kube-node-lease    Active   8m54s
-kube-public        Active   8m54s
-kube-system        Active   8m54s
-tigera-operator    Active   24s
+NAME              STATUS   AGE
+default           Active   46m
+kube-node-lease   Active   46m
+kube-public       Active   46m
+kube-system       Active   46m
+tigera-operator   Active   65s
 ```
 
 查看 tigera-operator 的 pod 的状态是否是 Running。
 
 ```shell
-kubectl get pods -n tigera-operator
+kubectl get pod -n tigera-operator
 
 # 输出如下
 NAME                              READY   STATUS    RESTARTS   AGE
-tigera-operator-f8bc97d4c-hpxmz   1/1     Running   0          20s
+tigera-operator-f8bc97d4c-bnnx4   1/1     Running   0          78s
 ```
 
 tigera-operator 是 Running 状态才能继续后面的步骤，应用自定义资源定义，配置 Calico 网络插件的具体设置。
@@ -135,19 +138,19 @@ kubectl create -f custom-resources.yaml
 - 查看 Calico 网络插件处于 **Running** 状态即表示安装成功。
 
 ```shell
-kubectl get pod -n calico-system
+watch kubectl get pod -n calico-system
 
 # 输出如下
-NAME                                      READY   STATUS    RESTARTS        AGE
-calico-kube-controllers-987cb68fd-jww8s   1/1     Running   1 (7m23s ago)   25m
-calico-node-2bjpp                         1/1     Running   1 (7m28s ago)   25m
-calico-node-bsr9w                         1/1     Running   1 (7m23s ago)   25m
-calico-node-xktdx                         1/1     Running   1 (7m34s ago)   13m
-calico-typha-5499cd7446-jgvz6             1/1     Running   2 (7m33s ago)   13m
-calico-typha-5499cd7446-rwncx             1/1     Running   1 (7m24s ago)   25m
-csi-node-driver-hr9t8                     2/2     Running   2 (7m34s ago)   13m
-csi-node-driver-nx9bj                     2/2     Running   2 (7m23s ago)   25m
-csi-node-driver-v6tnb                     2/2     Running   2 (7m28s ago)   25m
+NAME                                       READY   STATUS    RESTARTS   AGE
+calico-kube-controllers-747566cd94-vftxb   1/1     Running   0          6m10s
+calico-node-98pgm                          1/1     Running   0          6m11s
+calico-node-m2wnp                          1/1     Running   0          6m11s
+calico-node-sn6hb                          1/1     Running   0          6m11s
+calico-typha-847558d54f-4f225              1/1     Running   0          6m3s
+calico-typha-847558d54f-hqmvf              1/1     Running   0          6m11s
+csi-node-driver-4tgcj                      2/2     Running   0          6m10s
+csi-node-driver-j55b8                      2/2     Running   0          6m10s
+csi-node-driver-k7z7g                      2/2     Running   0          6m10s
 ```
 
 - 查看节点状态处于 **Ready** 即表示安装成功
@@ -156,8 +159,8 @@ csi-node-driver-v6tnb                     2/2     Running   2 (7m28s ago)   25m
 kubectl get nodes
 
 # 输出如下
-NAME                   STATUS   ROLES           AGE    VERSION
-kubernetes-worker-01   Ready    <none>          87m    v1.31.3
-kubernetes-worker-02   Ready    <none>          60m    v1.31.3
-node                   Ready    control-plane   179m   v1.31.3
+NAME                   STATUS   ROLES           AGE   VERSION
+kubernetes-worker-01   Ready    <none>          40m   v1.31.3
+kubernetes-worker-02   Ready    <none>          28m   v1.31.3
+node                   Ready    control-plane   53m   v1.31.3
 ```

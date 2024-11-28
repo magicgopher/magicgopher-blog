@@ -12,19 +12,19 @@ kubeadm 是 kubernetes 的集群安装工具，能够快速安装 kubernetes 集
 
 ## 创建并修改配置
 
-创建 cluster 目录，用于存放 `kubeadm.yaml` 配置文件。
+创建 cluster 目录，用于存放 `kubeadm-config.yaml` 配置文件。
 
 ```shell
 mkdir -p /usr/local/kubernetes/cluster && cd /usr/local/kubernetes/cluster
 ```
 
-导出 `kubeadm.yml` 配置文件到 `/usr/local/kubernetes/cluster` 目录下。
+导出 `kubeadm-config.yaml` 配置文件到 `/usr/local/kubernetes/cluster` 目录下。
 
 ```shell
-kubeadm config print init-defaults > kubeadm-config.yaml
+kubeadm config print init-defaults --component-configs KubeProxyConfiguration,KubeletConfiguration > kubeadm-config.yaml
 ```
 
-导出的 `kubeadm-config.yaml` 配置文件需要以下有注释的地方：
+修改导出的 `kubeadm-config.yaml` 配置文件，需要修改以下有注释的地方。
 
 ```shell
 apiVersion: kubeadm.k8s.io/v1beta4
@@ -38,11 +38,11 @@ bootstrapTokens:
   - authentication
 kind: InitConfiguration
 localAPIEndpoint:
-  # 修改为 master 节点的IP地址
+  # 这里修改成主节点 master-01 的 IP地址
   advertiseAddress: 192.168.56.100
   bindPort: 6443
 nodeRegistration:
-  # 修改成使用 cri-dockerd
+  # 这里修改成使用 cri-dockerd
   criSocket: unix:///var/run/cri-dockerd.sock
   imagePullPolicy: IfNotPresent
   imagePullSerial: true
@@ -72,7 +72,7 @@ etcd:
 # 国内不能访问 Google，修改为阿里云镜像源
 imageRepository: registry.aliyuncs.com/google_containers
 kind: ClusterConfiguration
-# 修改版本号
+# 这里修改成对应的版本号（kubeadm是1.31.3-1.1版本的，这里就是1.31.3）
 kubernetesVersion: 1.31.3
 networking:
   dnsDomain: cluster.local
@@ -81,6 +81,10 @@ networking:
   podSubnet: 10.97.0.0/16
 proxy: {}
 scheduler: {}
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+cgroupDriver: systemd
 ```
 
 ## 查看所需镜像
@@ -89,10 +93,10 @@ scheduler: {}
 kubeadm config images list --config kubeadm-config.yaml
 
 # 输出如下
-registry.aliyuncs.com/google_containers/kube-apiserver:v1.31.2
-registry.aliyuncs.com/google_containers/kube-controller-manager:v1.31.2
-registry.aliyuncs.com/google_containers/kube-scheduler:v1.31.2
-registry.aliyuncs.com/google_containers/kube-proxy:v1.31.2
+registry.aliyuncs.com/google_containers/kube-apiserver:v1.31.3
+registry.aliyuncs.com/google_containers/kube-controller-manager:v1.31.3
+registry.aliyuncs.com/google_containers/kube-scheduler:v1.31.3
+registry.aliyuncs.com/google_containers/kube-proxy:v1.31.3
 registry.aliyuncs.com/google_containers/coredns:v1.11.3
 registry.aliyuncs.com/google_containers/pause:3.10
 registry.aliyuncs.com/google_containers/etcd:3.5.15-0
@@ -104,10 +108,10 @@ registry.aliyuncs.com/google_containers/etcd:3.5.15-0
 kubeadm config images pull --config kubeadm-config.yaml
 
 # 输出如下
-[config/images] Pulled registry.aliyuncs.com/google_containers/kube-apiserver:v1.31.2
-[config/images] Pulled registry.aliyuncs.com/google_containers/kube-controller-manager:v1.31.2
-[config/images] Pulled registry.aliyuncs.com/google_containers/kube-scheduler:v1.31.2
-[config/images] Pulled registry.aliyuncs.com/google_containers/kube-proxy:v1.31.2
+[config/images] Pulled registry.aliyuncs.com/google_containers/kube-apiserver:v1.31.3
+[config/images] Pulled registry.aliyuncs.com/google_containers/kube-controller-manager:v1.31.3
+[config/images] Pulled registry.aliyuncs.com/google_containers/kube-scheduler:v1.31.3
+[config/images] Pulled registry.aliyuncs.com/google_containers/kube-proxy:v1.31.3
 [config/images] Pulled registry.aliyuncs.com/google_containers/coredns:v1.11.3
 [config/images] Pulled registry.aliyuncs.com/google_containers/pause:3.10
 [config/images] Pulled registry.aliyuncs.com/google_containers/etcd:3.5.15-0
@@ -123,14 +127,14 @@ kubeadm config images pull --config kubeadm-config.yaml
 kubeadm init --config=kubeadm-config.yaml --upload-certs | tee kubeadm-init.log
 
 # 输出如下
-[init] Using Kubernetes version: v1.31.2
+[init] Using Kubernetes version: v1.31.3
 [preflight] Running pre-flight checks
         [WARNING Hostname]: hostname "node" could not be reached
         [WARNING Hostname]: hostname "node": lookup node on 127.0.0.53:53: server misbehaving
 [preflight] Pulling images required for setting up a Kubernetes cluster
 [preflight] This might take a minute or two, depending on the speed of your internet connection
 [preflight] You can also perform this action beforehand using 'kubeadm config images pull'
-W1116 19:48:54.018315    2912 checks.go:846] detected that the sandbox image "registry.k8s.io/pause:3.9" of the container runtime is inconsistent with that used by kubeadm.It is recommended to use "registry.aliyuncs.com/google_containers/pause:3.10" as the CRI sandbox image.
+W1129 05:31:01.830227    2781 checks.go:846] detected that the sandbox image "registry.k8s.io/pause:3.9" of the container runtime is inconsistent with that used by kubeadm.It is recommended to use "registry.aliyuncs.com/google_containers/pause:3.10" as the CRI sandbox image.
 [certs] Using certificateDir folder "/etc/kubernetes/pki"
 [certs] Generating "ca" certificate and key
 [certs] Generating "apiserver" certificate and key
@@ -162,14 +166,14 @@ W1116 19:48:54.018315    2912 checks.go:846] detected that the sandbox image "re
 [kubelet-start] Starting the kubelet
 [wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory "/etc/kubernetes/manifests"
 [kubelet-check] Waiting for a healthy kubelet at http://127.0.0.1:10248/healthz. This can take up to 4m0s
-[kubelet-check] The kubelet is healthy after 1.002076871s
+[kubelet-check] The kubelet is healthy after 1.001214919s
 [api-check] Waiting for a healthy API server. This can take up to 4m0s
-[api-check] The API server is healthy after 1m4.001502134s
+[api-check] The API server is healthy after 12.501387894s
 [upload-config] Storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
 [kubelet] Creating a ConfigMap "kubelet-config" in namespace kube-system with the configuration for the kubelets in the cluster
 [upload-certs] Storing the certificates in Secret "kubeadm-certs" in the "kube-system" Namespace
 [upload-certs] Using certificate key:
-0eee453b8639f661197bdadcf7f0834c834de5b66123a7d2ec8d701f7c4565b8
+1db3bdd34a61fb531cf9cceb8072ab292d4a54434fcd8768a668172afdf222c0
 [mark-control-plane] Marking the node node as control-plane by adding the labels: [node-role.kubernetes.io/control-plane node.kubernetes.io/exclude-from-external-load-balancers]
 [mark-control-plane] Marking the node node as control-plane by adding the taints [node-role.kubernetes.io/control-plane:NoSchedule]
 [bootstrap-token] Using token: abcdef.0123456789abcdef
@@ -202,7 +206,7 @@ Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
 Then you can join any number of worker nodes by running the following on each as root:
 
 kubeadm join 192.168.56.100:6443 --token abcdef.0123456789abcdef \
-        --discovery-token-ca-cert-hash sha256:35ac488e4e3cae996aab7585e2d6f75926d3de015e71adfd9d6fb079e0086867
+        --discovery-token-ca-cert-hash sha256:426c9798aa6db32876d0d1a8983957b6cbd093fc35867904ec482c41c8a04235
 ```
 
 ## 配置 kubelet
@@ -226,8 +230,8 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl get nodes
 
 # 输出如下
-NAME   STATUS     ROLES           AGE   VERSION
-node   NotReady   control-plane   45m   v1.31.2
+NAME   STATUS     ROLES           AGE     VERSION
+node   NotReady   control-plane   2m36s   v1.31.3
 ```
 
 ## 安装工作节点
@@ -237,7 +241,7 @@ node   NotReady   control-plane   45m   v1.31.2
 ```shell
 # 这里需要加入--cri-socket 来指定使用 docker 还是 containerd
 kubeadm join 192.168.56.100:6443 --token abcdef.0123456789abcdef \
-        --discovery-token-ca-cert-hash sha256:35ac488e4e3cae996aab7585e2d6f75926d3de015e71adfd9d6fb079e0086867 \
+        --discovery-token-ca-cert-hash sha256:426c9798aa6db32876d0d1a8983957b6cbd093fc35867904ec482c41c8a04235 \
         --cri-socket=unix:///var/run/cri-dockerd.sock
 
 # 输出如下
@@ -248,7 +252,7 @@ kubeadm join 192.168.56.100:6443 --token abcdef.0123456789abcdef \
 [kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
 [kubelet-start] Starting the kubelet
 [kubelet-check] Waiting for a healthy kubelet at http://127.0.0.1:10248/healthz. This can take up to 4m0s
-[kubelet-check] The kubelet is healthy after 1.002923656s
+[kubelet-check] The kubelet is healthy after 1.050735187s
 [kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap
 
 This node has joined the cluster:
@@ -266,10 +270,10 @@ Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
 kubectl get nodes
 
 # 输出如下
-NAME                   STATUS     ROLES           AGE    VERSION
-kubernetes-worker-01   NotReady   <none>          27m    v1.31.2
-kubernetes-worker-02   NotReady   <none>          7s     v1.31.2
-node                   NotReady   control-plane   119m   v1.31.2
+NAME                   STATUS     ROLES           AGE     VERSION
+kubernetes-worker-01   NotReady   <none>          21m     v1.31.3
+kubernetes-worker-02   NotReady   <none>          8m50s   v1.31.3
+node                   NotReady   control-plane   33m     v1.31.3
 ```
 
 在 kubectl get nodes 的输出中，STATUS 显示为 NotReady 表示该节点尚未准备好处理 Pod，即使是 scheduler 的 状态为 Healthy 也不行。
@@ -282,16 +286,16 @@ node                   NotReady   control-plane   119m   v1.31.2
 kubectl get pod -n kube-system
 
 # 输出如下
-NAME                           READY   STATUS    RESTARTS      AGE
-coredns-855c4dd65d-fg46w       0/1     Pending   0             127m
-coredns-855c4dd65d-rf62j       0/1     Pending   0             127m
-etcd-node                      1/1     Running   1 (84m ago)   128m
-kube-apiserver-node            1/1     Running   1 (84m ago)   128m
-kube-controller-manager-node   1/1     Running   1 (84m ago)   128m
-kube-proxy-69hws               1/1     Running   0             8m59s
-kube-proxy-gz4w9               1/1     Running   1 (84m ago)   127m
-kube-proxy-w5sns               1/1     Running   0             36m
-kube-scheduler-node            1/1     Running   1 (84m ago)   128m
+NAME                           READY   STATUS    RESTARTS        AGE
+coredns-855c4dd65d-p26rk       0/1     Pending   0               35m
+coredns-855c4dd65d-wlv69       0/1     Pending   0               35m
+etcd-node                      1/1     Running   1 (7m34s ago)   35m
+kube-apiserver-node            1/1     Running   1 (7m24s ago)   35m
+kube-controller-manager-node   1/1     Running   1 (7m34s ago)   35m
+kube-proxy-km5xt               1/1     Running   1 (7m50s ago)   10m
+kube-proxy-sfg7b               1/1     Running   1 (7m35s ago)   35m
+kube-proxy-txggf               1/1     Running   1 (7m41s ago)   23m
+kube-scheduler-node            1/1     Running   1 (7m34s ago)   35m
 ```
 
 由输出的结果可以看出 coredns 是没有在运行的，此时我们还需要安装网络插件。

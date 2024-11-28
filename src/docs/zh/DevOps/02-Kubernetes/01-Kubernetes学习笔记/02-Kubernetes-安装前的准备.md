@@ -19,7 +19,7 @@ keywords: Kubernetes,Kubernetes学习笔记,Kubernetes应用实战,Kubernetes源
 
 | 主机名称             | IP地址         | 角色      | OS                  | CPU/内存 | 硬盘 |
 | -------------------- | -------------- | --------- | ------------------- | -------- | ---- |
-| kubernetes-master    | 192.168.56.100 | master    | Ubuntu Server 22.04 | 2核心/4G | 20G  |
+| kubernetes-master-01 | 192.168.56.100 | master    | Ubuntu Server 22.04 | 2核心/4G | 20G  |
 | kubernetes-worker-01 | 192.168.56.121 | worker-01 | Ubuntu Server 22.04 | 2核心/4G | 20G  |
 | kubernetes-worker-02 | 192.168.56.122 | worker-02 | Ubuntu Server 22.04 | 2核心/4G | 20G  |
 
@@ -31,7 +31,7 @@ keywords: Kubernetes,Kubernetes学习笔记,Kubernetes应用实战,Kubernetes源
 
 注意：以下步骤请在制作 VMWare 镜像时一并完成，避免逐台安装的痛苦！
 
-本次安装采用的方式是：安装一台虚拟机，使用的操作系统是Ubuntu Server 22.04，虚拟机上安装 Docker 以及kubeadm、kubectl、kubelet、时间同步服务器，然后在基于这台虚拟机克隆kubernetes-master、kubernetes-worker-01、kubernetes-worker-02。
+本次安装采用的方式是：安装一台虚拟机，使用的操作系统是Ubuntu Server 22.04，虚拟机上安装 Docker 以及kubeadm、kubectl、kubelet、时间同步服务器，然后在基于这台虚拟机克隆kubernetes-master-01、kubernetes-worker-01、kubernetes-worker-02。
 
 ### 配置 root 用户
 
@@ -119,7 +119,7 @@ apt-get update
 
 ### 配置ssh
 
-安装 `openssh-server`【如果已经安装可以忽略此步骤】
+安装 `openssh-server`【如果已经安装可以忽略此步骤，查看是否安装了 `openssh-server` 可以使用 `ssh -V` 查看】
 
 ```shell
 apt-get install openssh-server
@@ -176,6 +176,94 @@ IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
 
 ```shell
 ssh-keygen -R 目标主机IP地址
+```
+
+### 配置内核转发以及网桥过滤
+
+```shell
+# 创建加载内核模块文件
+cat << EOF | sudo tee /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
+```
+
+```shell
+# 手动加载此模块
+# 先执行这个
+sudo modprobe overlay
+# 再执行这个
+sudo modprobe br_netfilter
+```
+
+```shell
+# 查看已加载的模块
+lsmod | egrep "overlay"
+
+# 输出如下
+overlay               151552  0
+```
+
+```shell
+# 查看已加载的模块
+lsmod | egrep "br_netfilter"
+
+# 输出如下
+br_netfilter           32768  0
+bridge                311296  1 br_netfilter
+```
+
+```shell
+# 添加网桥过滤及内核转发配置文件
+cat << EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-iptables  = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward                 = 1
+EOF
+```
+
+```shell
+# 应用 sysctl 参数而不重新启动
+sudo sysctl --system
+```
+
+### 安装 ipset 及 ipvsadm
+
+更新软件源列表并安装 `ipset`、`ipvsadm`。
+
+```shell
+apt-get -y update && apt-get install ipset ipvsadm
+```
+
+为了确保这些模块在系统重启后自动加载，可以将它们添加到 `/etc/modules-load.d/ipvs.conf` 文件。
+
+```shell
+cat << EOF | sudo tee /etc/modules-load.d/ipvs.conf
+ip_vs
+ip_vs_rr
+ip_vs_wrr
+ip_vs_sh
+nf_conntrack
+EOF
+```
+
+创建加载模块脚本文件。
+
+```shell
+cat << EOF | sudo tee ipvs.sh
+#!/bin/sh
+modprobe -- ip_vs
+modprobe -- ip_vs_rr
+modprobe -- ip_vs_wrr
+modprobe -- ip_vs_sh
+modprobe -- nf_conntrack
+EOF
+```
+
+执行脚本文件，加载模块【执行完成之后可以删除 `ipvs.sh` 脚本文件】。
+
+```shell
+sudo sh ipvs.sh
 ```
 
 ### 设置 swap 空间
@@ -266,7 +354,7 @@ apt-get -y update
 apt-get -y install docker-ce
 ```
 
-验证 Docker 是否安装成功。
+验证 `Docker` 是否安装成功。
 
 ```shell
 docker version
@@ -301,24 +389,21 @@ Server: Docker Engine - Community
   GitCommit:        de40ad0
 ```
 
-设置Docker开机启动。
+将 `Docker` 服务设置为开机自启，并立即启动 `Docker` 服务。
 
 ```shell
 systemctl enable --now docker
+```
 
-# 或者
+系统执行此命令以确保 `Docker` 服务能够与 `systemd` 兼容并正确启动，确保 `Docker` 服务可以与 `systemd` 的启动机制集成。
+
+```shell
 /lib/systemd/systemd-sysv-install enable docker
 ```
 
 ### 配置 daemon.json
 
-在etc配置文件目录下创建 `docker` 目录。
-
-```shell
-mkdir -p /etc/docker
-```
-
-docker目录下创建 `daemon.json` 配置文件。
+创建 `daemon.json` 配置文件，内容如下：
 
 ```shell
 tee /etc/docker/daemon.json <<-'EOF'
@@ -349,6 +434,7 @@ systemctl restart docker
 查看 Docker 是否正常运行，Active: active (running)表示正在运行。
 
 ```shell
+# Q键退出
 systemctl status docker
 ```
 
@@ -377,7 +463,7 @@ dpkg -i cri-dockerd_0.3.15.3-0.ubuntu-jammy_amd64.deb
 
 # 输出如下
 Selecting previously unselected package cri-dockerd.
-(Reading database ... 75070 files and directories currently installed.)
+(Reading database ... 75102 files and directories currently installed.)
 Preparing to unpack cri-dockerd_0.3.15.3-0.ubuntu-jammy_amd64.deb ...
 Unpacking cri-dockerd (0.3.15~3-0~ubuntu-jammy) ...
 Setting up cri-dockerd (0.3.15~3-0~ubuntu-jammy) ...
@@ -391,100 +477,11 @@ Created symlink /etc/systemd/system/sockets.target.wants/cri-docker.socket → /
 systemctl enable --now cri-docker
 ```
 
-检查 cri-dockerd 状态，查看 cri-dockerd 是否正常运行，Active: active (running) 表示正在运行。
+检查 `cri-dockerd` 状态，查看 cri-dockerd 是否正常运行，Active: active (running) 表示正在运行。
 
 ```shell
+# Q键退出
 systemctl status cri-docker
-```
-
-### 配置内核转发以及网桥过滤
-
-```shell
-# 创建加载内核模块文件
-cat << EOF | sudo tee /etc/modules-load.d/k8s.conf
-overlay
-br_netfilter
-EOF
-```
-
-```shell
-# 手动加载此模块
-sudo modprobe overlay
-sudo modprobe br_netfilter
-```
-
-```shell
-# 查看已加载的模块
-lsmod | egrep "overlay"
-
-# 输出如下
-overlay               151552  0
-```
-
-```shell
-# 查看已加载的模块
-lsmod | egrep "br_netfilter"
-
-# 输出如下
-br_netfilter           32768  0
-bridge                311296  1 br_netfilter
-```
-
-```shell
-# 添加网桥过滤及内核转发配置文件
-cat << EOF | sudo tee /etc/sysctl.d/k8s.conf
-net.bridge.bridge-nf-call-iptables  = 1
-net.bridge.bridge-nf-call-ip6tables = 1
-net.ipv4.ip_forward                 = 1
-EOF
-```
-
-```shell
-# 应用 sysctl 参数而不重新启动
-sudo sysctl --system
-```
-
-### 安装 ipset 及 ipvsadm
-
-```shell
-apt-get install ipset ipvsadm
-```
-
-为了确保这些模块在系统重启后自动加载，可以将它们添加到 /etc/modules-load.d/ipvs.conf 文件：
-
-```shell
-cat << EOF | sudo tee /etc/modules-load.d/ipvs.conf
-ip_vs
-ip_vs_rr
-ip_vs_wrr
-ip_vs_sh
-nf_conntrack
-EOF
-```
-
-创建加载模块脚本文件
-
-```shell
-cat << EOF | sudo tee ipvs.sh
-#!/bin/sh
-modprobe -- ip_vs
-modprobe -- ip_vs_rr
-modprobe -- ip_vs_wrr
-modprobe -- ip_vs_sh
-modprobe -- nf_conntrack
-EOF
-```
-
-执行脚本文件，加载模块。
-
-```shell
-sudo sh ipvs.sh
-```
-
-使用以下命令加载模块。
-
-```shell
-systemctl restart systemd-modules-load.service
 ```
 
 ### 安装 Kubernetes 必备工具
@@ -521,7 +518,7 @@ apt-get -y update
 apt-cache madison kubelet kubeadm kubectl
 ```
 
-指定安装kubeadm、kubelet、kubectl工具，指定安装版本为 1.31.3-1.1 版本。
+指定安装kubeadm、kubelet、kubectl工具，指定安装版本为 `1.31.3-1.1` 版本。
 
 ```shell
 apt-get update && apt-get install -y kubelet=1.31.3-1.1 kubeadm=1.31.3-1.1 kubectl=1.31.3-1.1
@@ -543,7 +540,7 @@ KUBELET_EXTRA_ARGS="--cgroup-driver=systemd"
 设置开机开启kubelet。
 
 ```shell
-systemctl enable --now kubelet
+systemctl enable kubelet
 ```
 
 ### 设置同步时间
@@ -554,13 +551,13 @@ systemctl enable --now kubelet
 dpkg-reconfigure tzdata
 ```
 
-安装 ntpdate
+安装 `ntpdate`。
 
 ```shell
 apt-get install ntpdate
 ```
 
-设置系统时间与网络时间同步（cn.pool.ntp.org 位于中国的公共 NTP 服务器）
+设置系统时间与网络时间同步（cn.pool.ntp.org 位于[中国的公共 NTP 服务器](https://dns.icoa.cn/ntp/)）
 
 ```shell
 ntpdate cn.pool.ntp.org
@@ -604,14 +601,56 @@ shutdown -h now
 
 ### 单独节点配置说明
 
-将上面表格中的信息分别用配置好的基础机器再基于基础机器克隆出 kubernetes-master、kubernetes-worker-01、kubernetes-worker-02 机器。需要为 kubernetes-master 和 kubernetes-worker-01、kubernetes-worker-02 节点单独配置对应的IP地址和主机名称，上面表格中有说明。
+将上面表格中的信息分别用配置好的基础机器再基于基础机器完整克隆出 kubernetes-master-01、kubernetes-worker-01、kubernetes-worker-02 机器。需要为 kubernetes-master-01 和 kubernetes-worker-01、kubernetes-worker-02 节点单独配置对应的IP地址和主机名称，[上面表格中有说明](#各个节点配置说明)。
+
+### 配置主机名称
+
+修改主机名称，具体内容如下所示：
+
+::: code-group
+```shell [master-01]
+hostnamectl set-hostname kubernetes-master-01
+```
+
+```shell [worker-01]
+hostnamectl set-hostname kubernetes-worker-01
+```
+
+```shell [worker-02]
+hostnamectl set-hostname kubernetes-worker-02
+```
+:::
+
+### 配置hosts域名
+
+修改相关hosts域名的配置，具体内容如下所示：
+
+::: code-group
+```shell [master-01]
+cat >> /etc/hosts << EOF
+192.168.56.100 kubernetes-master-01
+EOF
+```
+
+```shell [worker-01]
+cat >> /etc/hosts << EOF
+192.168.56.121 kubernetes-worker-01
+EOF
+```
+
+```shell [worker-02]
+cat >> /etc/hosts << EOF
+192.168.56.122 kubernetes-worker-02
+EOF
+```
+:::
 
 ### IP地址配置
 
 编辑 `/etc/netplan/01-network-manager-all.yaml` 配置文件（没有该文件就创建），内容如下：
 
 ::: code-group
-```yaml [master]
+```yaml [master-01]
 network:
   version: 2
   renderer: networkd
@@ -671,45 +710,3 @@ ip route show | grep "default"
 ```shell
 netplan apply
 ```
-
-### 配置主机名称
-
-修改主机名称，具体内容如下所示：
-
-::: code-group
-```shell [master]
-hostnamectl set-hostname kubernetes-master
-```
-
-```shell [worker-01]
-hostnamectl set-hostname kubernetes-worker-01
-```
-
-```shell [worker-02]
-hostnamectl set-hostname kubernetes-worker-02
-```
-:::
-
-### 配置hosts域名
-
-修改相关hosts域名的配置，具体内容如下所示：
-
-::: code-group
-```shell [master]
-cat >> /etc/hosts << EOF
-192.168.56.100 kubernetes-master
-EOF
-```
-
-```shell [worker-01]
-cat >> /etc/hosts << EOF
-192.168.56.121 kubernetes-worker-01
-EOF
-```
-
-```shell [worker-02]
-cat >> /etc/hosts << EOF
-192.168.56.122 kubernetes-worker-02
-EOF
-```
-:::
