@@ -11,7 +11,7 @@ NAME                 STATUS    MESSAGE   ERROR
 scheduler            Healthy   ok
 # 自动化修复服务，主要作用是 Node 宕机后自动修复 Node 回到正常的工作状态
 controller-manager   Healthy   ok
-# 
+# 服务注册与发现和共享配置
 etcd-0               Healthy   ok
 ```
 
@@ -33,10 +33,10 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 kubectl get nodes
 
 # 输出如下
-NAME                   STATUS   ROLES           AGE     VERSION
-kubernetes-worker-01   Ready    <none>          3d      v1.31.2
-kubernetes-worker-02   Ready    <none>          2d23h   v1.31.2
-node                   Ready    control-plane   3d1h    v1.31.2
+NAME                   STATUS   ROLES           AGE   VERSION
+kubernetes-worker-01   Ready    <none>          65m   v1.31.3
+kubernetes-worker-02   Ready    <none>          52m   v1.31.3
+node                   Ready    control-plane   77m   v1.31.3
 ```
 
 ## 运行一个容器
@@ -71,6 +71,68 @@ my-nginx   1/1     Running   0          69s
 
 ## 外部访问
 
+- 创建一个 NodePort 类型的 Service，将 Pod 暴露到集群外部。
+
 ```shell
 kubectl expose pod my-nginx --type=NodePort --port=80
+
+# 输出如下
+service/my-nginx exposed
+```
+
+- 通过以下命令获取 Service 的详细信息，包括分配的端口。
+
+```shell
+kubectl get service
+
+# 输出如下
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP        92m
+my-nginx     NodePort    10.102.139.144   <none>        80:30777/TCP   6m10s
+```
+
+- 获取 Kubernetes 集群中任意节点的 IP 地址，可以使用以下命令。
+
+```shell
+kubectl get nodes -o wide
+
+# 输出如下
+NAME                   STATUS   ROLES           AGE   VERSION   INTERNAL-IP      EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION       CONTAINER-RUNTIME
+kubernetes-worker-01   Ready    <none>          80m   v1.31.3   192.168.56.121   <none>        Ubuntu 22.04.5 LTS   5.15.0-125-generic   docker://27.3.1
+kubernetes-worker-02   Ready    <none>          68m   v1.31.3   192.168.56.122   <none>        Ubuntu 22.04.5 LTS   5.15.0-125-generic   docker://27.3.1
+node                   Ready    control-plane   93m   v1.31.3   192.168.56.100   <none>        Ubuntu 22.04.5 LTS   5.15.0-125-generic   docker://27.3.1
+```
+
+- 通过浏览器访问暴露出去的 Pod（my-nginx）
+
+```shell
+http://<Node-IP>:<NodePort>/
+```
+
+浏览器访问，如下图所示：
+
+![image-03](/images/docs/Kubernetes/Kubernetes学习笔记/assets/image-03.png)
+
+![image-04](/images/docs/Kubernetes/Kubernetes学习笔记/assets/image-04.png)
+
+![image-05](/images/docs/Kubernetes/Kubernetes学习笔记/assets/image-05.png)
+
+## 停止服务
+
+- 删除已部署的服务（service）
+
+```shell
+kubectl delete service my-nginx
+
+# 输出如下
+service "my-nginx" deleted
+```
+
+- 删除 Pod
+
+```shell
+kubectl delete pod my-nginx
+
+# 输出如下
+pod "my-nginx" deleted
 ```
