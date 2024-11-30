@@ -1,3 +1,9 @@
+---
+title: Kubernetes
+author: MagicGopher
+keywords: Kubernetes, Calico, Network Policy, CNI, Container Networking
+---
+
 # Kubernetes 配置网络
 
 ## 概述
@@ -39,6 +45,8 @@ Kubernetes 中可选的 CNI 插件如下：
 ## 什么是 Calico？
 
 Calico 是一种网络和安全解决方案，可让 Kubernetes 工作负载和非 Kubernetes/旧版工作负载无缝且安全地进行通信。
+
+![Calico Logo](/images/docs/Kubernetes/Kubernetes学习笔记/assets/Calico-Logo.webp)
 
 ## 下载 Calico 配置文件（master节点）
 
@@ -106,7 +114,7 @@ kubectl create -f tigera-operator.yaml
 查看 namespace 会发现 tigera-operator 的命名空间。
 
 ```shell
-kubectl get ns
+kubectl get namespaces
 
 # 输出如下
 NAME              STATUS   AGE
@@ -135,32 +143,51 @@ kubectl create -f custom-resources.yaml
 
 ## 查看 Calico 状态
 
+- 使用 watch 命令实时监视 calico-system 命名空间下的所有 Pod 的状态。
+
+```shell
+watch kubectl get pods -n calico-system
+
+# 输出如下
+Every 2.0s: kubectl get pods -n calico-system                                                                 kubernetes-master-01: Sat Nov 30 11:04:55 2024
+NAME                                       READY   STATUS    RESTARTS   AGE
+calico-kube-controllers-5b7b5c6879-q797c   1/1     Running   0          10m
+calico-node-4l9hm                          1/1     Running   0          10m
+calico-node-8pvl8                          1/1     Running   0          10m
+calico-node-qmzpb                          1/1     Running   0          10m
+calico-typha-687b7c794-6ttjl               1/1     Running   0          10m
+calico-typha-687b7c794-kzxfq               1/1     Running   0          10m
+csi-node-driver-dvsdr                      2/2     Running   0          10m
+csi-node-driver-jlgzc                      2/2     Running   0          10m
+csi-node-driver-t7lxq                      2/2     Running   0          10m
+```
+
 - 查看 Calico 网络插件处于 **Running** 状态即表示安装成功。
 
 ```shell
-watch kubectl get pod -n calico-system
+kubectl get pods -n calico-system
 
 # 输出如下
 NAME                                       READY   STATUS    RESTARTS   AGE
-calico-kube-controllers-747566cd94-vftxb   1/1     Running   0          6m10s
-calico-node-98pgm                          1/1     Running   0          6m11s
-calico-node-m2wnp                          1/1     Running   0          6m11s
-calico-node-sn6hb                          1/1     Running   0          6m11s
-calico-typha-847558d54f-4f225              1/1     Running   0          6m3s
-calico-typha-847558d54f-hqmvf              1/1     Running   0          6m11s
-csi-node-driver-4tgcj                      2/2     Running   0          6m10s
-csi-node-driver-j55b8                      2/2     Running   0          6m10s
-csi-node-driver-k7z7g                      2/2     Running   0          6m10s
+calico-kube-controllers-5b7b5c6879-q797c   1/1     Running   0          11m
+calico-node-4l9hm                          1/1     Running   0          11m
+calico-node-8pvl8                          1/1     Running   0          11m
+calico-node-qmzpb                          1/1     Running   0          11m
+calico-typha-687b7c794-6ttjl               1/1     Running   0          11m
+calico-typha-687b7c794-kzxfq               1/1     Running   0          11m
+csi-node-driver-dvsdr                      2/2     Running   0          11m
+csi-node-driver-jlgzc                      2/2     Running   0          11m
+csi-node-driver-t7lxq                      2/2     Running   0          11m
 ```
 
-- 查看节点状态处于 **Ready** 即表示安装成功
+- 查看节点状态处于 **Ready** 即表示安装成功（在 master 节点操作）
 
 ```shell
 kubectl get nodes
 
 # 输出如下
 NAME                   STATUS   ROLES           AGE   VERSION
-kubernetes-worker-01   Ready    <none>          40m   v1.31.3
-kubernetes-worker-02   Ready    <none>          28m   v1.31.3
-node                   Ready    control-plane   53m   v1.31.3
+kubernetes-master-01   Ready    control-plane   19h   v1.31.3
+kubernetes-worker-01   Ready    <none>          19h   v1.31.3
+kubernetes-worker-02   Ready    <none>          18h   v1.31.3
 ```

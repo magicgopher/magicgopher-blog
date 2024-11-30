@@ -1,7 +1,7 @@
 ---
 title: Kubernetes
 author: MagicGopher
-keywords: Kubernetes,Kubernetes学习笔记,Kubernetes应用实战,Kubernetes源码解析
+keywords: Kubernetes, Kubernetes学习笔记, Kubernetes应用实战, Kubernetes源码解析, Kubernetes简介
 ---
 
 # Kubernetes简介

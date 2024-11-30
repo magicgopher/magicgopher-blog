@@ -1,3 +1,9 @@
+---
+title: Kubernetes
+author: MagicGopher
+keywords: Kubernetes, Pod, Service, Deployment
+---
+
 # 运行容器
 
 ## 查看组件运行状态
@@ -83,12 +89,12 @@ service/my-nginx exposed
 - 通过以下命令获取 Service 的详细信息，包括分配的端口。
 
 ```shell
-kubectl get service
+kubectl get services
 
 # 输出如下
 NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
 kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP        92m
-my-nginx     NodePort    10.102.139.144   <none>        80:30777/TCP   6m10s
+my-nginx     NodePort    10.102.139.144   <none>        80:<NodePort>/TCP   6m10s
 ```
 
 - 获取 Kubernetes 集群中任意节点的 IP 地址，可以使用以下命令。
@@ -119,7 +125,7 @@ http://<Node-IP>:<NodePort>/
 
 ## 停止服务
 
-- 删除已部署的服务（service）
+- 删除已部署的服务（Service）
 
 ```shell
 kubectl delete service my-nginx
@@ -135,4 +141,45 @@ kubectl delete pod my-nginx
 
 # 输出如下
 pod "my-nginx" deleted
+```
+
+## 创建 Deployment
+
+- 创建一个 Deployment 指定副本数量为 2。
+
+```shell
+kubectl create deployment my-nginx-deployment --image=nginx:latest --replicas=2
+
+# 输出如下
+deployment.apps/my-nginx-deployment created
+```
+
+- 查看 Deployment 的状态
+
+```shell
+kubectl get deployments
+
+# 输出如下
+NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
+my-nginx-deployment   2/2     2            2           72s
+```
+
+- 通过发布 Service 将 Pod 暴露到集群外部。
+
+```shell
+kubectl expose deployment my-nginx-deployment --port=80 --target-port=80 --type=NodePort
+
+# 输出如下
+service/my-nginx-deployment exposed
+```
+
+- 通过以下命令获取 Service 的详细信息，包括分配的端口。
+
+```shell
+kubectl get services
+
+# 输出如下
+NAME                  TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes            ClusterIP   10.96.0.1       <none>        443/TCP        140m
+my-nginx-deployment   NodePort    10.110.20.192   <none>        80:<NodePort>/TCP   6s
 ```

@@ -16,11 +16,11 @@ Kubernetes学习笔记文档涵盖了以下内容：
 - [Kubernetes-安装集群](./01-Kubernetes学习笔记/03-Kubernetes-安装集群.md)
 - [Kubernetes-配置网络](./01-Kubernetes学习笔记/04-Kubernetes-配置网络.md)
 - [Kubernetes-运行容器](./01-Kubernetes学习笔记/05-Kubernetes-运行容器.md)
-- [Kubernetes-概念总结](./01-Kubernetes学习笔记/06-Kubernetes-概念总结.md)
-- [Kubernetes-Ingress简介和应用](./01-Kubernetes学习笔记/07-Kubernetes-Ingress简介和应用.md)
-- [Kubernetes-数据卷使用](./01-Kubernetes学习笔记/08-Kubernetes-数据卷使用.md)
-- [Kubernetes-ConfigMap应用](./01-Kubernetes学习笔记/09-Kubernetes-ConfigMap应用.md)
-- [Kubernetes-WebUI安装和使用](./01-Kubernetes学习笔记/10-Kubernetes-WebUI安装和使用.md)
+- [Kubernetes-Ingress控制器与流量管理](./01-Kubernetes学习笔记/06-Kubernetes-Ingress控制器与流量管理.md)
+- [Kubernetes-数据卷与持久化存储](./01-Kubernetes学习笔记/07-Kubernetes-数据卷与持久化存储.md)
+- [Kubernetes-ConfigMap和Secret管理](./01-Kubernetes学习笔记/08-Kubernetes-ConfigMap和Secret管理.md)
+- [Kubernetes-WebUI安装和使用](./01-Kubernetes学习笔记/09-Kubernetes-WebUI安装和使用.md)
+- [Kubernetes-概念总结](./01-Kubernetes学习笔记/10-Kubernetes-概念总结.md)
 
 ## Kubernetes应用实战
 
