@@ -146,6 +146,24 @@ h6 {
     z-index: 9999 !important;
 }
 
+/* 鼠标悬停时的选中样式 */
+.main img:hover {
+    /* 蓝色边框 */
+    border: 1px solid #0078d4;
+    /* 图片放大更多 */
+    transform: scale(1.1);
+    /* 背景变得更明显 */
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 支持暗色模式 */
+.dark .main img:hover {
+    /* 暗色模式下用绿色边框 */
+    border: 1px solid #4caf50;
+    /* 背景浅色化 */
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 /* Live2D看板娘当屏幕宽度小于等于 768px 时隐藏 */
 @media only screen and (max-width: 768px) {
     #oml2d-canvas {
