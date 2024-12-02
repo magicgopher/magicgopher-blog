@@ -149,9 +149,7 @@ h6 {
 /* 鼠标悬停时的选中样式 */
 .main img:hover {
     /* 蓝色边框 */
-    border: 1px solid #0078d4;
-    /* 图片放大更多 */
-    transform: scale(1.1);
+    border: 0.5px solid #0078d4;
     /* 背景变得更明显 */
     background-color: rgba(0, 0, 0, 0.1);
 }
@@ -159,9 +157,24 @@ h6 {
 /* 支持暗色模式 */
 .dark .main img:hover {
     /* 暗色模式下用绿色边框 */
-    border: 1px solid #4caf50;
+    border: 0.5px solid #4caf50;
     /* 背景浅色化 */
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 移动端样式 */
+@media (max-width: 768px) { // 可根据实际情况调整宽度
+    .main img:hover {
+        /* 移动端去掉边框 */
+        border: none;
+        /* 保持背景效果 */
+        background-color: rgba(0, 0, 0, 0.1); // 或者根据需要调整
+    }
+
+    .dark .main img:hover {
+        border: none; // 暗色模式下同样去掉边框
+        background-color: rgba(255, 255, 255, 0.1);
+    }
 }
 
 /* Live2D看板娘当屏幕宽度小于等于 768px 时隐藏 */
