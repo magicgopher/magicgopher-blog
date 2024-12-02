@@ -1,5 +1,6 @@
 import type { MarkdownOptions } from 'vitepress';
 import { specificPaths, blacklistPaths } from '../utils/constants';
+import mermaidPlugin from './mermaid';
 
 // 将路径字符串转换为正则表达式
 const toRegex = (path: string) => new RegExp(path.replace(/\//g, '\\/'));
@@ -19,12 +20,14 @@ export const markdownConfig: MarkdownOptions = {
     },
     // 代码行号是否显示
     lineNumbers: false,
-    // 图片懒加载
     image: {
+        // 图片懒加载
         lazyLoading: true
     },
     // 自定义Markdown渲染
     config: (md) => {
+        // 使用mermaid插件
+        md.use(mermaidPlugin as any);
         // 配置函数，接受参数md（Markdown实例）
         const render = md.render.bind(md);
         // 绑定md.render方法到变量render上

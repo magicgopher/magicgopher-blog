@@ -6,6 +6,7 @@ import escookTheme from '@escook/vitepress-theme';
 import BackTop from '@/components/BackTop.vue';
 import VisitorStats from '@/components/VisitorStats.vue';
 import GiscusComment from '@/components/GiscusComment.vue';
+import Mermaid from '@/components/Mermaid.vue';
 import busuanzi from 'busuanzi.pure.js';
 import '@escook/vitepress-theme/style.css';
 import './style/index.scss';
@@ -19,8 +20,10 @@ export default {
         });
     },
     async enhanceApp({ app, router }) {
+        // 注册全局组件
         app.component('BackTop', BackTop);
         app.component('VisitorStats', VisitorStats);
+        app.component('Mermaid', Mermaid);
         // 判断是否在浏览器环境
         if (inBrowser) {
             router.onAfterRouteChanged = () => {
