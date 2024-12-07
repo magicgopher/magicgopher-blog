@@ -14,6 +14,15 @@ const options = {
             //   discard = false
             // })
 
+            // 预处理 commit.type，兼容 ":" 后有无空格、多余空格的情况
+            if (commit.header) {
+                const match = commit.header.match(/^(\w+):\s*(.*)$/);
+                if (match) {
+                    commit.type = match[1]; // 提取 type
+                    commit.subject = match[2]; // 提取 subject
+                }
+            }
+
             // 提交类型
             if (commit.type === 'feat') {
                 commit.type = '✨ Features | 新功能'
