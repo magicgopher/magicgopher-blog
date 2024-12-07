@@ -4,7 +4,7 @@
     "email": "gopher997@gmail.com"
   },
   "name": "magicgopher-blog",
-  "version": "1.4.2",
+  "version": "1.5.2",
   "type": "module",
   "description": "MagicGopher Blog",
   "license": "MIT",
@@ -20,20 +20,20 @@
     "@giscus/vue": "^3.0.0",
     "busuanzi.pure.js": "^1.0.3",
     "oh-my-live2d": "^0.19.3",
-    "typescript": "^5.5.4",
+    "typescript": "^5.7.2",
     "vite-plugin-markdown-preview": "^1.1.1",
-    "vue": "^3.4.38"
+    "vue": "^3.5.13"
   },
   "devDependencies": {
-    "@types/node": "^18.19.32",
+    "@types/node": "^18.19.67",
     "conventional-changelog-cli": "^3.0.0",
-    "husky": "^9.0.11",
-    "medium-zoom": "^1.1.0",
+    "husky": "^9.1.7",
     "markdown-it-mathjax3": "^4.3.2",
+    "medium-zoom": "^1.1.0",
     "mermaid": "^11.4.1",
-    "sass": "^1.77.6",
-    "vite": "^5.3.5",
-    "vitepress": "^1.3.2"
+    "sass": "^1.82.0",
+    "vite": "^5.4.11",
+    "vitepress": "^1.5.0"
   },
   "volta": {
     "node": "18.20.3"

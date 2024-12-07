@@ -9,11 +9,11 @@ export const GitHubConfigConstants = {
 // 自定义顶级导航栏文本和下拉列表内容映射
 export const CustomTextMap: Record<string, string> = {
     // 将导航栏和侧边栏的英文文本内容映射为对应中文文本内容
-    // 导航栏（编程语言）
+    // 导航栏（后端）
     '01-go': 'Go',
     '02-java': 'Java',
-    // 导航栏（前端技术）
-    '01-前端基础': '前端基础',
+    // 导航栏（前端）
+    '01-基础': '前端基础',
     // 导航栏（DevOps）
     'devops': 'DevOps',
     '01-docker': 'Docker',
@@ -30,10 +30,10 @@ export const SpecialItems: string[] = [
 export const NavbarConstants = {
     // 首页
     Home: '/',
-    // 导航栏（编程语言）
-    Program: '/docs/zh/编程语言/',
-    // 导航栏（前端技术）
-    Frontend: '/docs/zh/前端技术/',
+    // 导航栏（后端）
+    Program: '/docs/zh/后端/',
+    // 导航栏（前端）
+    Frontend: '/docs/zh/前端/',
     // 导航栏（DevOps）
     DevOps: '/docs/zh/DevOps/',
     // 导航栏（常用工具）
@@ -45,11 +45,11 @@ export const NavbarConstants = {
 // 侧边栏常量枚举
 export const SidebarConstants = {
     // Go语言侧边栏
-    Golang: '/docs/zh/编程语言/01-Go/',
+    Golang: '/docs/zh/后端/01-Go/',
     // Java侧边栏
-    Java: '/docs/zh/编程语言/02-Java/',
+    Java: '/docs/zh/后端/02-Java/',
     // 前端基础侧边栏
-    FrontendBase: '/docs/zh/前端技术/01-前端基础/',
+    FrontendBase: '/docs/zh/前端/01-基础/',
     // Docker侧边栏
     Docker: '/docs/zh/DevOps/01-Docker/',
     // Kubernetes侧边栏

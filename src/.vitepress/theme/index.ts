@@ -1,20 +1,20 @@
 import mediumZoom from 'medium-zoom';
+import DefaultTheme from "vitepress/theme";
 import { h, onMounted, watch, nextTick } from 'vue';
 import { inBrowser, Theme, useRoute } from 'vitepress';
-import { live2dModels } from '../utils/constants'
-import escookTheme from '@escook/vitepress-theme';
+import { live2dModels } from '../utils/constants';
 import BackTop from '@/components/BackTop.vue';
 import VisitorStats from '@/components/VisitorStats.vue';
 import GiscusComment from '@/components/GiscusComment.vue';
 import Mermaid from '@/components/Mermaid.vue';
 import busuanzi from 'busuanzi.pure.js';
-import '@escook/vitepress-theme/style.css';
 import './style/index.scss';
 
 export default {
-    extends: escookTheme,
+    extends: DefaultTheme,
     Layout: () => {
-        return h(escookTheme.Layout, null, {
+        // 返回布局
+        return h(DefaultTheme.Layout, null, {
             // 添加评论
             'doc-after': () => h(GiscusComment),
         });
