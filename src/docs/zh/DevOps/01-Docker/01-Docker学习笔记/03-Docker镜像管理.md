@@ -1,3 +1,11 @@
+---
+title: Docker镜像管理
+author: MagicGopher
+keywords: docker, image, 镜像
+description: 介绍 Docker 镜像管理
+editLink: false
+---
+
 # Docker镜像管理
 
 ## 查看镜像

@@ -1,3 +1,11 @@
+---
+title: Redis部署
+author: MagicGopher
+keywords: docker, redis
+description: 介绍 Docker 部署 Redis 数据库
+editLink: false
+---
+
 # Redis部署
 
 ## 启动Redis容器

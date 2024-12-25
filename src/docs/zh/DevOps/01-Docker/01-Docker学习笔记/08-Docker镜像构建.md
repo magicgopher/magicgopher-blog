@@ -1,7 +1,9 @@
 ---
 title: Docker镜像构建
 author: MagicGopher
-keywords: Docker, Dockerfile
+keywords: docker, dockerfile, docker build
+description: 介绍 Docker 镜像构建
+editLink: false
 ---
 
 # Docker镜像构建

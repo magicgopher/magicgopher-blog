@@ -1,3 +1,11 @@
+---
+title: RocketMQ部署
+author: MagicGopher
+keywords: docker, rocketmq
+description: 介绍 Docker 部署 RocketMQ
+editLink: false
+---
+
 # RocketMQ部署
 
 ## x86架构部署

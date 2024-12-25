@@ -1,7 +1,9 @@
 ---
 title: Docker
 author: MagicGopher
-keywords: Docker,Docker学习笔记,Docker应用实战,Docker源码解析
+keywords: Docker, Docker学习笔记, Docker应用实战, Docker源码解析
+description: Docker学习笔记是一份学习文档，旨在介绍和记录关于Docker的学习过程、概念和使用方法，以及Docker的应用实战和源码解析。
+editLink: false
 ---
 
 # Docker
@@ -26,13 +28,17 @@ Docker学习笔记文档涵盖了以下内容：
 > Docker应用实战是一个实际应用案例的文档，旨在展示如何使用Docker来构建、部署和管理应用程序。
 
 Docker应用实战文档涵盖了以下内容：
-- [Docker应用实战-部署MySQL数据库](./02-Docker应用实战/01-部署MySQL数据库.md)
-- [Docker应用实战-部署PostgreSQL数据库](./02-Docker应用实战/02-部署PostgreSQL数据库.md)
-- [Docker应用实战-部署Redis数据库](./02-Docker应用实战/03-部署Redis数据库.md)
-- [Docker应用实战-部署MongoDB数据库](./02-Docker应用实战/04-部署MongoDB数据库.md)
-- [Docker应用实战-部署RocketMQ消息队列](./02-Docker应用实战/05-部署RocketMQ消息队列.md)
-- [Docker应用实战-部署Nacos注册中和配置中心](./02-Docker应用实战/06-部署Nacos注册中和配置中心.md)
+- [部署MySQL数据库](./02-Docker应用实战/01-部署MySQL数据库.md)
+- [部署PostgreSQL数据库](./02-Docker应用实战/02-部署PostgreSQL数据库.md)
+- [部署Redis数据库](./02-Docker应用实战/03-部署Redis数据库.md)
+- [部署MongoDB数据库](./02-Docker应用实战/04-部署MongoDB数据库.md)
+- [部署RocketMQ消息队列](./02-Docker应用实战/05-部署RocketMQ消息队列.md)
+- [部署Nacos注册中和配置中心](./02-Docker应用实战/06-部署Nacos注册中和配置中心.md)
 
 ## Docker源码解析
 
 > Docker源码文档是详细说明Docker源码。
+
+::: tip 提示
+文档正在更新中...
+:::

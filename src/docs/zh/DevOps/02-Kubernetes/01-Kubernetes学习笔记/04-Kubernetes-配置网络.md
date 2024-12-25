@@ -1,10 +1,12 @@
 ---
-title: Kubernetes
+title: Kubernetes配置网络
 author: MagicGopher
 keywords: Kubernetes, Calico, Network Policy, CNI, Container Networking
+description: 介绍 Kubernetes 配置网络，以及 Calico 网络策略，以及 CNI 网络插件
+editLink: false
 ---
 
-# Kubernetes 配置网络
+# Kubernetes配置网络
 
 ## 概述
 

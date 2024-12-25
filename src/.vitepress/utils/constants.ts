@@ -1,19 +1,17 @@
 // GitHub相关常量配置
 export const GitHubConfigConstants = {
     // 项目名称
-    ProjectName: "MagicGopher-Blog",
+    ProjectName: "magicgopher-blog",
     // GitHub用户名
-    UserName: "MagicGopher",
+    UserName: "magicgopher",
 }
 
 // 自定义顶级导航栏文本和下拉列表内容映射
 export const CustomTextMap: Record<string, string> = {
     // 将导航栏和侧边栏的英文文本内容映射为对应中文文本内容
     // 导航栏（后端）
-    '01-go': 'Go',
+    '01-golang': 'Golang',
     '02-java': 'Java',
-    // 导航栏（前端）
-    '01-基础': '前端基础',
     // 导航栏（DevOps）
     'devops': 'DevOps',
     '01-docker': 'Docker',
@@ -45,7 +43,7 @@ export const NavbarConstants = {
 // 侧边栏常量枚举
 export const SidebarConstants = {
     // Go语言侧边栏
-    Golang: '/docs/zh/后端/01-Go/',
+    Golang: '/docs/zh/后端/01-Golang/',
     // Java侧边栏
     Java: '/docs/zh/后端/02-Java/',
     // 前端基础侧边栏
@@ -66,9 +64,8 @@ export const SidebarBlacklist: string[] = [
 
 // 要插入 <BackTop /> 组件的路径数组
 export const specificPaths = [
-    // 格式：'/src/docs/zh/编程语言/'
-    '/src/docs/zh/编程语言/',
-    '/src/docs/zh/前端技术/',
+    // 格式：'/src/docs/zh/后端/'
+    '/src/docs/zh/后端/',
     '/src/docs/zh/DevOps/',
     '/src/docs/zh/常用工具/',
     '/src/docs/zh/关于我/',

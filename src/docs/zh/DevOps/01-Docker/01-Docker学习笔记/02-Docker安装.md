@@ -1,3 +1,11 @@
+---
+title: Docker安装
+author: MagicGopher
+keywords: docker
+description: 介绍 Docker 在各个平台的安装方式
+editLink: false
+---
+
 # Docker安装
 
 ## Ubuntu系统安装Docker

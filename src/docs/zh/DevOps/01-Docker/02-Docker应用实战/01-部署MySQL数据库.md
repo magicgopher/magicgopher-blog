@@ -1,3 +1,11 @@
+---
+title: MySQL部署
+author: MagicGopher
+keywords: docker, mysql
+description: 介绍如何使用 Docker 部署 MySQL 数据库，以及搭建 MySQL 主从同步
+editLink: false
+---
+
 # MySQL部署
 
 ## 启动MySQL容器

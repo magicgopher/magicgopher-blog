@@ -1,3 +1,11 @@
+---
+title: PostgreSQL部署
+author: MagicGopher
+keywords: docker, postgresql
+description: 介绍 Docker 部署 PostgreSQL 数据库
+editLink: false
+---
+
 # PostgreSQL部署
 
 ## 启动PostgreSQL容器

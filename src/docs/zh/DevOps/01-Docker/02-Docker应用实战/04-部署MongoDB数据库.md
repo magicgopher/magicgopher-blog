@@ -1,3 +1,11 @@
+---
+title: 部署MongoDB
+author: MagicGopher
+keywords: docker, mongodb
+description: 介绍 Docker 部署 MongoDB
+editLink: false
+---
+
 # MongoDB部署
 
 ## 启动MMongoDB容器

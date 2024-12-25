@@ -1,10 +1,12 @@
 ---
-title: Kubernetes
+title: Kubernetes安装集群
 author: MagicGopher
-keywords: Kubernetes, Kubernetes学习笔记, Kubernetes应用实战, Kubernetes源码解析, Kubernetes安装集群
+keywords: Kubernetes, Kubernetes安装集群
+description: 介绍 Kubernetes 安装集群过程
+editLink: false
 ---
 
-# Kubernetes 安装集群
+# Kubernetes安装集群
 
 ## 概述
 

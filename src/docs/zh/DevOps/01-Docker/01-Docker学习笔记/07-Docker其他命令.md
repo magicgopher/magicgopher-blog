@@ -1,7 +1,9 @@
 ---
 title: Docker其他命令
 author: MagicGopher
-keywords: Docker,docker
+keywords: docker
+description: 介绍 Docker 其他命令
+editLink: false
 ---
 
 # Docker其他命令

@@ -1,10 +1,12 @@
 ---
 title: Kubernetes
 author: MagicGopher
-keywords: Kubernetes,Kubernetes学习笔记,Kubernetes应用实战,Kubernetes源码解析
+keywords: Kubernetes, Kubernetes安装前的准备
+description: 介绍 Kubernetes 安装前的准备
+editLink: false
 ---
 
-# Kubernetes安装
+# Kubernetes安装前的准备
 
 ## 安装环境概述
 

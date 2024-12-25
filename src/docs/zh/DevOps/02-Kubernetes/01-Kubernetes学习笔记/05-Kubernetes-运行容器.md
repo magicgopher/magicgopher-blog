@@ -1,7 +1,9 @@
 ---
-title: Kubernetes
+title: 运行容器
 author: MagicGopher
-keywords: Kubernetes, Pod, Service, Deployment
+keywords: Kubernetes, Pod, Service, Deployment, ReplicaSet
+description: 介绍如何在 Kubernetes 集群上运行容器
+editLink: false
 ---
 
 # 运行容器

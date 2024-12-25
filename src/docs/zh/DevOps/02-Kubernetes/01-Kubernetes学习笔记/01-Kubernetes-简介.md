@@ -1,7 +1,9 @@
 ---
-title: Kubernetes
+title: Kubernetes简介
 author: MagicGopher
 keywords: Kubernetes, Kubernetes学习笔记, Kubernetes应用实战, Kubernetes源码解析, Kubernetes简介
+description: 介绍 Kubernetes 的基本概念
+editLink: false
 ---
 
 # Kubernetes简介
