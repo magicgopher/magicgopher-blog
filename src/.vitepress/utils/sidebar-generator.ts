@@ -73,14 +73,18 @@ export function generateSidebar(baseDir: string): SidebarItem[] {
 }
 
 /**
- * 从文件名中提取文本
+ * 从文件名中提取文本并格式化
  * @param fileName 文件名
- * @returns 提取的文本
+ * @returns 例如：01-markdown.md --> 01.markdown
  */
 function extractTextFromFileName(fileName: string): string {
-    const match = fileName.match(/^(\d+[-._+]?)?(.*)\.md$/);
-    if (match && match[2]) {
-        return match[2];
+    // 匹配文件名中的数字和文本部分
+    const match = fileName.match(/^(\d+)[-._+]?\s*(.*)\.md$/);
+    if (match && match[1] && match[2]) {
+        // match[1] 是数字部分，match[2] 是文本部分
+        // 去掉数字前面的 0，然后加上 '.'
+        const number = parseInt(match[1], 10);
+        return `${number}.${match[2]}`;
     }
     return fileName.slice(0, -3);
 }
