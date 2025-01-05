@@ -1,4 +1,4 @@
-# Navicat Premium历史版本下载
+# Navicat Premium历史版本
 
 ## Navicat Premium 15
 

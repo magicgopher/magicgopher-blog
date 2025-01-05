@@ -1,4 +1,4 @@
-# Navicat在MacOS无限试用教程
+# Navicat无限试用教程
 
 ## 官网下载安装包
 
@@ -18,7 +18,7 @@ git clone https://mirror.ghproxy.com/https://github.com/yhan219/navicat_reset_ma
 ```
 :::
 
-## 运行脚本
+## MacOS系统用户
 
 进入目录，运行脚本：
 

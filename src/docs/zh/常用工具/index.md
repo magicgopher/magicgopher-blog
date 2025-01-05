@@ -16,5 +16,5 @@ Git工具文档涵盖了以下内容：
 > Navicat 是香港卓软数字科技有限公司生产的一系列 MySQL、Redis、PostgreSQL、Microsoft SQL Server、Oracle、MariaDB、SQLite 及 MongoDB 的图形化数据库管理及发展软件。它有一个类似浏览器的图形用户界面，支持多重连线到本地和远程数据库。它的设计合乎各种用户的需求，从数据库管理员和程序员，到各种为客户服务并与合作伙伴共享信息的不同企业或公司。
 
 Navicat文档涵盖了以下内容：
-- [Navicat在MacOS无限试用教程](./Navicat/01-Navicat在MacOS无限试用教程.md)
-- [Navicat Premium历史版本下载](./Navicat/02-Navicat%20Premium历史版本下载.md)
+- [Navicat无限试用教程](./Navicat/01-Navicat无限试用教程.md)
+- [Navicat历史版本](./Navicat/02-Navicat%20Premium历史版本.md)
