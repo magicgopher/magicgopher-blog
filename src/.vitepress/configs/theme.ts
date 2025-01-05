@@ -7,8 +7,8 @@ import { localSearchOptions } from '../configs/search/local-search';
 export const themeConfig: DefaultTheme.Config = {
     // logo
     logo: {
-        light: '/images/gif/blob-sunglasses.gif',
-        dark: '/images/gif/blob-sun.gif'
+        light: '/images/png/hacker-light.png',
+        dark: '/images/png/hacker-dark.png'
     },
     // 中文导航
     nav: zhNavbar,
@@ -34,9 +34,9 @@ export const themeConfig: DefaultTheme.Config = {
         }
     },
     // 定义返回顶部按钮的文本（该标签仅在移动端视图中显示）
-    returnToTopLabel: "👆返回顶部",
+    returnToTopLabel: "返回顶部",
     // 侧边栏菜单标题（移动端显示）
-    sidebarMenuLabel: "👈 专题",
+    sidebarMenuLabel: "专题",
     // 浅色模式切换按钮标题
     lightModeSwitchTitle: "切换到浅色主题",
     // 深色模式切换按钮标题

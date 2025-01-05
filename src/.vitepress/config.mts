@@ -10,7 +10,7 @@ export default defineConfig({
   // head配置
   head: [
     // favicon设置
-    ['link', { rel: 'icon', href: 'go-logo.svg' }],
+    ['link', { rel: 'icon', href: 'favicon.ico' }],
     // 控制台信息
     ['script', { src: '/js/console-info.js' }],
     // SEO
@@ -55,6 +55,16 @@ export default defineConfig({
     plugins: [
       // 组件预览插件
       MarkdownPreview(),
-    ]
+    ],
+    // css 配置
+    css: {
+      // css预处理器
+      preprocessorOptions: {
+        scss: {
+          // 使用现代 Sass 编译器 API
+          api: "modern-compiler"
+        }
+      }
+    }
   }
 })

@@ -6,12 +6,12 @@ hero:
   text: "个人博客"
   tagline: 记录学习笔记和开发过程中遇到的问题
   image:
-    src: /images/png/magician_gopher.png
+    src: /images/svg/logo.svg
     alt: MagicGopher's Blog
   actions:
     - theme: brand
       text: 仓库地址
-      link: https://github.com/MagicGopher/MagicGopher-Blog/
+      link: https://github.com/magicgopher/magicgopher-blog/
     - theme: alt
       text: 更新日志
       link: /docs/zh/关于我/更新日志

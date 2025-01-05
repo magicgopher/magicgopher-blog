@@ -55,11 +55,25 @@
 :root {
     /* 标题 */
     --vp-home-hero-name-color: transparent;
-    --vp-home-hero-name-background: linear-gradient(135deg, var(--vp-c-brand) 10%, var(--vp-c-brand-next));
+    --vp-home-hero-name-background: linear-gradient(120deg, var(--vp-c-brand) 10%, var(--vp-c-brand-next));
 
     /* 图标背景 */
-    --vp-home-hero-image-background-image: linear-gradient(135deg, var(--vp-c-brand) 10%, var(--vp-c-brand-next));
-    --vp-home-hero-image-filter: blur(75px);
+    --vp-home-hero-image-background-image: -webkit-linear-gradient(-45deg, var(--vp-c-brand) 10%, var(--vp-c-brand-next));
+    --vp-home-hero-image-filter: blur(80px);
+}
+
+/* 屏幕宽度大于等于 640px */
+@media (min-width: 640px) {
+    :root {
+        --vp-home-hero-image-filter: blur(120px);
+    }
+}
+
+/* 屏幕宽度大于等于 960px */
+@media (min-width: 960px) {
+    :root {
+        --vp-home-hero-image-filter: blur(130px);
+    }
 }
 
 /**
@@ -91,11 +105,11 @@
     background-color: var(--vp-blockquote-bg-color-dark);
 }
 
-/* Safari has a very bad performance on gradient and filter */
+/* Safari 和 Firefox 浏览器渐变和滤镜方面单独处理 */
 .browser-safari,
 .browser-firefox {
-    --vp-home-hero-image-background-image: transparent;
-    --vp-home-hero-image-filter: '';
+    --vp-home-hero-image-background-image: linear-gradient(120deg, #2AFADF 10%, #4C83FF 100%);
+    --vp-home-hero-image-filter: blur(50px);
 }
 
 /**
@@ -146,7 +160,7 @@ h6 {
     z-index: 9999 !important;
 }
 
-/* 鼠标悬停时的选中样式 */
+/* 鼠标悬停时的选中图片样式 */
 .main img:hover {
     /* 蓝色边框 */
     border: 0.5px solid #0078d4;
@@ -154,7 +168,7 @@ h6 {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* 支持暗色模式 */
+/* 鼠标悬停时的选中图片样式 支持暗色模式 */
 .dark .main img:hover {
     /* 暗色模式下用绿色边框 */
     border: 0.5px solid #4caf50;
@@ -162,13 +176,13 @@ h6 {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* 移动端样式 */
-@media (max-width: 768px) { // 可根据实际情况调整宽度
+/* 移动端样式 选中图片样式 */
+@media (max-width: 768px) {
     .main img:hover {
         /* 移动端去掉边框 */
         border: none;
         /* 保持背景效果 */
-        background-color: rgba(0, 0, 0, 0.1); // 或者根据需要调整
+        background-color: rgba(0, 0, 0, 0.1);
     }
 
     .dark .main img:hover {
