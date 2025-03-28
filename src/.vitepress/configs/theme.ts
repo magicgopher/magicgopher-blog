@@ -6,7 +6,7 @@ import { localSearchOptions } from '../configs/search/local-search';
 
 export const themeConfig: DefaultTheme.Config = {
     // logo
-    logo: 'favicon.ico',
+    logo: '/favicon.ico',
     // 中文导航
     nav: zhNavbar,
     // 中文侧边栏
