@@ -6,10 +6,7 @@ import { localSearchOptions } from '../configs/search/local-search';
 
 export const themeConfig: DefaultTheme.Config = {
     // logo
-    logo: {
-        light: '/images/png/hacker-light.png',
-        dark: '/images/png/hacker-dark.png'
-    },
+    logo: 'favicon.ico',
     // 中文导航
     nav: zhNavbar,
     // 中文侧边栏
