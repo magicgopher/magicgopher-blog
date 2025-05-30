@@ -19,7 +19,7 @@ export const markdownConfig: MarkdownOptions = {
         dark: 'dracula'
     },
     // 代码行号是否显示
-    lineNumbers: false,
+    lineNumbers: true,
     image: {
         // 图片懒加载
         lazyLoading: true
