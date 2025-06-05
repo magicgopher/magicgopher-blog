@@ -22,12 +22,14 @@ export const CustomTextMap: Record<string, string> = {
 export const SpecialItems: string[] = [
     // 例如 /docs/zh/常用工具/ 这样就导航栏的常用工具就不会显示下拉框了
     '/docs/zh/常用工具/',
+    '/docs/zh/导航/',
 ]
 
 // 导航栏常量枚举
 export const NavbarConstants = {
     // 首页
     Home: '/',
+    Navigation: '/docs/zh/导航/',
     // 导航栏（后端）
     Program: '/docs/zh/后端/',
     // 导航栏（前端）
@@ -42,6 +44,8 @@ export const NavbarConstants = {
 
 // 侧边栏常量枚举
 export const SidebarConstants = {
+    // 
+    Navbar: '/docs/zh/导航/',
     // Go语言侧边栏
     Golang: '/docs/zh/后端/01-Golang/',
     // Java侧边栏

@@ -1,20 +1,31 @@
 import mediumZoom from 'medium-zoom';
 import DefaultTheme from "vitepress/theme";
 import { h, onMounted, watch, nextTick } from 'vue';
-import { inBrowser, Theme, useRoute } from 'vitepress';
+import { inBrowser, Theme, useRoute, useData } from 'vitepress';
 import { live2dModels } from '../utils/constants';
 import BackTop from '@/components/BackTop.vue';
 import VisitorStats from '@/components/VisitorStats.vue';
 import GiscusComment from '@/components/GiscusComment.vue';
 import Mermaid from '@/components/Mermaid.vue';
+import MNavLinks from '@/components/MNavLinks.vue'
 import busuanzi from 'busuanzi.pure.js';
 import './style/index.scss';
 
 export default {
     extends: DefaultTheme,
     Layout: () => {
+        const props: Record<string, any> = {}
+
+        // 获取 frontmatter
+        const { frontmatter } = useData();
+
+        // 添加自定义class
+        if (frontmatter.value?.layoutClass) {
+            props.class = frontmatter.value.layoutClass
+        }
+
         // 返回布局
-        return h(DefaultTheme.Layout, null, {
+        return h(DefaultTheme.Layout, props, {
             // 添加评论
             'doc-after': () => h(GiscusComment),
         });
@@ -24,6 +35,7 @@ export default {
         app.component('BackTop', BackTop);
         app.component('VisitorStats', VisitorStats);
         app.component('Mermaid', Mermaid);
+        app.component('MNavLinks', MNavLinks);
         // 判断是否在浏览器环境
         if (inBrowser) {
             router.onAfterRouteChanged = () => {

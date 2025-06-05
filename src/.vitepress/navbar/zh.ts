@@ -6,6 +6,8 @@ import { generateNavbar } from '../utils/navbar-generator';
 export const zhNavbar: DefaultTheme.Config['nav'] = [
     // 导航栏（首页）
     { text: '首页', link: NavbarConstants.Home },
+    // 导航栏（导航）
+    generateNavbar(NavbarConstants.Navigation),
     // 导航栏（后端）
     generateNavbar(NavbarConstants.Program),
     // 导航栏（DevOps）
