@@ -44,6 +44,12 @@ export const NAV_DATA: NavData[] = [
                 title: 'Hugging Face',
                 desc: '开源的机器学习平台，专注于自然语言处理（NLP）和人工智能（AI）',
                 link: 'https://huggingface.co'
+            },
+            {
+                icon: '/images/nav/vllm.png',
+                title: 'vLLM',
+                desc: 'vLLM 是一个快速、易于使用的 LLM 推理和服务库',
+                link: 'https://docs.vllm.ai'
             }
         ]
     },
@@ -84,6 +90,46 @@ export const NAV_DATA: NavData[] = [
                 title: 'Vert.x™',
                 desc: '基于 JVM 的开源、异步、事件驱动的应用程序框架',
                 link: 'https://vertx.io'
+            },
+            {
+                icon: '/images/nav/jhipster.png',
+                title: 'JHipster',
+                desc: 'JHipster 是一个开发平台，用于快速生成、开发和部署现代 Web 应用程序和微服务架构',
+                link: 'https://www.jhipster.tech'
+            },
+            {
+                icon: '/images/nav/quarkus.png',
+                title: 'Quarkus',
+                desc: '一个为Java 虚拟机（JVM）和原生编译而设计的全堆栈Kubernetes 原生Java 框架',
+                link: 'https://quarkus.io'
+            },
+            {
+                icon: '/images/nav/gradle.png',
+                title: 'Gradle',
+                desc: 'Java、Android 和 Kotlin 开发者的首选开源构建系统',
+                link: 'https://gradle.org'
+            }
+        ]
+    },
+    {
+        title: 'React生态',
+        items: [
+            {
+                icon: '/images/nav/react.png',
+                title: 'React',
+                desc: '一个自由及开放源代码的前端JavaScript工具库',
+                link: 'https://react.dev'
+            }
+        ]
+    },
+    {
+        title: 'Vue生态',
+        items: [
+            {
+                icon: '/images/nav/vue.png',
+                title: 'Vue',
+                desc: '渐进式 JavaScript 框架，用于构建用户界面',
+                link: 'https://vuejs.org'
             }
         ]
     },
@@ -101,7 +147,13 @@ export const NAV_DATA: NavData[] = [
                 title: 'Stack Overflow',
                 desc: '全球最大的技术问答社区',
                 link: 'https://stackoverflow.com'
+            },
+            {
+                icon: '/images/nav/leetcode.png',
+                title: 'LeetCode',
+                desc: '提供用户练习编码和算法练习的在线平台',
+                link: 'https://leetcode.com'
             }
         ]
-    },
+    }
 ]

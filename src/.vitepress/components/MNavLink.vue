@@ -115,6 +115,7 @@ const formatBadge = computed(() => {
 .m-nav-link .icon img {
     border-radius: 4px;
     width: var(--m-nav-icon-size);
+    pointer-events: none; /* 禁用图像的指针事件，使其不可点击 */
 }
 
 
