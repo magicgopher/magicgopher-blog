@@ -5,28 +5,46 @@ export const NAV_DATA: NavData[] = [
         title: 'AI导航',
         items: [
             {
-                icon: '/images/nav/gemini.png',
+                icon: '/images/nav/gemini.svg',
                 title: 'Gemini',
                 desc: '由 Google DeepMind 开发的多模态大型语言模型(LLM)系列',
                 link: 'https://gemini.google.com'
             },
             {
-                icon: '/images/nav/grok.png',
+                icon: '/images/nav/grok.svg',
                 title: 'Grok',
                 desc: '由Elon Musk旗下的xAI公司推出的Grok AI，作为一款全新的生成式人工智能助手',
                 link: 'https://grok.com'
             },
             {
-                icon: '/images/nav/chatgpt.png',
+                icon: '/images/nav/chatgpt.svg',
                 title: 'ChatGPT',
                 desc: '由 OpenAI 基于GPT（生成式预训练转换器）语言模型开发的人工智能聊天机器人',
                 link: 'https://chatgpt.com'
             },
             {
-                icon: '/images/nav/claude.png',
+                icon: '/images/nav/claude.svg',
                 title: 'Claude',
                 desc: '由 Anthropic 打造的高性能、可信赖且智能的 AI 平台',
                 link: 'https://claude.ai'
+            },
+            {
+                icon: '/images/nav/midjourney.png',
+                title: 'Midjourney',
+                desc: '一款AI绘画工具',
+                link: 'https://www.midjourney.com'
+            },
+            {
+                icon: '/images/nav/suno.png',
+                title: 'Suno AI',
+                desc: '一款生成式人工智能音乐创作工具',
+                link: 'https://suno.com'
+            },
+            {
+                icon: '',
+                title: '',
+                desc: '',
+                link: ''
             }
         ]
     },
@@ -40,16 +58,22 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://ollama.com'
             },
             {
-                icon: '/images/nav/huggingface.png',
+                icon: '/images/nav/vllm.png',
+                title: 'vLLM',
+                desc: 'vLLM 是一个快速、易于使用的 LLM 推理和服务库',
+                link: 'https://docs.vllm.ai'
+            },
+            {
+                icon: '/images/nav/huggingface.svg',
                 title: 'Hugging Face',
                 desc: '开源的机器学习平台，专注于自然语言处理（NLP）和人工智能（AI）',
                 link: 'https://huggingface.co'
             },
             {
-                icon: '/images/nav/vllm.png',
-                title: 'vLLM',
-                desc: 'vLLM 是一个快速、易于使用的 LLM 推理和服务库',
-                link: 'https://docs.vllm.ai'
+                icon: '/images/nav/mcp.png',
+                title: 'MCP',
+                desc: 'MCP 是一个开放协议，它规范了应用程序向 LLM 提供上下文的方式',
+                link: 'https://modelcontextprotocol.io'
             }
         ]
     },
@@ -63,16 +87,22 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://www.cloudwego.io'
             },
             {
-                icon: '/images/nav/go-kratos.png',
+                icon: '/images/nav/go-kratos.svg',
                 title: 'Kratos',
                 desc: 'Kratos 是一个基于 Golang 实现的轻量级微服务框架',
                 link: 'https://go-kratos.dev'
             },
             {
-                icon: '/images/nav/go-zero.png',
+                icon: '/images/nav/go-zero.svg',
                 title: 'go-zero',
                 desc: 'go-zero 是一个内置大量工程实践的 Web 和 RPC 框架',
                 link: 'https://go-zero.dev'
+            },
+            {
+                icon: '/images/nav/goproxy.svg',
+                title: 'Goproxy',
+                desc: '目前中国最可靠的 Go 模块代理',
+                link: 'https://goproxy.cn'
             }
         ]
     },
@@ -80,7 +110,7 @@ export const NAV_DATA: NavData[] = [
         title: 'Java',
         items: [
             {
-                icon: '/images/nav/spring.png',
+                icon: '/images/nav/spring.svg',
                 title: 'Spring',
                 desc: '世界上最受欢迎的 Java 框架生态',
                 link: 'https://spring.io'
@@ -108,6 +138,24 @@ export const NAV_DATA: NavData[] = [
                 title: 'Gradle',
                 desc: 'Java、Android 和 Kotlin 开发者的首选开源构建系统',
                 link: 'https://gradle.org'
+            },
+            {
+                icon: '/images/nav/dubbo.png',
+                title: 'Apache Dubbo',
+                desc: '构建具备内置 RPC、流量管控、安全、可观测能力的应用，支持Kubernetes和VM部署环境',
+                link: 'https://dubbo.apache.org'
+            },
+            {
+                icon: '/images/nav/nacos.png',
+                title: 'Nacos',
+                desc: '一个更容易构建云原生应用的动态服务发现、配置管理和服务管理平台',
+                link: 'https://nacos.io'
+            },
+            {
+                icon: '/images/nav/sentinel.jpg',
+                title: 'Sentinel',
+                desc: '一款开源的分布式系统的实时监控和自动化故障恢复工具',
+                link: 'https://nacos.io'
             }
         ]
     },
@@ -115,10 +163,28 @@ export const NAV_DATA: NavData[] = [
         title: 'React生态',
         items: [
             {
-                icon: '/images/nav/react.png',
+                icon: '/images/nav/react.svg',
                 title: 'React',
-                desc: '一个自由及开放源代码的前端JavaScript工具库',
+                desc: '用于构建 Web 和原生交互界面的 JavaScript 库',
                 link: 'https://react.dev'
+            },
+            {
+                icon: '/images/nav/react-router.png',
+                title: 'React Router',
+                desc: 'React 路由解决方案',
+                link: 'https://reactrouter.com'
+            },
+            {
+                icon: '/images/nav/umijs.png',
+                title: 'UmiJS',
+                desc: 'Umi，中文发音为「乌米」，是可扩展的企业级前端应用框架',
+                link: 'https://umijs.org'
+            },
+            {
+                icon: '/images/nav/antd.svg',
+                title: 'Ant Design',
+                desc: 'Ant Design - 一套企业级UI 设计语言和React 组件库',
+                link: 'https://ant.design'
             }
         ]
     },
@@ -126,10 +192,63 @@ export const NAV_DATA: NavData[] = [
         title: 'Vue生态',
         items: [
             {
-                icon: '/images/nav/vue.png',
-                title: 'Vue',
+                icon: '/images/nav/vue.svg',
+                title: 'Vue 3',
                 desc: '渐进式 JavaScript 框架，用于构建用户界面',
                 link: 'https://vuejs.org'
+            },
+            {
+                icon: '/images/nav/vue.svg',
+                title: 'Vue 2',
+                desc: '渐进式 JavaScript 框架，用于构建用户界面',
+                link: 'https://v2.vuejs.org'
+            },
+            {
+                icon: '/images/nav/vue-router.svg',
+                title: 'Vue Router',
+                desc: 'Vue Router 是 Vue.js 官方的客户端路由解决方案',
+                link: 'https://router.vuejs.org'
+            },
+            {
+                icon: '/images/nav/vue3op.png',
+                title: 'Vue3 One Piece',
+                desc: 'Vue3 One Piece一个深入学习vue的神奇网站',
+                link: 'https://vue3js.cn'
+            },
+            {
+                icon: '/images/nav/pinia.svg',
+                title: 'Pinia',
+                desc: 'Pinia 是 Vue 3 的状态管理库',
+                link: 'https://vue3js.cn'
+            }
+        ]
+    },
+    {
+        title: '容器技术',
+        items: [
+            {
+                icon: '/images/nav/podman.webp',
+                title: 'Podman',
+                desc: 'Red Hat公司所推出的一款符合开放源代码容器倡议的开放源代码容器管理工具',
+                link: 'https://podman.io'
+            },
+            {
+                icon: '/images/nav/podman-desktop.svg',
+                title: 'Podman Desktop',
+                desc: '开发者使用容器和 Kubernetes 的最佳免费开源工具',
+                link: 'https://podman-desktop.io'
+            },
+            {
+                icon: '/images/nav/docker.png',
+                title: 'Docker Desktop',
+                desc: 'Docker Desktop是Docker的一个官方桌面应用程序',
+                link: 'https://www.docker.com'
+            },
+            {
+                icon: '/images/nav/kubernetes.png',
+                title: 'Kubernetes',
+                desc: '一个开源容器编排系统',
+                link: 'https://kubernetes.io'
             }
         ]
     },
@@ -137,19 +256,19 @@ export const NAV_DATA: NavData[] = [
         title: '社区',
         items: [
             {
-                icon: '/images/nav/github.png',
+                icon: '/images/nav/github.svg',
                 title: 'GitHub',
                 desc: '全球最大的代码托管平台',
                 link: 'https://github.com'
             },
             {
-                icon: '/images/nav/stackoverflow.png',
+                icon: '/images/nav/stackoverflow.svg',
                 title: 'Stack Overflow',
                 desc: '全球最大的技术问答社区',
                 link: 'https://stackoverflow.com'
             },
             {
-                icon: '/images/nav/leetcode.png',
+                icon: '/images/nav/leetcode.svg',
                 title: 'LeetCode',
                 desc: '提供用户练习编码和算法练习的在线平台',
                 link: 'https://leetcode.com'
