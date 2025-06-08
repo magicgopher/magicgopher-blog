@@ -41,10 +41,10 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://suno.com'
             },
             {
-                icon: '',
-                title: '',
-                desc: '',
-                link: ''
+                icon: '/images/nav/deepseek.png',
+                title: 'DeepSeek',
+                desc: '专注于研究世界领先的通用人工智能底层模型与技术',
+                link: 'https://www.deepseek.com'
             }
         ]
     },
