@@ -74,6 +74,24 @@ export const NAV_DATA: NavData[] = [
                 title: 'MCP',
                 desc: 'MCP 是一个开放协议，它规范了应用程序向 LLM 提供上下文的方式',
                 link: 'https://modelcontextprotocol.io'
+            },
+            {
+                icon: '/images/nav/dify.png',
+                title: 'Dify',
+                desc: 'Dify 是一个开源的 LLM 应用开发平台',
+                link: 'https://dify.ai'
+            },
+            {
+                icon: '/images/nav/n8n.png',
+                title: 'n8n',
+                desc: 'n8n 是一个工作流自动化平台',
+                link: 'https://n8n.io'
+            },
+            {
+                icon: '/images/nav/ragflow.svg',
+                title: 'RAGFlow',
+                desc: 'RAGFlow是一款基于深度文档理解的开源 RAG（检索增强生成）引擎',
+                link: 'https://ragflow.io'
             }
         ]
     },
@@ -185,6 +203,12 @@ export const NAV_DATA: NavData[] = [
                 title: 'Ant Design',
                 desc: 'Ant Design - 一套企业级UI 设计语言和React 组件库',
                 link: 'https://ant.design'
+            },
+            {
+                icon: '/images/nav/tremor.ico',
+                title: 'Tremor',
+                desc: '一个开源的React组件库，专为构建数据驱动的Web应用（特别是仪表盘）而设计',
+                link: 'https://tremor.so'
             }
         ]
     },
@@ -220,6 +244,18 @@ export const NAV_DATA: NavData[] = [
                 title: 'Pinia',
                 desc: 'Pinia 是 Vue 3 的状态管理库',
                 link: 'https://vue3js.cn'
+            },
+            {
+                icon: '/images/nav/nuxtjs.svg',
+                title: 'Nuxt.js',
+                desc: '一个基于Vue.js 的通用应用框架',
+                link: 'https://nuxt.com'
+            },
+            {
+                icon: '/images/nav/vant.png',
+                title: 'Vant',
+                desc: '轻量、可定制的移动端 Vue 组件库',
+                link: 'https://vant-ui.github.io'
             }
         ]
     },
@@ -272,6 +308,29 @@ export const NAV_DATA: NavData[] = [
                 title: 'LeetCode',
                 desc: '提供用户练习编码和算法练习的在线平台',
                 link: 'https://leetcode.com'
+            }
+        ]
+    },
+    {
+        title: '工具',
+        items: [
+            {
+                icon: '/images/nav/mirrors.png',
+                title: '镜像站',
+                desc: 'Docker镜像站 && GitHub镜像站',
+                link: 'https://mirror.kentxxq.com'
+            },
+            {
+                icon: '/images/nav/pingcode.png',
+                title: 'PingCode',
+                desc: 'PingCode 是简单易用的新一代研发管理平台',
+                link: 'https://pingcode.com'
+            },
+            {
+                icon: '/images/nav/nus.png',
+                title: 'Visualgo',
+                desc: '由新加坡国立大学开发的可视化网站',
+                link: 'https://visualgo.net'
             }
         ]
     }
