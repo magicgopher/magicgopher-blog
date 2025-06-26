@@ -21,18 +21,18 @@
     "oh-my-live2d": "^0.19.3",
     "typescript": "^5.8.3",
     "vite-plugin-markdown-preview": "^1.1.1",
-    "vue": "^3.5.16"
+    "vue": "^3.5.17"
   },
   "devDependencies": {
     "@mdit-vue/shared": "^2.1.4",
-    "@types/node": "^18.19.110",
+    "@types/node": "^18.19.112",
     "conventional-changelog-cli": "^3.0.0",
     "husky": "^9.1.7",
     "markdown-it-mathjax3": "^4.3.2",
     "medium-zoom": "^1.1.0",
-    "mermaid": "^11.6.0",
-    "sass": "^1.89.1",
-    "vite": "^5.4.19",
+    "mermaid": "^11.7.0",
+    "sass": "^1.89.2",
+    "vite": "^6.3.5",
     "vitepress": "^1.6.3"
   },
   "volta": {
