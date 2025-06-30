@@ -121,6 +121,18 @@ export const NAV_DATA: NavData[] = [
                 title: 'Goproxy',
                 desc: '目前中国最可靠的 Go 模块代理',
                 link: 'https://goproxy.cn'
+            },
+            {
+                icon: '/images/nav/fiber.png',
+                title: 'Fiber',
+                desc: 'Fiber 是一个基于 Fasthttp（Go 中最快的 HTTP 引擎）构建的 Go Web 框架',
+                link: 'https://gofiber.io'
+            },
+            {
+                icon: '/images/nav/ent.png',
+                title: 'ent',
+                desc: 'ent是一个简单而又功能强大的Go语言实体框架，ent易于构建和维护应用程序与大数据模型',
+                link: 'https://entgo.io'
             }
         ]
     },
@@ -178,8 +190,14 @@ export const NAV_DATA: NavData[] = [
             {
                 icon: '/images/nav/polaris.png',
                 title: 'Polaris',
-                desc: 'Polaris 是一个开源的服务发现与治理系统，用于解决分布式和微服务架构中的服务管理、流量管控、容错和配置管理等问题。',
+                desc: 'Polaris 是一个开源的服务发现与治理系统，用于解决分布式和微服务架构中的服务管理、流量管控、容错和配置管理等问题',
                 link: 'https://polarismesh.cn'
+            },
+            {
+                icon: '/images/nav/flowable.png',
+                title: 'Flowable',
+                desc: 'Flowable是一个使用Java编写的轻量级业务流程引擎',
+                link: 'https://github.com/flowable/flowable-engine'
             }
         ]
     },
