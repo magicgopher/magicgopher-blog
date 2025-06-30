@@ -174,6 +174,12 @@ export const NAV_DATA: NavData[] = [
                 title: 'Sentinel',
                 desc: '一款开源的分布式系统的实时监控和自动化故障恢复工具',
                 link: 'https://nacos.io'
+            },
+            {
+                icon: '/images/nav/polaris.png',
+                title: 'Polaris',
+                desc: 'Polaris 是一个开源的服务发现与治理系统，用于解决分布式和微服务架构中的服务管理、流量管控、容错和配置管理等问题。',
+                link: 'https://polarismesh.cn'
             }
         ]
     },
