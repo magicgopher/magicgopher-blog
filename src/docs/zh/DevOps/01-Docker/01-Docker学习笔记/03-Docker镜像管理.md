@@ -322,3 +322,7 @@ f5e0c31e1ad3: Loading layer [==================================================>
 a436da1937ad: Loading layer [==================================================>]  36.22MB/36.22MB
 Loaded image: apache/rocketmq:4.9.8
 ```
+
+## 参考资料
+
+- [https://docs.docker.com/](https://docs.docker.com/)

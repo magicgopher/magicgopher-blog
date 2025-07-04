@@ -673,4 +673,8 @@ myubuntu                       18.04         286348ce57ac   4 seconds ago   356M
 docker run -di --name myubuntu18 -p 8080:8080 myubuntu:18.04
 ```
 
-访问 http://IP地址:8080/ 可以看到 tomcat 的欢迎页面，说明环境 OK!
+访问 [http://IP地址:8080](http://IP地址:8080) 可以看到 tomcat 的欢迎页面，说明环境 OK!
+
+## 参考资料
+
+- [https://docs.docker.com/](https://docs.docker.com/)

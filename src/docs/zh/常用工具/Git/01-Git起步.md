@@ -287,3 +287,7 @@ usage: git add [<options>] [--] <pathspec>...
     --[no-]pathspec-file-nul
                           with --pathspec-from-file, pathspec elements are separated with NUL character
 ```
+
+## 参考资料
+
+- [https://git-scm.com/doc/](https://git-scm.com/doc/)

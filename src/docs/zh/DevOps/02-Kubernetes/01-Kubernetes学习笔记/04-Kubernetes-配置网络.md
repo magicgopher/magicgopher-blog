@@ -193,3 +193,8 @@ kubernetes-master-01   Ready    control-plane   19h   v1.31.3
 kubernetes-worker-01   Ready    <none>          19h   v1.31.3
 kubernetes-worker-02   Ready    <none>          18h   v1.31.3
 ```
+
+## 参考资料
+
+- [https://kubernetes.io](https://kubernetes.io)
+- [https://docs.tigera.io](https://docs.tigera.io)

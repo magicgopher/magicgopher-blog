@@ -712,3 +712,7 @@ ip route show | grep "default"
 ```shell
 netplan apply
 ```
+
+## 参考资料
+
+- [https://kubernetes.io](https://kubernetes.io)

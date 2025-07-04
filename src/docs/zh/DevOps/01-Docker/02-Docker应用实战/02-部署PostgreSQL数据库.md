@@ -30,3 +30,7 @@ docker ps
 ::: tip 提示
 文档正在更新中...
 :::
+
+## 参考资料
+
+- [https://github.com/docker-library/postgres/](https://github.com/docker-library/postgres/)

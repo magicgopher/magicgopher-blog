@@ -353,3 +353,8 @@ docker-compose -f dashboard.yaml up -d
 ```
 
 启动成功后，可以通过 `docker ps` 命令查看 RocketMQ Dashboard 容器是否启动成功。
+
+## 参考资料
+
+- [https://rocketmq.apache.org](https://rocketmq.apache.org)
+- [https://github.com/apache/rocketmq-docker](https://github.com/apache/rocketmq-docker)

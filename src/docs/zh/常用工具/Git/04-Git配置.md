@@ -222,3 +222,7 @@ git config --global core.excludesfile filepath
 # 示例
 git config --global core.excludesfile ~/.gitignore_global
 ```
+
+## 参考资料
+
+- [https://git-scm.com/doc/](https://git-scm.com/doc/)

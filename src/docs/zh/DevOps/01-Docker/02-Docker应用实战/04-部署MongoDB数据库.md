@@ -30,3 +30,7 @@ docker run --name mongo-express -p 8081:8081 \
 ::: tip 提示
 文档正在更新中...
 :::
+
+## 参考资料
+
+- [https://www.mongodb.com/docs/manual/tutorial/install-mongodb-community-with-docker/](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-community-with-docker/)

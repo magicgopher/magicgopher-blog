@@ -80,3 +80,6 @@ Docker 利用 Linux 核心中的资源分脱机制，例如 cgroups，以及 Lin
 - **Docker 网络(Docker Network)**：Docker 提供了多种网络模式，如桥接网络、主机网络、Overlay 网络等，用于连接容器和外部网络。
 - **Docker 存储(Docker Storage)**：Docker 支持多种存储驱动，如 AUFS、overlay2 等，用于为容器提供存储卷也就是Volumes。
 
+## 参考资料
+
+- [https://docs.docker.com/](https://docs.docker.com/)

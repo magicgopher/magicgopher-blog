@@ -185,3 +185,7 @@ NAME                  TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        A
 kubernetes            ClusterIP   10.96.0.1       <none>        443/TCP        140m
 my-nginx-deployment   NodePort    10.110.20.192   <none>        80:<NodePort>/TCP   6s
 ```
+
+## 参考资料
+
+- [https://kubernetes.io](https://kubernetes.io)

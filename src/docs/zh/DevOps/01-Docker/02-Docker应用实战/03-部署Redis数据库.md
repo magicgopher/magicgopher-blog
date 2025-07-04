@@ -228,3 +228,7 @@ redis-cli -h 127.0.0.1 -p 6379
 redis-cli -h 127.0.0.1 -p 6379
 auth 12345678
 ```
+
+## 参考资料
+
+- [https://redis.io](https://redis.io)

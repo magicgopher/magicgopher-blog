@@ -146,3 +146,7 @@ env:
 colima ssh sudo systemctl daemon-reload
 colima ssh sudo systemctl restart docker
 ```
+
+## 参考资料
+
+- [https://docs.docker.com/](https://docs.docker.com/)

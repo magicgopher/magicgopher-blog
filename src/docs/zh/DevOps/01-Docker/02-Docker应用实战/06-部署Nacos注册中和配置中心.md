@@ -11,3 +11,8 @@ editLink: false
 ::: tip 提示
 文档正在更新中...
 :::
+
+## 参考资料
+
+- [https://nacos.io](https://nacos.io)
+- [https://github.com/nacos-group/nacos-docker](https://github.com/nacos-group/nacos-docker)

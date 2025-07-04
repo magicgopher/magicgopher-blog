@@ -377,6 +377,7 @@ docker run -di --name custom_bbox02 --net custom_network busybox
 
 ![image-38](/images/docs/Docker/Docker学习笔记/assets/image-38.png)
 
-::: tip 笔记内容来源
-码神之路知识体系：[码神之路](https://www.mszlu.com/)
-:::
+## 参考资料
+
+- [https://docs.docker.com/](https://docs.docker.com/)
+- [https://www.mszlu.com](https://www.mszlu.com)

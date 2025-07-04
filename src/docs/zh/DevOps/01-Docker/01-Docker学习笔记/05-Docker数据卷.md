@@ -184,3 +184,7 @@ docker volume inspect 031520e8fafcc5f57fe86e6f25dfc7163cb26e8e58fb2e18ad3aa72e93
 - `Name`：数据卷的名称。
 - `Options`：在创建数据卷时指定的额外选项。比如使用 docker volume create -o type=nfs -o device=:/path/to/nfs/share -o o=addr=10.10.10.10 nfs-vol 创建的 NFS 数据卷，这里 Options 字段会显示相应的配置选项。
 - `Scope`：数据卷的作用域。通常是 local 表示该数据卷仅在当前节点上可用。对于集群环境，可能会是 global 表示该数据卷在整个集群中可用。
+
+## 参考资料
+
+- [https://docs.docker.com/](https://docs.docker.com/)

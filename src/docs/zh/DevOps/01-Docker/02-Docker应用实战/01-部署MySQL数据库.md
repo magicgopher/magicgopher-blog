@@ -1164,3 +1164,7 @@ INSERT INTO tb_user(id, name) VALUES (DEFAULT, '张三'), (DEFAULT, '李四');
 ```
 
 然后再使用图形化客户端工具（DataGrip 或者 Navicat）连接上mysql-slave-01【mysql-slave-02】，查看数据是否同步到mysql-slave-01【mysql-slave-02】。
+
+## 参考资料
+
+- [https://github.com/docker-library/mysql/](https://github.com/docker-library/mysql/)

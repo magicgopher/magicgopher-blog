@@ -322,3 +322,7 @@ kube-scheduler-kubernetes-master-01            1/1     Running   0          39m
 ```
 
 由输出的结果可以看出 coredns 是没有在运行的，此时我们还需要安装网络插件。
+
+## 参考资料
+
+- [https://kubernetes.io](https://kubernetes.io)

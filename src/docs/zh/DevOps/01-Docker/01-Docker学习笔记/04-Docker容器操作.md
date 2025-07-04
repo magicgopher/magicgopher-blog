@@ -288,3 +288,7 @@ docker inspect 容器名称或者容器ID
 # 获取容器的 IP 地址
 docker inspect --format='{{.NetworkSettings.IPAddress}}' 容器名称或者容器ID
 ```
+
+## 参考资料
+
+- [https://docs.docker.com/](https://docs.docker.com/)
