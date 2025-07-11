@@ -1,7 +1,7 @@
 import mediumZoom from 'medium-zoom';
 import DefaultTheme from "vitepress/theme";
 import { h, onMounted, watch, nextTick } from 'vue';
-import { inBrowser, Theme, useRoute, useData } from 'vitepress';
+import { inBrowser, useRoute, useData, Router } from 'vitepress';
 import { live2dModels } from '../utils/constants';
 import BackTop from '@/components/BackTop.vue';
 import VisitorStats from '@/components/VisitorStats.vue';
@@ -11,7 +11,11 @@ import MNavLinks from '@/components/MNavLinks.vue'
 import busuanzi from 'busuanzi.pure.js';
 import './style/index.scss';
 
+// 彩虹背景动画样式
+let homePageStyle: HTMLStyleElement | undefined
+
 export default {
+    // 继承默认主题
     extends: DefaultTheme,
     Layout: () => {
         const props: Record<string, any> = {}
@@ -30,18 +34,29 @@ export default {
             'doc-after': () => h(GiscusComment),
         });
     },
-    async enhanceApp({ app, router }) {
+    async enhanceApp({ app, router }: { app: any, router: Router }) {
         // 注册全局组件
         app.component('BackTop', BackTop);
         app.component('VisitorStats', VisitorStats);
         app.component('Mermaid', Mermaid);
         app.component('MNavLinks', MNavLinks);
+
+        // 彩虹背景动画样式
+        if (typeof window !== 'undefined') {
+            watch(
+                () => router.route.data.relativePath,
+                () => updateHomePageStyle(location.pathname === '/'),
+                { immediate: true },
+            )
+        }
+
         // 判断是否在浏览器环境
         if (inBrowser) {
             router.onAfterRouteChanged = () => {
                 busuanzi.fetch();
             };
         }
+
         // Live2D看板娘
         if (!import.meta.env.SSR) {
             const { loadOml2d } = await import('oh-my-live2d');
@@ -68,22 +83,44 @@ export default {
             () => nextTick(() => initZoom())
         );
     }
-} satisfies Theme;
+}
 
-// 检查代码是否在浏览器环境中运行(而不是在服务器端环境如 Node.js 中运行)
-if (typeof window !== 'undefined') {
-    // 通过检查用户代理字符串来检测用户的浏览器类型
-    const browser = navigator.userAgent.toLowerCase();
-    // 如果用户代理字符串包含 'chrome'，为 HTML 根元素添加 'browser-chrome' 类
-    if (browser.includes('chrome')) {
-        document.documentElement.classList.add('browser-chrome');
+// 检测浏览器是否为 Safari, Edge 或 Firefox
+function isUnsupportedBrowser(): boolean {
+    const ua = navigator.userAgent.toLowerCase();
+    return (
+        ua.includes('safari') && !ua.includes('chrome') || // Safari (排除 Chrome，因为 Chrome 的 UA 也可能包含 Safari)
+        ua.includes('firefox') || // Firefox
+        ua.includes('edge') || ua.includes('edg/') // Edge (旧版和新版 Chromium-based Edge)
+    );
+}
+
+// 彩虹背景动画样式
+function updateHomePageStyle(value: boolean) {
+
+    // 如果是 Safari、Edge 或 Firefox，直接返回，不应用样式
+    if (isUnsupportedBrowser()) {
+        if (homePageStyle) {
+            homePageStyle.remove();
+            homePageStyle = undefined;
+        }
+        return;
     }
-    // 如果用户代理字符串包含 'firefox'，为 HTML 根元素添加 'browser-firefox' 类
-    else if (browser.includes('firefox')) {
-        document.documentElement.classList.add('browser-firefox');
-    }
-    // 如果用户代理字符串包含 'safari'，为 HTML 根元素添加 'browser-safari' 类
-    else if (browser.includes('safari')) {
-        document.documentElement.classList.add('browser-safari');
+
+    // 如果 value 为 true，且 homePageStyle 不存在，则创建样式
+    if (value) {
+        if (homePageStyle) return
+
+        homePageStyle = document.createElement('style')
+        homePageStyle.innerHTML = `
+            :root {
+                animation: rainbow 10s linear infinite;
+            }`
+        document.body.appendChild(homePageStyle)
+    } else {
+        if (!homePageStyle) return
+
+        homePageStyle.remove()
+        homePageStyle = undefined
     }
 }

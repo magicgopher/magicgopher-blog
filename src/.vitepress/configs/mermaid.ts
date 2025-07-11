@@ -16,7 +16,7 @@ export async function render(id: string, code: string) {
 // 定义Mermaid插件，用于扩展MarkdownIt的渲染功能
 export default function mermaidPlugin(md: MarkdownIt): void {
     // 获取MarkdownIt默认的fence渲染规则（即代码块渲染规则）
-    const fence = md.renderer.rules.fence?.bind(md.renderer.rules)
+    const fence = md.renderer.rules.fence!.bind(md.renderer.rules)
 
     // 重写fence渲染规则
     md.renderer.rules.fence = (tokens, idx, options, env, self) => {

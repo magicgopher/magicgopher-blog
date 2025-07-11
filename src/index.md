@@ -16,7 +16,7 @@ hero:
       text: 更新日志
       link: /docs/zh/关于我/更新日志
     - theme: sponsor
-      text: 通过邮件📮联系我
+      text: 📮通过邮件联系我
       link: mailto:gopher997@gmail.com
 
 features:
