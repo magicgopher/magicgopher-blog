@@ -3,11 +3,11 @@ import DefaultTheme from "vitepress/theme";
 import { h, onMounted, watch, nextTick } from 'vue';
 import { inBrowser, useRoute, useData, Router } from 'vitepress';
 import { live2dModels } from '../utils/constants';
-import BackTop from '@/components/BackTop.vue';
+import BackToTop from '@/components/BackToTop.vue';
 import VisitorStats from '@/components/VisitorStats.vue';
 import GiscusComment from '@/components/GiscusComment.vue';
 import Mermaid from '@/components/Mermaid.vue';
-import MNavLinks from '@/components/MNavLinks.vue'
+import MNavLinks from '@/components/MNavLinks.vue';
 import busuanzi from 'busuanzi.pure.js';
 import './style/index.scss';
 
@@ -36,7 +36,7 @@ export default {
     },
     async enhanceApp({ app, router }: { app: any, router: Router }) {
         // 注册全局组件
-        app.component('BackTop', BackTop);
+        app.component('BackToTop', BackToTop);
         app.component('VisitorStats', VisitorStats);
         app.component('Mermaid', Mermaid);
         app.component('MNavLinks', MNavLinks);
@@ -116,10 +116,11 @@ function updateHomePageStyle(value: boolean) {
             :root {
                 animation: rainbow 10s linear infinite;
             }`
+        // 将样式添加到文档
         document.body.appendChild(homePageStyle)
     } else {
         if (!homePageStyle) return
-
+        // 如果 value 为 false，且 homePageStyle 存在，则删除样式
         homePageStyle.remove()
         homePageStyle = undefined
     }

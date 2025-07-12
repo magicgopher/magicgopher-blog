@@ -1,4 +1,4 @@
-import type { NavData } from '../../../.vitepress/utils/types'
+import type { NavData } from '../../.vitepress/utils/types';
 
 export const NAV_DATA: NavData[] = [
     {

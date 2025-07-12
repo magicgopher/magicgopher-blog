@@ -7,6 +7,7 @@ import MarkdownPreview from 'vite-plugin-markdown-preview';
 export default defineConfig({
   // 网站的基础路径
   base: '/',
+
   // head配置
   head: [
     // favicon设置
@@ -24,18 +25,25 @@ export default defineConfig({
     // google
     ['meta', { name: 'google-site-verification', content: 'egfIVStn9QImuDTotp7bEa2XKq-5E8AvRgk6TFaI-Y0' }],
   ],
+
   // 标题
   title: "MagicGopher Blog",
+
   // 描述
   description: "记录学习笔记和开发过程中遇到的问题",
+
   // build输出目录
   outDir: './dist',
+
   // 获取每个文件最后一次 git 提交的 UNIX 时间戳(ms)，同时它将以合适的日期格式显示在每一页的底部
   lastUpdated: true,
+
   // 主题
   themeConfig: themeConfig,
+
   // markdown配置
   markdown: markdownConfig,
+
   // vite配置
   vite: {
     // 解析配置
@@ -46,16 +54,19 @@ export default defineConfig({
         "@": resolve(__dirname, "./"),
       }
     },
+
     // ssr配置
     ssr: {
       // 指定不进行外部化处理的包
       noExternal: ['@escook/vitepress-theme', 'vitepress'],
     },
+
     // 插件 
     plugins: [
       // 组件预览插件
       MarkdownPreview(),
     ],
+    
     // css 配置
     css: {
       // css预处理器

@@ -20,44 +20,42 @@ export const CustomTextMap: Record<string, string> = {
 
 // 特殊的导航栏处理数组常量，
 export const SpecialItems: string[] = [
-    // 例如 /docs/zh/常用工具/ 这样就导航栏的常用工具就不会显示下拉框了
-    '/docs/zh/常用工具/',
-    '/docs/zh/导航/',
+    // 例如 /zh/常用工具/ 这样就导航栏的常用工具就不会显示下拉框了
+    '/zh/常用工具/',
+    '/zh/导航/',
 ]
 
 // 导航栏常量枚举
 export const NavbarConstants = {
     // 首页
     Home: '/',
-    Navigation: '/docs/zh/导航/',
+    Navigation: '/zh/导航/',
     // 导航栏（后端）
-    Program: '/docs/zh/后端/',
+    Program: '/zh/后端/',
     // 导航栏（前端）
-    Frontend: '/docs/zh/前端/',
+    Frontend: '/zh/前端/',
     // 导航栏（DevOps）
-    DevOps: '/docs/zh/DevOps/',
+    DevOps: '/zh/DevOps/',
     // 导航栏（常用工具）
-    Tools: '/docs/zh/常用工具/',
+    Tools: '/zh/常用工具/',
     // 导航栏（关于我）
-    About: '/docs/zh/关于我/',
+    About: '/zh/关于我/',
 }
 
 // 侧边栏常量枚举
 export const SidebarConstants = {
-    // 
-    Navbar: '/docs/zh/导航/',
-    // Go语言侧边栏
-    Golang: '/docs/zh/后端/01-Golang/',
+    // 导航
+    Navbar: '/zh/导航/',
+    // Golang侧边栏
+    Golang: '/zh/后端/01-Golang/',
     // Java侧边栏
-    Java: '/docs/zh/后端/02-Java/',
-    // 前端基础侧边栏
-    FrontendBase: '/docs/zh/前端/01-基础/',
+    Java: '/zh/后端/02-Java/',
     // Docker侧边栏
-    Docker: '/docs/zh/DevOps/01-Docker/',
+    Docker: '/zh/DevOps/01-Docker/',
     // Kubernetes侧边栏
-    Kubernetes: '/docs/zh/DevOps/02-Kubernetes/',
+    Kubernetes: '/zh/DevOps/02-Kubernetes/',
     // 常用工具侧边栏
-    Tools: '/docs/zh/常用工具/',
+    Tools: '/zh/常用工具/',
 }
 
 // 侧边栏不显示的文件常量
@@ -66,19 +64,18 @@ export const SidebarBlacklist: string[] = [
     'index.md',
 ];
 
-// 要插入 <BackTop /> 组件的路径数组
+// 要插入 <BackToTop /> 组件的路径数组
 export const specificPaths = [
     // 格式：'/src/docs/zh/后端/'
-    '/src/docs/zh/后端/',
-    '/src/docs/zh/DevOps/',
-    '/src/docs/zh/常用工具/',
-    '/src/docs/zh/关于我/',
+    '/docs/zh/后端/',
+    '/docs/zh/DevOps/',
+    '/docs/zh/常用工具/',
+    '/docs/zh/关于我/',
 ];
 
-// 不需要插入 <BackTop /> 组件的文件路径黑名单
+// 不需要插入 <BackToTop /> 组件的文件路径黑名单
 export const blacklistPaths: string[] = [
-    // 格式：'docs/zh/program/go/01-Go语言基础/08-字符串处理.md'
-    // 'docs/zh/program/go/01-Go语言基础/08-字符串处理.md'
+    // 格式：'zh/后端/01-Golang/01-Golang基础/01-简介和发展历程.md'
 ];
 
 // Live2D模型配置

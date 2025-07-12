@@ -18,35 +18,44 @@ export const markdownConfig: MarkdownOptions = {
         // 黑夜主题
         dark: 'dracula'
     },
+
     // 代码行号是否显示
     lineNumbers: true,
+
     image: {
         // 图片懒加载
         lazyLoading: true
     },
+
     // 自定义Markdown渲染
     config: (md) => {
         // 使用mermaid插件
         md.use(mermaidPlugin as any);
+
         // 配置函数，接受参数md（Markdown实例）
         const render = md.render.bind(md);
+
         // 绑定md.render方法到变量render上
         md.render = (...args) => {
             // 重写md.render方法，接受任意数量的参数args
             const [src, env] = args;
+
             // 获取当前渲染的文件路径
             const filePath = env.path;
-            // 检查文件路径，决定是否插入 <BackTop /> 组件
+
+            // 检查文件路径，决定是否插入 <BackToTop /> 组件
             if (filePath && specificPathsRegex.some(path => path.test(filePath)) && !blacklistPathsRegex.some(path => path.test(filePath))) {
                 // 检查文件路径是否包含在 specificPathsRegex 中，且不在 blacklistPathsRegex 中
                 const result = render(src, env);
-                // 将 <BackTop /> 组件插入到渲染结果之前
-                return `<BackTop />\n${result}`;
+                // 将 <BackToTop /> 组件插入到渲染结果之前
+                return `<BackToTop />\n${result}`;
             }
+
             // 否则，返回原始的渲染结果
             return render(src, env);
         };
     },
+    
     // 你可以使用 langAlias 选项注册自定义的语言别名
     languageAlias: {
         // 注册 .gitignore 为 html

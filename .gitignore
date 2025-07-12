@@ -241,6 +241,6 @@ GitHub.sublime-settings
 node_modules/
 
 # vitepress build output
-src/.vitepress/cache
-src/dist
+docs/.vitepress/cache
+docs/dist
 
