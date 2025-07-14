@@ -7,6 +7,6 @@ last_commit_message=$(git log -1 --pretty=%B)
 # 如果最后一次提交不是更新日志，则生成更新日志并提交
 if [[ "$last_commit_message" != "chore(log): 生成博客更新日志。" ]]; then
   pnpm log
-  git add ./src/docs/zh/关于我/更新日志.md
+  git add ./docs/zh/关于我/更新日志.md
   git commit -m "chore(log): 生成博客更新日志。"
 fi

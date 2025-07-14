@@ -1,0 +1,83 @@
+/* var.css */
+:root {
+    --vp-c-brand-1: #48cae4;
+    --vp-c-brand-2: #00a7d1;
+    --vp-c-brand-3: #007a9c;
+}
+
+.dark {
+    --vp-c-brand-1: #3dd68c;
+    --vp-c-brand-2: #1abc74;
+    --vp-c-brand-3: #0e8b54;
+}
+
+:root {
+    --vp-home-hero-name-color: transparent;
+    --vp-home-hero-name-background: -webkit-linear-gradient(120deg, var(--vp-c-brand), var(--vp-c-brand-next));
+
+
+    --vp-home-hero-image-background-image: linear-gradient(-45deg, var(--vp-c-brand) 50%, var(--vp-c-brand-next) 50%);
+    --vp-home-hero-image-filter: blur(30px);
+}
+
+/* 屏幕宽度大于等于 640px */
+@media (min-width: 640px) {
+    :root {
+        --vp-home-hero-image-filter: blur(50px);
+    }
+}
+
+/* 屏幕宽度大于等于 960px */
+@media (min-width: 960px) {
+    :root {
+        --vp-home-hero-image-filter: blur(70px);
+    }
+}
+
+/* VPFeatures 页卡悬浮效果 */
+.VPFeatures .items .item {
+    transition: transform 0.3s;
+}
+
+/* VPFeatures 页卡悬浮效果 */
+.VPFeatures .items .item:hover {
+    transform: translateY(-5px);
+}
+
+/* 按钮颜色 */
+:root {
+    --vp-button-brand-border: var(--vp-c-brand-light);
+    --vp-button-brand-text: var(--vp-c-white);
+    --vp-button-brand-bg: var(--vp-c-brand);
+    --vp-button-brand-hover-border: var(--vp-c-brand-light);
+    --vp-button-brand-hover-text: var(--vp-c-white);
+    --vp-button-brand-hover-bg: var(--vp-c-brand-light);
+    --vp-button-brand-active-border: var(--vp-c-brand-light);
+    --vp-button-brand-active-text: var(--vp-c-white);
+    --vp-button-brand-active-bg: var(--vp-button-brand-bg);
+}
+
+/* 图片缩放配置 */
+.medium-zoom-overlay {
+    z-index: 30;
+}
+
+/* 图片缩放配置 */
+.medium-zoom-image {
+    /* 给的值是21，但是实测盖不住，直接999 */
+    z-index: 9999 !important;
+}
+
+/* 调整 h3 至 h6 标题之间的间距 */
+h4,
+h5,
+h6 {
+    margin-top: 1rem;
+}
+
+/* Live2D看板娘当屏幕宽度小于等于 768px 时隐藏 */
+@media only screen and (max-width: 768px) {
+    #oml2d-canvas {
+        display: none;
+    }
+}

@@ -19,16 +19,16 @@
       "skipLibCheck": true,
       "baseUrl": "./",
       "paths": {
-        "@/*": ["./src/*"]
+        "@/*": ["./docs/*"]
       },
       "types": ["vite/client"]
     },
     "include": [
-      "src/**/*.ts",
-      "src/**/*.tsx",
-      "src/**/*.vue",
-      "src/.vitepress/**/*.ts",
-      "src/.vitepress/**/*.d.ts",
+      "docs/**/*.ts",
+      "docs/**/*.tsx",
+      "docs/**/*.vue",
+      "docs/.vitepress/**/*.ts",
+      "docs/.vitepress/**/*.d.ts",
     ],
     "exclude": [
       "node_modules"

@@ -4,16 +4,16 @@
     "email": "gopher997@gmail.com"
   },
   "name": "magicgopher-blog",
-  "version": "1.5.2",
+  "version": "1.6.2",
   "type": "module",
   "description": "MagicGopher Blog",
   "license": "MIT",
   "scripts": {
-    "dev": "vitepress dev src",
-    "build": "vitepress build src",
-    "preview": "vitepress preview src",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "prepare": "husky install",
-    "log": "conventional-changelog -p angular -i ./src/docs/zh/关于我/更新日志.md -s -r 0 -n ./changelog.ts"
+    "log": "conventional-changelog -p angular -i ./docs/zh/关于我/更新日志.md -s -r 0 -n ./changelog.ts"
   },
   "dependencies": {
     "@giscus/vue": "^3.1.1",
@@ -25,12 +25,12 @@
   },
   "devDependencies": {
     "@mdit-vue/shared": "^2.1.4",
-    "@types/node": "^18.19.112",
+    "@types/node": "^18.19.118",
     "conventional-changelog-cli": "^3.0.0",
     "husky": "^9.1.7",
     "markdown-it-mathjax3": "^4.3.2",
     "medium-zoom": "^1.1.0",
-    "mermaid": "^11.7.0",
+    "mermaid": "^11.8.1",
     "sass": "^1.89.2",
     "vite": "^6.3.5",
     "vitepress": "^1.6.3"
