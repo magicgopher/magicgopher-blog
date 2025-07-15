@@ -27,7 +27,7 @@ export default defineConfig({
   ],
 
   // 标题
-  title: "MagicGopher",
+  title: "MagicGopher Blog",
 
   // build输出目录
   outDir: './dist',

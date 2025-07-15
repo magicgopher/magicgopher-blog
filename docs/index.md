@@ -2,8 +2,8 @@
 layout: home
 
 hero:
-  name: "MagicGopher Blog"
-  text: "个人博客"
+  name: MagicGopher Blog
+  text: 编程笔记
   tagline: 记录学习笔记和开发过程中遇到的问题
   image:
     src: /images/svg/logo.svg
@@ -31,5 +31,3 @@ features:
     details: 由 Vite 和 Vue 驱动的静态站点生成器
     link: https://vitepress.dev/
 ---
-
-<VisitorStats />
