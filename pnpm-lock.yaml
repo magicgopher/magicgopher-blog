@@ -11,9 +11,6 @@ importers:
       '@giscus/vue':
         specifier: ^3.1.1
         version: 3.1.1(vue@3.5.17(typescript@5.8.3))
-      busuanzi.pure.js:
-        specifier: ^1.0.3
-        version: 1.0.3
       oh-my-live2d:
         specifier: ^0.19.3
         version: 0.19.3
@@ -1046,9 +1043,6 @@ packages:
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
-
-  busuanzi.pure.js@1.0.3:
-    resolution: {integrity: sha512-tPULdyx+8NNb9geZYDpktKmHAYx9f2LEOBaHyWCaM7iPEMIa/43KgYAUluuU7YG9UFSOFpj4dO7Nj2Vlu3V9Rg==}
 
   camelcase-keys@6.2.2:
     resolution: {integrity: sha512-YrwaA0vEKazPBkn0ipTiMpSajYDSe+KjQfrjhcBMxJt/znbvlHd8Pw/Vamaz5EB4Wfhs3SUR3Z9mwRu/P3s3Yg==}
@@ -3433,8 +3427,6 @@ snapshots:
     dependencies:
       fill-range: 7.1.1
     optional: true
-
-  busuanzi.pure.js@1.0.3: {}
 
   camelcase-keys@6.2.2:
     dependencies:

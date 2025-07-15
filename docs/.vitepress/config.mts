@@ -27,10 +27,7 @@ export default defineConfig({
   ],
 
   // 标题
-  title: "MagicGopher Blog",
-
-  // 描述
-  description: "记录学习笔记和开发过程中遇到的问题",
+  title: "MagicGopher",
 
   // build输出目录
   outDir: './dist',
