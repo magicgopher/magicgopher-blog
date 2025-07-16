@@ -11,7 +11,6 @@ import { live2dModels } from '../utils/constants';
 // 导入自定义组件：返回顶部按钮、Giscus 评论、Mermaid 图表和导航链接
 import BackToTop from '@/components/BackToTop.vue';
 import GiscusComment from '@/components/GiscusComment.vue';
-import Mermaid from '@/components/Mermaid.vue';
 import MNavLinks from '@/components/MNavLinks.vue';
 // 导入全局样式文件
 import './style/index.scss';
@@ -48,7 +47,6 @@ export default {
     async enhanceApp({ app, router }: { app: any, router: Router }) {
         // 注册全局组件
         app.component('BackToTop', BackToTop); // 返回顶部按钮组件
-        app.component('Mermaid', Mermaid);       // Mermaid 图表组件
         app.component('MNavLinks', MNavLinks);   // 导航链接组件
 
         // 仅在浏览器环境中执行以下逻辑

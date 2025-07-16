@@ -1,12 +1,10 @@
 import { resolve } from 'path';
-import { defineConfig } from 'vitepress';
 import { themeConfig } from './configs/theme';
 import { markdownConfig } from './configs/markdown';
 import MarkdownPreview from 'vite-plugin-markdown-preview';
+import { withMermaid } from 'vitepress-plugin-mermaid';
 
-export default defineConfig({
-  // 网站的基础路径
-  base: '/',
+export default withMermaid({
 
   // head配置
   head: [
@@ -67,6 +65,16 @@ export default defineConfig({
           api: "modern-compiler"
         }
       }
-    }
+    },
+  },
+
+  // markdown-it 配置
+  mermaid: {
+    // mermaid 配置
+  },
+
+  // markdown-it 配置
+  mermaidPlugin: {
+    class: "mermaid my-class",
   }
 })

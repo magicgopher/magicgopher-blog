@@ -5,7 +5,7 @@ import { generateNavbar } from '../utils/navbar-generator';
 // 中文导航栏配置
 export const zhNavbar: DefaultTheme.Config['nav'] = [
     // 导航栏（首页）
-    { text: '首页', link: NavbarConstants.Home },
+    { text: '🏠首页', link: NavbarConstants.Home },
 
     // 导航栏（导航）
     generateNavbar(NavbarConstants.Navigation),

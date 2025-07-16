@@ -15,6 +15,15 @@ interface Navbar {
     items: NavbarItem[]; // 子条目数组
 }
 
+// 符号映射表，用于为目录或文件添加前缀符号
+const SymbolMap: { [key: string]: string } = {
+    '导航': '🧭',
+    '后端': '🖥️',
+    'DevOps': '🚀',
+    '常用工具': '⚙️',
+    '关于我': '👤',
+};
+
 /**
  * 生成 VitePress 导航栏数据结构
  * 根据指定的顶级目录，扫描其子目录和 Markdown 文件，生成导航栏配置
@@ -76,17 +85,22 @@ export function generateNavbar(topLevelDirectory: string): Navbar {
         navbar.link = `${topLevelDirectory}`;
     }
 
+    // 返回生成的导航栏数据结构
     return navbar;
 }
 
 /**
  * 获取目录或文件的自定义显示文本
  * 如果在 CustomTextMap 中定义了映射，则返回映射值；否则返回原始名称
+ * 为顶级目录、子目录或文件添加前缀符号（如果在 SymbolMap 中定义）
  *
  * @param directoryOrFile 目录或文件名
  * @returns 自定义显示文本
  */
 function getCustomText(directoryOrFile: string): string {
     const name = path.basename(directoryOrFile, path.extname(directoryOrFile)).toLowerCase();
-    return CustomTextMap[name] || name;
+    const displayText = CustomTextMap[name] || name;
+    // 为顶级目录、子目录或文件添加符号（如果在 SymbolMap 中定义）
+    const symbol = SymbolMap[displayText];
+    return symbol ? `${symbol}${displayText}` : displayText;
 }
