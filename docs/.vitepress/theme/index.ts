@@ -11,7 +11,9 @@ import { live2dModels } from '../utils/constants';
 // 导入自定义组件：返回顶部按钮、Giscus 评论、Mermaid 图表和导航链接
 import BackToTop from '@/components/BackToTop.vue';
 import GiscusComment from '@/components/GiscusComment.vue';
+import Mermaid from '@/components/Mermaid.vue';
 import MNavLinks from '@/components/MNavLinks.vue';
+import MyLayout from '@/components/MyLayout.vue';
 // 导入全局样式文件
 import './style/index.scss';
 
@@ -37,7 +39,7 @@ export default {
         }
 
         // 返回渲染后的布局组件，包含默认主题布局和自定义插槽
-        return h(DefaultTheme.Layout, props, {
+        return h(MyLayout, props, {
             // 在文档内容后添加 Giscus 评论组件
             'doc-after': () => h(GiscusComment),
         });
@@ -46,8 +48,9 @@ export default {
     // 增强应用配置，初始化全局组件和其他功能
     async enhanceApp({ app, router }: { app: any, router: Router }) {
         // 注册全局组件
-        app.component('BackToTop', BackToTop); // 返回顶部按钮组件
-        app.component('MNavLinks', MNavLinks);   // 导航链接组件
+        app.component('BackToTop', BackToTop);
+        app.component('Mermaid', Mermaid);
+        app.component('MNavLinks', MNavLinks);
 
         // 仅在浏览器环境中执行以下逻辑
         if (typeof window !== 'undefined') {
@@ -93,7 +96,11 @@ export default {
     }
 }
 
-// 检查浏览器是否为不受支持的浏览器（Safari、Edge 或 Firefox）
+/**
+ * 检查浏览器是否为不受支持的浏览器（Safari、Edge 或 Firefox）
+ * 
+ * @returns boolean - 返回 true 表示当前浏览器不受支持（Safari、Edge 或 Firefox），返回 false 表示支持
+ */
 function isUnsupportedBrowser(): boolean {
     const ua = navigator.userAgent.toLowerCase();
     return (
@@ -106,11 +113,17 @@ function isUnsupportedBrowser(): boolean {
     );
 }
 
-// 更新首页的彩虹背景动画样式
+/**
+ * 更新首页的彩虹背景动画样式
+ * 
+ * @param value - boolean，表示当前是否为首页（true 表示首页，false 表示非首页）
+ * @returns void
+ */
 function updateHomePageStyle(value: boolean) {
     // 如果是 Safari、Edge 或 Firefox 浏览器，直接移除样式并返回
     if (isUnsupportedBrowser()) {
         if (homePageStyle) {
+            // 如果 homePageStyle 存在，则移除样式元素并清空变量
             homePageStyle.remove();
             homePageStyle = undefined;
         }
@@ -119,19 +132,21 @@ function updateHomePageStyle(value: boolean) {
 
     // 如果 value 为 true（表示当前是首页）且 homePageStyle 不存在，则添加彩虹动画样式
     if (value) {
-        if (homePageStyle) return; // 避免重复添加
+        if (homePageStyle) return; // 避免重复添加样式
 
+        // 创建新的 <style> 元素
         homePageStyle = document.createElement('style');
+        // 设置彩虹背景动画样式，应用到 :root 伪类
         homePageStyle.innerHTML = `
             :root {
                 animation: rainbow 10s linear infinite; // 应用彩虹背景动画，持续 10 秒，线性无限循环
             }`;
-        // 将样式添加到文档的 body 中
+        // 将样式元素添加到文档的 <body> 中
         document.body.appendChild(homePageStyle);
     } else {
         // 如果 value 为 false（非首页）且 homePageStyle 存在，则移除样式
-        if (!homePageStyle) return;
+        if (!homePageStyle) return; // 如果样式不存在，直接返回
         homePageStyle.remove();
-        homePageStyle = undefined;
+        homePageStyle = undefined; // 清空 homePageStyle 变量
     }
 }

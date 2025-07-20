@@ -1,3 +1,4 @@
+import mermaidPlugin from './mermaid';
 import type { MarkdownOptions } from 'vitepress';
 import { specificPaths, blacklistPaths } from '../utils/constants';
 
@@ -28,6 +29,9 @@ export const markdownConfig: MarkdownOptions = {
 
     // 自定义Markdown渲染
     config: (md) => {
+        // 使用Mermaid插件
+        md.use(mermaidPlugin as any);
+
         // 配置函数，接受参数md（Markdown实例）
         const render = md.render.bind(md);
 
