@@ -154,4 +154,11 @@ onUnmounted(() => {
 .fade-leave-to {
     opacity: 0; /* 完全透明 */
 }
+
+/* 移动端（屏幕宽度小于 1024px）隐藏组件 */
+@media (max-width: 1024px) {
+    .back-to-top {
+        display: none;
+    }
+}
 </style>
