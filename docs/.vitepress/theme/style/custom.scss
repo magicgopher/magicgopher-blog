@@ -1,0 +1,72 @@
+/* 我的信息头部图片样式 */
+.header {
+    width: 100%;
+    /* 禁止点击 */
+    pointer-events: none;
+}
+
+/* 头像样式 */
+.avatar {
+    float: right;
+    width: 45%;
+    /* 禁止点击 */
+    pointer-events: none;
+}
+
+/* github stats 容器样式 */
+.github-info {
+    display: flex;
+    width: 720px;
+    /* 禁止点击 */
+    pointer-events: none;
+}
+
+/* github stats 左侧卡片样式 */
+.github-info-left {
+    height: auto;
+    width: 60%;
+    pointer-events: none;
+}
+
+/* github stats 右侧卡片样式 */
+.github-info-right {
+    height: auto;
+    width: 40%;
+    pointer-events: none;
+}
+
+/* 我的信息页面 图标容器样式 */
+.icon-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: left;
+    max-width: var(--vp-layout-max-width);
+    margin: 0 auto;
+}
+
+/* 我的信息页面 图标容器样式 */
+.icon-container img {
+    object-fit: contain;
+    /* 禁用点击 */
+    pointer-events: none;
+}
+
+/* 移动端调整 */
+@media (max-width: 720px) {
+    /* 我的信息页面 图标容器样式 */
+    .icon-container img {
+        width: 30px;
+        height: 30px;
+    }
+    /* 我的信息页面 图标容器样式 */
+    .icon-container {
+        gap: 8px;
+    }
+}
+
+/* icon图标样式 */
+.icon {
+    width: 48px;
+    height: 48px;
+}

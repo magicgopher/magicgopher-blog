@@ -6,7 +6,7 @@ hero:
   text: 编程笔记
   tagline: 记录学习笔记和开发过程中遇到的问题
   image:
-    src: /images/svg/logo.svg
+    src: /images/svg/blog/logo.svg
     alt: MagicGopher's Blog
   actions:
     - theme: brand
@@ -26,7 +26,7 @@ features:
   - icon: 💻
     title: 软件分享
     details: 分享开发和日常使用到的软件、插件
-  - icon: <img src="./images/svg/vitepress.svg" alt="Vitepress" />
+  - icon: <img src="./images/svg/blog/vitepress.svg" alt="Vitepress" />
     title: Vitepress
     details: 由 Vite 和 Vue 驱动的静态站点生成器
     link: https://vitepress.dev/

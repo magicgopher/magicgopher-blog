@@ -19,7 +19,7 @@
 /* 为所有不带 .is-link 的 .VPSidebarItem 折叠状态添加图标 */
 #VPSidebarNav .VPSidebarItem:not(.is-link).collapsed>.item::before {
     content: '';
-    background-image: url('/images/svg/document.svg');
+    background-image: url('/images/svg/blog/document.svg');
     /* 设置图标路径 */
     width: 16px;
     height: 16px;
@@ -40,7 +40,7 @@
 /* 为所有不带 .is-link 的 .VPSidebarItem 非折叠状态添加图标 */
 #VPSidebarNav .VPSidebarItem:not(.is-link)>.item::before {
     content: '';
-    background-image: url('/images/svg/document-open.svg');
+    background-image: url('/images/svg/blog/document-open.svg');
     /* 设置图标路径 */
     width: 16px;
     height: 16px;
@@ -62,7 +62,7 @@
 /* 为选中的 .item 添加图标 */
 #VPSidebarNav .VPSidebarItem.is-link>.item::before {
     content: '';
-    background-image: url('/images/svg/file.svg');
+    background-image: url('/images/svg/blog/file.svg');
     /* 图标路径 */
     width: 16px;
     height: 16px;
