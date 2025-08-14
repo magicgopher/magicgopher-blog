@@ -32,6 +32,8 @@
     max-width: 60%;
     /* 高度自适应，保持图片比例 */
     height: auto;
+    /* 以最高优先级强制将堆叠层级设置为 0 */
+    z-index: 0 !important;
 }
 
 /* GitHub 统计卡片中的第二张图片（语言统计卡） */
@@ -40,6 +42,8 @@
     max-width: 40%;
     /* 高度自适应，保持图片比例 */
     height: auto;
+    /* 以最高优先级强制将堆叠层级设置为 0 */
+    z-index: 0 !important;
 }
 
 /* 图标容器样式，用于展示技术栈图标 */
@@ -64,6 +68,8 @@
     width: 48px;
     /* 设置图标高度为48px */
     height: 48px;
+    /* 以最高优先级强制将堆叠层级设置为 0 */
+    z-index: 0 !important;
 }
 
 /* 移动端响应式样式，屏幕宽度小于768px时触发 */
@@ -74,6 +80,8 @@
         width: 30px;
         /* 设置图标高度为30px */
         height: 30px;
+        /* 以最高优先级强制将堆叠层级设置为 0 */
+        z-index: 0 !important;
     }
     /* 隐藏 Gopher 图片在移动端 */
     .gopher-image {
