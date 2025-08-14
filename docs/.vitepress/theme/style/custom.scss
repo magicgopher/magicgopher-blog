@@ -1,72 +1,83 @@
-/* 我的信息头部图片样式 */
-.header {
+/* 头部图片样式 */
+.header-image {
+    /* 设置图片宽度为100%，占满容器 */
     width: 100%;
-    /* 禁止点击 */
+    /* 禁用图片的交互事件，如点击或拖动 */
     pointer-events: none;
 }
 
-/* 头像样式 */
-.avatar {
+/* Gopher 图片样式（右侧浮动图片） */
+.gopher-image {
+    /* 设置图片浮动到右侧 */
     float: right;
-    width: 45%;
-    /* 禁止点击 */
+    /* 设置图片宽度为容器宽度的50% */
+    width: 50%;
+    /* 禁用图片的交互事件 */
     pointer-events: none;
 }
 
-/* github stats 容器样式 */
-.github-info {
+/* GitHub 统计卡片容器样式 */
+.github-stats {
+    /* 使用 flex 布局，使子元素水平排列 */
     display: flex;
-    width: 720px;
-    /* 禁止点击 */
-    pointer-events: none;
-}
-
-/* github stats 左侧卡片样式 */
-.github-info-left {
-    height: auto;
-    width: 60%;
-    pointer-events: none;
-}
-
-/* github stats 右侧卡片样式 */
-.github-info-right {
-    height: auto;
-    width: 40%;
-    pointer-events: none;
-}
-
-/* 我的信息页面 图标容器样式 */
-.icon-container {
-    display: flex;
+    /* 允许子元素换行，以适应容器宽度 */
     flex-wrap: wrap;
+    /* 禁用容器的交互事件 */
+    pointer-events: none;
+}
+
+/* GitHub 统计卡片中的第一张图片（主要统计卡） */
+.github-stats img:first-child {
+    /* 设置最大宽度为60%，防止图片过宽 */
+    max-width: 60%;
+    /* 高度自适应，保持图片比例 */
+    height: auto;
+}
+
+/* GitHub 统计卡片中的第二张图片（语言统计卡） */
+.github-stats img:last-child {
+    /* 设置最大宽度为40%，与第一张图片形成比例 */
+    max-width: 40%;
+    /* 高度自适应，保持图片比例 */
+    height: auto;
+}
+
+/* 图标容器样式，用于展示技术栈图标 */
+.icon-container {
+    /* 使用 flex 布局，使图标水平排列 */
+    display: flex;
+    /* 允许图标换行，以适应容器宽度 */
+    flex-wrap: wrap;
+    /* 设置图标之间的间距为10px */
     gap: 10px;
+    /* 设置图标容器左对齐 */
     justify-content: left;
+    /* 使用 VitePress 的最大宽度变量，保持内容居中 */
     max-width: var(--vp-layout-max-width);
+    /* 设置容器水平居中 */
     margin: 0 auto;
 }
 
-/* 我的信息页面 图标容器样式 */
+/* 图标容器中的图标样式 */
 .icon-container img {
-    object-fit: contain;
-    /* 禁用点击 */
-    pointer-events: none;
+    /* 设置图标宽度为48px（PC端默认尺寸） */
+    width: 48px;
+    /* 设置图标高度为48px */
+    height: 48px;
 }
 
-/* 移动端调整 */
-@media (max-width: 720px) {
-    /* 我的信息页面 图标容器样式 */
+/* 移动端响应式样式，屏幕宽度小于768px时触发 */
+@media (max-width: 768px) {
+    /* 移动端图标容器中的图标样式 */
     .icon-container img {
+        /* 设置图标宽度为30px */
         width: 30px;
+        /* 设置图标高度为30px */
         height: 30px;
     }
-    /* 我的信息页面 图标容器样式 */
-    .icon-container {
-        gap: 8px;
+    /* 隐藏 Gopher 图片在移动端 */
+    .gopher-image {
+        /* 设置 display 为 none，隐藏图片 */
+        display: none;
     }
-}
-
-/* icon图标样式 */
-.icon {
-    width: 48px;
-    height: 48px;
 }
