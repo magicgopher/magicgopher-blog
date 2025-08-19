@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { CustomTextMap, SpecialItems } from './constants';
+import { CustomTextMap, SpecialItems, SymbolMap } from './constants';
 
 // 定义导航栏子条目接口
 interface NavbarItem {
@@ -14,15 +14,6 @@ interface Navbar {
     link?: string; // 导航栏自身的链接（可选）
     items: NavbarItem[]; // 子条目数组
 }
-
-// 符号映射表，用于为目录或文件添加前缀符号
-const SymbolMap: { [key: string]: string } = {
-    '导航': '🧭',
-    '后端': '🖥️',
-    'DevOps': '🚀',
-    '常用工具': '⚙️',
-    '关于我': '👤',
-};
 
 /**
  * 生成 VitePress 导航栏数据结构

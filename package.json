@@ -24,7 +24,9 @@
   },
   "devDependencies": {
     "@mdit-vue/shared": "^2.1.4",
+    "@types/dom-view-transitions": "^1.0.6",
     "@types/node": "^18.19.118",
+    "@types/vue": "^2.0.0",
     "conventional-changelog-cli": "^3.0.0",
     "husky": "^9.1.7",
     "medium-zoom": "^1.1.0",

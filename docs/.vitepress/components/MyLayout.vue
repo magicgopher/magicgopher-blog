@@ -1,6 +1,5 @@
 <template>
-    <DefaultTheme.Layout>
-        <!-- 这里是已有的插槽组件 -->
+    <DefaultTheme.Layout v-bind="$attrs">
     </DefaultTheme.Layout>
 </template>
 
@@ -37,7 +36,7 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
     document.documentElement.animate(
         { clipPath: isDark.value ? clipPath.reverse() : clipPath },
         {
-            duration: 300,
+            duration: 600,
             easing: 'ease-in',
             pseudoElement: `::view-transition-${isDark.value ? 'old' : 'new'}(root)`
         }

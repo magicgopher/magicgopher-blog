@@ -27,8 +27,10 @@ export const SpecialItems: string[] = [
 
 // 导航栏常量枚举
 export const NavbarConstants = {
-    // 首页
+    // 导航栏（首页）
+    HomeText: '首页',
     Home: '/',
+    // 导航栏（导航）
     Navigation: '/zh/导航/',
     // 导航栏（后端）
     Program: '/zh/后端/',
@@ -86,3 +88,12 @@ export const live2dModels = [
         }
     }
 ]
+
+// 导航栏符号映射表，用于为目录或文件添加前缀符号
+export const SymbolMap: { [key: string]: string } = {
+    // '导航': '🧭',
+    // '后端': '🖥️',
+    // 'DevOps': '🚀',
+    // '常用工具': '⚙️',
+    // '关于我': '👤',
+};
