@@ -6,11 +6,9 @@ description: Kubernetes学习笔记
 editLink: false
 ---
 
-# Kubernetes
+# ✨ Kubernetes
 
-## Kubernetes学习笔记
-
-> Kubernetes学习笔记是一份学习文档，旨在介绍和记录关于Kubernetes的学习过程、概念和使用方法。无论你是Kubernetes新手还是希望巩固已有知识的开发者，都能在这里找到有用的信息。
+## 🎯 Kubernetes学习笔记
 
 | 章节 | 标题 | 描述 | 状态 |
 | --- | --- | --- | --- |

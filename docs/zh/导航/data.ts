@@ -2,7 +2,7 @@ import type { NavData } from '../../.vitepress/utils/types';
 
 export const NAV_DATA: NavData[] = [
     {
-        title: 'AI导航',
+        title: '🎯 AI',
         items: [
             {
                 icon: '/images/nav/gemini.svg',
@@ -49,7 +49,7 @@ export const NAV_DATA: NavData[] = [
         ]
     },
     {
-        title: '大模型',
+        title: '🎯 大模型',
         items: [
             {
                 icon: '/images/nav/ollama.png',
@@ -96,7 +96,7 @@ export const NAV_DATA: NavData[] = [
         ]
     },
     {
-        title: 'Golang',
+        title: '🎯 Golang',
         items: [
             {
                 icon: '/images/nav/cloudwego.png',
@@ -137,7 +137,7 @@ export const NAV_DATA: NavData[] = [
         ]
     },
     {
-        title: 'Java',
+        title: '🎯 Java',
         items: [
             {
                 icon: '/images/nav/spring.svg',
@@ -202,7 +202,7 @@ export const NAV_DATA: NavData[] = [
         ]
     },
     {
-        title: 'React生态',
+        title: '🎯 React生态',
         items: [
             {
                 icon: '/images/nav/react.svg',
@@ -237,7 +237,7 @@ export const NAV_DATA: NavData[] = [
         ]
     },
     {
-        title: 'Vue生态',
+        title: '🎯 Vue生态',
         items: [
             {
                 icon: '/images/nav/vue.svg',
@@ -284,7 +284,7 @@ export const NAV_DATA: NavData[] = [
         ]
     },
     {
-        title: '容器技术',
+        title: '🎯 容器技术',
         items: [
             {
                 icon: '/images/nav/podman.webp',
@@ -313,7 +313,7 @@ export const NAV_DATA: NavData[] = [
         ]
     },
     {
-        title: '社区',
+        title: '🎯 社区',
         items: [
             {
                 icon: '/images/nav/github.svg',
@@ -336,7 +336,7 @@ export const NAV_DATA: NavData[] = [
         ]
     },
     {
-        title: '工具',
+        title: '🎯 工具',
         items: [
             {
                 icon: '/images/nav/mirrors.png',

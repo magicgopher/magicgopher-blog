@@ -14,7 +14,7 @@ import { NAV_DATA } from './data'
 </script>
 
 
-# 导航
+# 🧭 导航
 
 <MNavLinks v-for="{title, items} in NAV_DATA" :title="title" :items="items"/>
 

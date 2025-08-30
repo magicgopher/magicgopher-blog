@@ -6,11 +6,9 @@ description: 本文档为Java学习笔记。
 editLink: false
 ---
 
-# Java 学习笔记
+# ✨ Java 学习笔记
 
-## Java 基础
-
-> 本章节将介绍 Java 基础部分涵盖了 Java的历史、特点以及JDK、JRE、JVM的区别，变量、常量、数据类型、操作符、控制流语句（if, switch, for, while, do-while）、类与对象、封装、继承、多态、抽象、接口、异常处理机制（try-catch）、自定义异常、String、StringBuilder, 集合框架（List, Set, Map）、文件操作、字节流与字符流、序列化、线程的创建与管理、同步、线程通信、线程池的使用。
+## 🎯 Java 基础
 
 | 章节 | 标题 | 描述 | 状态 |
 | --- | --- | --- | --- |
