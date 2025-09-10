@@ -21,11 +21,6 @@ const formatTitle = computed(() => {
     return slugify(props.title)
 })
 
-const svg = computed(() => {
-    if (typeof props.icon === 'object') return props.icon.svg
-    return ''
-})
-
 const formatBadge = computed(() => {
     if (typeof props.badge === 'string') {
         return { text: props.badge, type: 'info' }
@@ -39,9 +34,15 @@ const formatBadge = computed(() => {
         <article class="box" :class="{ 'has-badge': formatBadge }">
             <div class="box-header">
                 <template v-if="!noIcon">
-                    <div v-if="svg" class="icon" v-html="svg"></div>
-                    <div v-else-if="icon && typeof icon === 'string'" class="icon">
-                        <img :src="withBase(icon)" :alt="title" onerror="this.parentElement.style.display='none'" />
+                    <div v-if="typeof icon === 'object' && icon.svg" class="icon" v-html="icon.svg"></div>
+                    
+                    <div v-else-if="icon" class="icon">
+                        <template v-if="typeof icon === 'object' && icon.light && icon.dark">
+                            <img :src="withBase(icon.light)" :alt="title" class="light-icon" onerror="this.style.display='none'" />
+                            <img :src="withBase(icon.dark)" :alt="title" class="dark-icon" onerror="this.style.display='none'" />
+                        </template>
+                        
+                        <img v-else-if="typeof icon === 'string'" :src="withBase(icon)" :alt="title" onerror="this.parentElement.style.display='none'" />
                     </div>
                 </template>
                 <h5 v-if="title" :id="formatTitle" class="title" :class="{ 'no-icon': noIcon }">
@@ -118,7 +119,6 @@ const formatBadge = computed(() => {
     pointer-events: none; /* 禁用图像的指针事件，使其不可点击 */
 }
 
-
 .m-nav-link .title {
     overflow: hidden;
     flex-grow: 1;
@@ -166,4 +166,22 @@ const formatBadge = computed(() => {
         font-size: 16px
     }
 }
+
+/* --- 新增样式 --- */
+/* 默认情况下，显示亮色图标，隐藏暗色图标 */
+:root .dark-icon {
+    display: none;
+}
+:root .light-icon {
+    display: block;
+}
+
+/* 在暗色模式下，显示暗色图标，隐藏亮色图标 */
+:root.dark .dark-icon {
+    display: block;
+}
+:root.dark .light-icon {
+    display: none;
+}
+
 </style>

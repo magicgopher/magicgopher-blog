@@ -1,7 +1,7 @@
 /* type.ts */
 export interface NavLink {
     /** 站点图标 */
-    icon?: string | { svg: string }
+    icon?: string | { svg: string } | { light: string; dark: string }
     badge?:
     | string
     | {
