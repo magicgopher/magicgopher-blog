@@ -23,7 +23,7 @@
     "baseUrl": "./",
     "paths": {
       "@/*": [
-        "./docs/*"
+        "./docs/.vitepress/theme/*"
       ]
     },
     "typeRoots": [
@@ -32,7 +32,8 @@
     ]
   },
   "include": [
-    "types/**/*"
+    "types/**/*",
+    "docs/.vitepress/**/*"
   ],
   "exclude": [
     "node_modules"
