@@ -81,3 +81,8 @@ h6 {
         display: none;
     }
 }
+
+/* 禁用主页图片的交互事件，如点击或拖动 */
+.VPHome .VPHero.has-image .image-src {
+    pointer-events: none;
+}

@@ -107,9 +107,7 @@ function isUnsupportedBrowser(): boolean {
         // 检测 Safari（排除 Chrome，因为 Chrome 的 UA 可能包含 Safari）
         (ua.includes('safari') && !ua.includes('chrome')) ||
         // 检测 Firefox
-        ua.includes('firefox') ||
-        // 检测 Edge（包括旧版和基于 Chromium 的新版 Edge）
-        ua.includes('edge') || ua.includes('edg/')
+        ua.includes('firefox')
     );
 }
 
