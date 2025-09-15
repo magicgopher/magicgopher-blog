@@ -14,6 +14,7 @@ import GiscusComment from '@/components/GiscusComment.vue';
 import Mermaid from '@/components/Mermaid.vue';
 import MNavLinks from '@/components/MNavLinks.vue';
 import MyLayout from '@/components/MyLayout.vue';
+import Live2DViewer from '@/components/Live2DViewer.vue';
 // 导入全局样式文件
 import './style/index.scss';
 
@@ -51,6 +52,7 @@ export default {
         app.component('BackToTop', BackToTop);
         app.component('Mermaid', Mermaid);
         app.component('MNavLinks', MNavLinks);
+        app.component('Live2DViewer', Live2DViewer);
 
         // 仅在浏览器环境中执行以下逻辑
         if (typeof window !== 'undefined') {

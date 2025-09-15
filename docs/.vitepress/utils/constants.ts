@@ -16,6 +16,9 @@ export const CustomTextMap: Record<string, string> = {
     'devops': 'DevOps',
     '01-docker': 'Docker',
     '02-kubernetes': 'Kubernetes',
+    // 导航栏（Live2D）
+    'live2d': 'Live2D',
+    '01-碧蓝航线': '碧蓝航线'
 }
 
 // 特殊的导航栏处理数组常量，
@@ -32,8 +35,10 @@ export const NavbarConstants = {
     Home: '/',
     // 导航栏（导航）
     Navigation: '/zh/导航/',
+    // 导航栏（Live2D）
+    Live2D: '/zh/Live2D/',
     // 导航栏（后端）
-    Program: '/zh/后端/',
+    Backend: '/zh/后端/',
     // 导航栏（DevOps）
     DevOps: '/zh/DevOps/',
     // 导航栏（常用工具）

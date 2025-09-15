@@ -10,8 +10,11 @@ export const zhNavbar: DefaultTheme.Config['nav'] = [
     // 导航栏（导航）
     generateNavbar(NavbarConstants.Navigation),
 
+    // 导航栏（Live2D）
+    generateNavbar(NavbarConstants.Live2D),
+
     // 导航栏（后端）
-    generateNavbar(NavbarConstants.Program),
+    generateNavbar(NavbarConstants.Backend),
 
     // 导航栏（DevOps）
     generateNavbar(NavbarConstants.DevOps),
