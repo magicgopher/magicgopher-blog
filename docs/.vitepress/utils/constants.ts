@@ -49,8 +49,8 @@ export const NavbarConstants = {
 
 // 侧边栏常量枚举
 export const SidebarConstants = {
-    // 导航
-    Navbar: '/zh/导航/',
+    // Live2D侧边栏（）
+    Live2D: '/zh/Live2D/',
     // Golang侧边栏
     Golang: '/zh/后端/01-Golang/',
     // Java侧边栏

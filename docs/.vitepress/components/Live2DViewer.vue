@@ -1,13 +1,19 @@
 <template>
-    <!-- Live2D Viewer -->
     <div ref="container" class="live2d-container">
         <canvas ref="canvas"></canvas>
+        <div class="fullscreen-button" @click="toggleFullscreen" :title="isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'">
+            <svg v-if="!isFullscreen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+            </svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+            </svg>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, toRaw } from 'vue';
-import { useData } from 'vitepress';
+import { ref, onMounted, onUnmounted, toRaw } from 'vue';
 
 // 定义 props
 const props = defineProps({
@@ -15,12 +21,48 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    scale: {
+        type: Number,
+        default: null, // 默认不进行缩放，交由组件自动计算
+    },
+    offsetX: {
+        type: Number,
+        default: 0, // X 轴偏移量
+    },
+    offsetY: {
+        type: Number,
+        default: 0, // Y 轴偏移量
+    },
 });
 
-const { isDark } = useData();
 const container = ref<HTMLDivElement | null>(null);
 const canvas = ref<HTMLCanvasElement | null>(null);
 let app: any = null; // Pixi 应用实例
+const isFullscreen = ref(false); // 全屏状态
+
+/**
+ * 切换全屏
+ */
+const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+        container.value?.requestFullscreen();
+        isFullscreen.value = true;
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+        isFullscreen.value = false;
+    }
+};
+
+/**
+ * 监听 ESC 键退出全屏
+ */
+const handleFullscreenChange = () => {
+    if (!document.fullscreenElement) {
+        isFullscreen.value = false;
+    }
+};
 
 /**
  * 动态加载 live2dcubismcore.js 脚本。
@@ -52,7 +94,6 @@ const initModel = async () => {
         const PIXI = await import('pixi.js');
         const { Live2DModel } = await import('pixi-live2d-display/cubism4');
 
-        // 对于 pixi.js v7 + pixi-live2d-display v0.4.0，这行代码是必需的
         Live2DModel.registerTicker(PIXI.Ticker);
 
         if (!canvas.value || !container.value) return;
@@ -61,7 +102,6 @@ const initModel = async () => {
             app.destroy(true);
         }
 
-        // 使用 Pixi.js v7 的构造函数方式进行初始化
         app = new PIXI.Application({
             view: canvas.value,
             autoStart: true,
@@ -69,7 +109,6 @@ const initModel = async () => {
             backgroundAlpha: 0,
         });
 
-        // 使用 VitePress 的 base path 确保模型路径正确
         const modelPath = `${import.meta.env.BASE_URL}${props.modelUrl.startsWith('/')
                 ? props.modelUrl.substring(1)
                 : props.modelUrl
@@ -84,23 +123,36 @@ const initModel = async () => {
 
         app.stage.addChild(toRaw(model));
 
-        // 调整模型位置和大小
-        const containerWidth = container.value.clientWidth;
-        const containerHeight = container.value.clientHeight;
+        const resizeModel = () => {
+            if (!container.value) return;
+            const containerWidth = container.value.clientWidth;
+            const containerHeight = container.value.clientHeight;
 
-        // 设置锚点
-        model.anchor.set(0.5, 0.5);
+            model.anchor.set(0.5, 0.5);
+            model.position.set(
+                containerWidth / 2 + props.offsetX,
+                containerHeight / 2 + props.offsetY
+            );
 
-        model.position.set(containerWidth / 2, containerHeight / 2);
+            if (props.scale) {
+                model.scale.set(props.scale);
+            } else {
+                const autoScale =
+                    Math.min(
+                        containerHeight / model.height,
+                        containerWidth / model.width
+                    ) * 0.8;
+                model.scale.set(autoScale);
+            }
+        };
 
-        const scale =
-            Math.min(
-                containerHeight / model.height,
-                containerWidth / model.width
-            ) * 0.8;
-        model.scale.set(scale);
+        resizeModel(); // 初始化时调整一次
+        
+        // 监听容器大小变化
+        const resizeObserver = new ResizeObserver(resizeModel);
+        resizeObserver.observe(container.value);
 
-        // 添加拖拽交互
+
         model.on('pointerdown', (e: any) => {
             model.dragging = true;
             model._pointerX = e.data.global.x - model.x;
@@ -118,30 +170,70 @@ const initModel = async () => {
     }
 };
 
-onMounted(initModel);
+onMounted(() => {
+    initModel();
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+});
 
 onUnmounted(() => {
     if (app) {
         app.destroy(true);
     }
+    document.removeEventListener('fullscreenchange', handleFullscreenChange);
 });
 
-watch(isDark, () => {
-    if (app) {
-        initModel();
-    }
-});
 </script>
 
 <style scoped>
 .live2d-container {
+    position: relative; /* 为全屏按钮定位 */
     width: 100%;
     height: 800px;
     border-radius: 8px;
     border: 1px dashed var(--vp-c-divider);
     cursor: grab;
+    overflow: hidden; /* 隐藏可能溢出的内容 */
 }
 .live2d-container:active {
     cursor: grabbing;
+}
+
+/* 全屏按钮样式 */
+.fullscreen-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+    cursor: pointer;
+    color: var(--vp-c-text-2);
+    
+    /* 修改部分开始 */
+    width: 36px;  /* 设置固定宽度 */
+    height: 36px; /* 设置固定高度 */
+    background-color: var(--vp-c-bg-soft);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
+    /* 修改部分结束 */
+}
+
+.fullscreen-button:hover {
+    background-color: var(--vp-c-bg-mute);
+    color: var(--vp-c-text-1);
+}
+
+/* 全屏时的样式 */
+.live2d-container:fullscreen {
+    border: none;
+    border-radius: 0;
+    background-color: var(--vp-c-bg);
+}
+
+/* 确保 SVG 图标尺寸正确 */
+.fullscreen-button svg {
+    width: 20px;
+    height: 20px;
 }
 </style>

@@ -4,6 +4,10 @@ import { generateSidebar } from '../utils/sidebar-generator';
 
 // 中文侧边栏配置
 export const zhSidebar: DefaultTheme.Config['sidebar'] = {
+
+    // 侧边栏 Live2D
+    [SidebarConstants.Live2D]: generateSidebar(SidebarConstants.Live2D),
+
     // 侧边栏 后端（Golang）
     [SidebarConstants.Golang]: generateSidebar(SidebarConstants.Golang),
 
