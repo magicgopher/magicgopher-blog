@@ -2,7 +2,7 @@
     <div style="margin-top: 24px">
         <Giscus
             id="comments"
-            repo="MagicGopher/MagicGopher-Blog" 
+            repo="magicgopher/magicgopher-blog"
             repoId="R_kgDOMNveng"
             category="General"
             categoryId="DIC_kwDOMNvens4ChhfK"

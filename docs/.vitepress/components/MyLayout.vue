@@ -1,6 +1,13 @@
 <template>
     <DefaultTheme.Layout v-bind="$attrs">
+        <template #doc-after>
+            <!-- Giscus 评论组件 -->
+            <slot name="doc-after" />
+        </template>
     </DefaultTheme.Layout>
+
+    <!-- 返回顶部按钮组件 -->
+    <BackToTop />
 </template>
 
 <script setup lang="ts">

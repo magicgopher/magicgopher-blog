@@ -83,13 +83,27 @@ export const blacklistPaths: string[] = [
     // 格式：'zh/后端/01-Golang/01-Golang基础/01-简介和发展历程.md'
 ];
 
-// Live2D模型配置
+// OhMyLive2D Live2D模型配置
 export const live2dModels = [
     {
         path: '/live2d/abeikelongbi_3/abeikelongbi_3.model3.json',
         scale: 0.05,
         stageStyle: {
             height: 350
+        }
+    },
+    {
+        path: '/live2d/aijier_3/aijier_3.model3.json',
+        scale: 0.05,
+        stageStyle: {
+            height: 450
+        }
+    },
+    {
+        path: '/live2d/baerdimo_6/baerdimo_6.model3.json',
+        scale: 0.05,
+        stageStyle: {
+            height: 360
         }
     }
 ]
