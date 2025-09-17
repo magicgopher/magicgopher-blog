@@ -107,6 +107,9 @@ const initModel = async () => {
             autoStart: true,
             resizeTo: container.value,
             backgroundAlpha: 0,
+            resolution: window.devicePixelRatio || 2, // 设置渲染分辨率为设备像素比
+            autoDensity: true, //自动调整视图大小，适配分辨率
+            antialias: true, // 开启抗锯齿，让边缘更平滑
         });
 
         const modelPath = `${import.meta.env.BASE_URL}${props.modelUrl.startsWith('/')
