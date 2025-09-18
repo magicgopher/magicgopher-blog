@@ -5,9 +5,9 @@ import DefaultTheme from "vitepress/theme";
 // 导入 Vue 的相关 hooks，用于组件生命周期和响应式处理
 import { h, onMounted, watch, nextTick } from 'vue';
 // 导入 VitePress 的路由和数据 hooks，用于获取路由信息和 frontmatter 数据
-import { useRoute, useData, Router } from 'vitepress';
+import { useRoute, useData, Router, inBrowser } from 'vitepress';
 // 导入 Live2D 模型配置常量
-import { live2dModels } from '../utils/constants';
+import { LIVE2D_MODELS_PATH, HIDE_LIVE2D_PATHS } from '../utils/constants';
 // 导入自定义组件：返回顶部按钮、Giscus 评论、Mermaid 图表和导航链接
 import BackToTop from '@/components/BackToTop.vue';
 import GiscusComment from '@/components/GiscusComment.vue';
@@ -15,6 +15,10 @@ import Mermaid from '@/components/Mermaid.vue';
 import MNavLinks from '@/components/MNavLinks.vue';
 import MyLayout from '@/components/MyLayout.vue';
 import Live2DViewer from '@/components/Live2DViewer.vue';
+// 顶部进度条组件
+import { NProgress } from 'nprogress-v2/dist/index.js';
+// 进度条样式
+import 'nprogress-v2/dist/index.css';
 // 导入全局样式文件
 import './style/index.scss';
 
@@ -54,7 +58,17 @@ export default {
         app.component('MNavLinks', MNavLinks);
         app.component('Live2DViewer', Live2DViewer);
 
-        // 仅在浏览器环境中执行以下逻辑
+        if (inBrowser) {
+            NProgress.configure({ showSpinner: false })
+            router.onBeforeRouteChange = () => {
+                NProgress.start() // 开始进度条
+            }
+            router.onAfterRouteChanged = () => {
+                NProgress.done() // 停止进度条
+            }
+        }
+
+        // 彩虹背景动画样式
         if (typeof window !== 'undefined') {
             // 监听路由变化，动态更新首页彩虹背景动画样式
             watch(
@@ -66,11 +80,41 @@ export default {
 
         // 在非 SSR（服务器端渲染）环境下加载 Live2D 看板娘
         if (!import.meta.env.SSR) {
-            const { loadOml2d } = await import('oh-my-live2d');
+            const { loadOml2d } = await import('oh-my-live2d'); ``
             loadOml2d({
-                models: live2dModels, // 加载预定义的 Live2D 模型
+                models: LIVE2D_MODELS_PATH, // 加载预定义的 Live2D 模型
                 initialStatus: "sleep", // 设置初始状态为休眠
             });
+
+            // 监听路由，在 Live2D 目录下的页面隐藏看板娘
+            watch(
+                () => router.route.data.relativePath,
+                (path) => {
+                    nextTick(() => {
+                        const stage = document.getElementById('oml2d-stage');
+                        if (stage) {
+                            // 【修改】在比较前，移除 HIDE_LIVE2D_PATHS 中每个路径开头的斜杠
+                            const shouldHide = HIDE_LIVE2D_PATHS.some(hidePath => {
+                                const formattedPath = hidePath.startsWith('/') ? hidePath.substring(1) : hidePath;
+                                return path.startsWith(formattedPath);
+                            });
+
+                            if (shouldHide) {
+                                // 隐藏看板娘
+                                stage.style.opacity = '0';
+                                stage.style.visibility = 'hidden';
+                                stage.style.pointerEvents = 'none';
+                            } else {
+                                // 显示看板娘
+                                stage.style.opacity = '1';
+                                stage.style.visibility = 'visible';
+                                stage.style.pointerEvents = 'auto';
+                            }
+                        }
+                    });
+                },
+                { immediate: true }
+            );
         }
     },
 

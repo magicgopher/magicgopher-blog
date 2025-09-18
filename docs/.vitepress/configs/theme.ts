@@ -1,7 +1,7 @@
 import { DefaultTheme } from 'vitepress';
 import { zhNavbar } from '../navbar/index';
 import { zhSidebar } from '../sidebar/index';
-import { GitHubConfigConstants } from '../utils/constants';
+import { GITHUB_CONFIG_CONSTANTS } from '../utils/constants';
 import { localSearchOptions } from '../configs/search/local-search';
 
 export const themeConfig: DefaultTheme.Config = {
@@ -55,7 +55,7 @@ export const themeConfig: DefaultTheme.Config = {
     
     // 社交链接
     socialLinks: [
-        { icon: 'github', link: `https://github.com/${GitHubConfigConstants.UserName}` },
+        { icon: 'github', link: `https://github.com/${GITHUB_CONFIG_CONSTANTS.UserName}` },
         { icon: 'discord', link: `https://discord.gg/43H642zaUt` },
     ],
 
@@ -68,6 +68,6 @@ export const themeConfig: DefaultTheme.Config = {
     // 编辑链接
     editLink: {
         text: '在 GitHub 上编辑此页',
-        pattern: `https://github.com/${GitHubConfigConstants.UserName}/${GitHubConfigConstants.ProjectName}/edit/main/src/:path`,
+        pattern: `https://github.com/${GITHUB_CONFIG_CONSTANTS.UserName}/${GITHUB_CONFIG_CONSTANTS.ProjectName}/edit/main/src/:path`,
     },
 }

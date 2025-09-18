@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { SidebarBlacklist } from './constants';
+import { SIDEBAR_BLACK_LIST } from './constants';
 
 // 定义侧边栏条目接口
 interface SidebarItem {
@@ -27,7 +27,7 @@ export function generateSidebar(baseDir: string): SidebarItem[] {
     // 遍历目录内容
     files.forEach((file) => {
         // 忽略黑名单中的文件（如 index.md）
-        if (SidebarBlacklist.includes(file.toLowerCase())) {
+        if (SIDEBAR_BLACK_LIST.includes(file.toLowerCase())) {
             return;
         }
 

@@ -1,5 +1,5 @@
 // GitHub相关常量配置
-export const GitHubConfigConstants = {
+export const GITHUB_CONFIG_CONSTANTS = {
     // 项目名称
     ProjectName: "magicgopher-blog",
     // GitHub用户名
@@ -7,7 +7,7 @@ export const GitHubConfigConstants = {
 }
 
 // 自定义顶级导航栏文本和下拉列表内容映射
-export const CustomTextMap: Record<string, string> = {
+export const CUSTOM_TEXT_MAP: Record<string, string> = {
     // 将导航栏和侧边栏的英文文本内容映射为对应中文文本内容
     // 导航栏（后端）
     '01-golang': 'Golang',
@@ -22,14 +22,14 @@ export const CustomTextMap: Record<string, string> = {
 }
 
 // 特殊的导航栏处理数组常量，
-export const SpecialItems: string[] = [
+export const SPECIAL_ITEMS: string[] = [
     // 例如 /zh/常用工具/ 这样就导航栏的常用工具就不会显示下拉框了
     '/zh/常用工具/',
     '/zh/导航/',
 ]
 
 // 导航栏常量枚举
-export const NavbarConstants = {
+export const NAVBAR_CONSTANTS = {
     // 导航栏（首页）
     HomeText: '首页',
     Home: '/',
@@ -48,7 +48,7 @@ export const NavbarConstants = {
 }
 
 // 侧边栏常量枚举
-export const SidebarConstants = {
+export const SIDEBAR_CONSTANTS = {
     // Live2D侧边栏（）
     Live2D: '/zh/Live2D/',
     // Golang侧边栏
@@ -64,27 +64,13 @@ export const SidebarConstants = {
 }
 
 // 侧边栏不显示的文件常量
-export const SidebarBlacklist: string[] = [
+export const SIDEBAR_BLACK_LIST: string[] = [
     // index.md文件在侧边栏不显示
     'index.md',
 ];
 
-// 要插入 <BackToTop /> 组件的路径数组
-export const specificPaths = [
-    // 格式：'/src/docs/zh/后端/'
-    '/docs/zh/后端/',
-    '/docs/zh/DevOps/',
-    '/docs/zh/常用工具/',
-    '/docs/zh/关于我/',
-];
-
-// 不需要插入 <BackToTop /> 组件的文件路径黑名单
-export const blacklistPaths: string[] = [
-    // 格式：'zh/后端/01-Golang/01-Golang基础/01-简介和发展历程.md'
-];
-
 // OhMyLive2D Live2D模型配置
-export const live2dModels = [
+export const LIVE2D_MODELS_PATH = [
     {
         path: '/live2d/abeikelongbi_3/abeikelongbi_3.model3.json',
         scale: 0.05,
@@ -109,10 +95,31 @@ export const live2dModels = [
 ]
 
 // 导航栏符号映射表，用于为目录或文件添加前缀符号
-export const SymbolMap: { [key: string]: string } = {
+export const SYMBOL_MAP: { [key: string]: string } = {
     // '导航': '🧭',
     // '后端': '🖥️',
     // 'DevOps': '🚀',
     // '常用工具': '⚙️',
     // '关于我': '👤',
 };
+
+/**
+ * @description 定义需要隐藏看板娘的路径列表
+ * * some() 方法会遍历数组中的每个元素，并对每个元素执行一次提供的函数，直到找到一个使得函数返回 true 的元素。
+ * 如果找到了这样的元素，some() 会立即返回 true。否则，some() 返回 false。
+ * startsWith() 方法用于检查当前路由路径是否以数组中定义的任何一个路径为开头。
+ * * @example
+ * export const HIDE_LIVE2D_PATHS = ['/zh/Live2D/', '/zh/后端/', '/zh/前端/'];
+ */
+export const HIDE_LIVE2D_PATHS = [
+    '/zh/Live2D/'
+]
+
+/**
+ * @description 定义需要隐藏“<BackToTop>返回顶部”组件的路径列表
+ * @example
+ * export const HIDE_BACKTOTOP_PATHS = ['/zh/about/', '/zh/friends/'];
+ */
+export const HIDE_BACKTOTOP_PATHS = [
+    '/zh/导航/'
+]

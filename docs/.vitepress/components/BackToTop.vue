@@ -22,7 +22,7 @@
     </transition>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 // 引入Vue的响应式API和生命周期钩子
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 

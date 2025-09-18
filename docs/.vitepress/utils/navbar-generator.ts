@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { CustomTextMap, SpecialItems, SymbolMap } from './constants';
+import { CUSTOM_TEXT_MAP, SPECIAL_ITEMS, SYMBOL_MAP } from './constants';
 
 // 定义导航栏子条目接口
 interface NavbarItem {
@@ -72,7 +72,7 @@ export function generateNavbar(topLevelDirectory: string): Navbar {
     });
 
     // 如果顶级目录在特殊条目列表中，设置导航栏自身的链接
-    if (SpecialItems.includes(topLevelDirectory)) {
+    if (SPECIAL_ITEMS.includes(topLevelDirectory)) {
         navbar.link = `${topLevelDirectory}`;
     }
 
@@ -82,16 +82,16 @@ export function generateNavbar(topLevelDirectory: string): Navbar {
 
 /**
  * 获取目录或文件的自定义显示文本
- * 如果在 CustomTextMap 中定义了映射，则返回映射值；否则返回原始名称
- * 为顶级目录、子目录或文件添加前缀符号（如果在 SymbolMap 中定义）
+ * 如果在 CUSTOM_TEXT_MAP 中定义了映射，则返回映射值；否则返回原始名称
+ * 为顶级目录、子目录或文件添加前缀符号（如果在 SYMBOL_MAP 中定义）
  *
  * @param directoryOrFile 目录或文件名
  * @returns 自定义显示文本
  */
 function getCustomText(directoryOrFile: string): string {
     const name = path.basename(directoryOrFile, path.extname(directoryOrFile)).toLowerCase();
-    const displayText = CustomTextMap[name] || name;
-    // 为顶级目录、子目录或文件添加符号（如果在 SymbolMap 中定义）
-    const symbol = SymbolMap[displayText];
+    const displayText = CUSTOM_TEXT_MAP[name] || name;
+    // 为顶级目录、子目录或文件添加符号（如果在 SYMBOL_MAP 中定义）
+    const symbol = SYMBOL_MAP[displayText];
     return symbol ? `${symbol}${displayText}` : displayText;
 }

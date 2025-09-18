@@ -7,7 +7,7 @@
     </DefaultTheme.Layout>
 
     <!-- 返回顶部按钮组件 -->
-    <BackToTop />
+    <BackToTop v-if="showBackToTop" />
 </template>
 
 <script setup lang="ts">
@@ -16,10 +16,25 @@ import DefaultTheme from 'vitepress/theme';
 // 导入 useData 来获取 VitePress 的全局响应式数据，例如 isDark
 import { useData } from 'vitepress';
 // 导入 nextTick 和 provide，用于 Vue 的 DOM 更新和依赖注入
-import { nextTick, provide } from 'vue';
+import { computed, nextTick, provide } from 'vue';
+// 导入定义的常量
+import { HIDE_BACKTOTOP_PATHS } from '../utils/constants';
 
 // 从 VitePress 的全局数据中解构出 isDark 状态，它是一个 ref，会实时反映当前的主题模式
-const { isDark } = useData()
+const { isDark, page } = useData()
+
+// 创建一个计算属性，用于判断是否应该显示 BackToTop 组件
+const showBackToTop = computed(() => {
+    // some() 方法检查 HIDE_BACKTOTOP_PATHS 数组中是否有任何一个路径与当前页面路径匹配
+    const shouldHide = HIDE_BACKTOTOP_PATHS.some(hidePath => {
+        // 移除配置路径开头的斜杠，以匹配 relativePath 的格式
+        const formattedPath = hidePath.startsWith('/') ? hidePath.substring(1) : hidePath;
+        // 检查当前页面的相对路径是否以配置的路径开头
+        return page.value.relativePath.startsWith(formattedPath);
+    });
+    // 如果不应该隐藏，则返回 true (显示组件)
+    return !shouldHide;
+})
 
 /**
  * 检查浏览器是否支持 View Transitions API。
@@ -76,7 +91,7 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
             clipPath: clipPath,
         },
         {
-            duration: 600, // 动画持续时间
+            duration: 300, // 动画持续时间
             easing: 'ease-in', // 动画缓动函数
             fill: 'forwards', // 动画完成后保持最后的状态
             // 指定这个动画应用在哪个伪元素上。
