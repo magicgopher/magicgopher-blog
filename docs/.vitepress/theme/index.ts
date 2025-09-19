@@ -15,6 +15,8 @@ import Mermaid from '@/components/Mermaid.vue';
 import MNavLinks from '@/components/MNavLinks.vue';
 import MyLayout from '@/components/MyLayout.vue';
 import Live2DViewer from '@/components/Live2DViewer.vue';
+// 导入首页卡片鼠标追踪组件
+import HomeFeatureBefore from '@/components/HomeFeatureBefore.vue';
 // 顶部进度条组件
 import { NProgress } from 'nprogress-v2/dist/index.js';
 // 进度条样式
@@ -47,6 +49,8 @@ export default {
         return h(MyLayout, props, {
             // 在文档内容后添加 Giscus 评论组件
             'doc-after': () => h(GiscusComment),
+            // 在首页功能卡片之前添加鼠标追踪组件
+            'home-features-before': () => h(HomeFeatureBefore),
         });
     },
 
@@ -57,6 +61,8 @@ export default {
         app.component('Mermaid', Mermaid);
         app.component('MNavLinks', MNavLinks);
         app.component('Live2DViewer', Live2DViewer);
+        // 注册首页卡片鼠标追踪组件
+        app.component('HomeFeatureBefore', HomeFeatureBefore);
 
         if (inBrowser) {
             NProgress.configure({ showSpinner: false })

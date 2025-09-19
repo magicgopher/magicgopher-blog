@@ -1,0 +1,62 @@
+/* 首页卡片鼠标追踪效果样式 */
+
+/* 仅在深色模式下应用效果 */
+.dark .VPHomeFeatures .VPFeature {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* 创建径向渐变光晕效果的伪元素 */
+.dark .VPHomeFeatures .VPFeature::before {
+    content: '';
+    display: block;
+    position: absolute;
+    background: radial-gradient(var(--color), transparent, transparent);
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, -50%);
+    width: 600px; // 光晕大小
+    height: 600px; // 光晕大小
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    /* 渐变过渡时间 */
+    pointer-events: none;
+    /* 不阻挡鼠标事件 */
+    z-index: 0;
+}
+
+/* 鼠标悬停时显示光晕效果 */
+.dark .VPHomeFeatures .VPFeature:hover::before {
+    opacity: 2;
+    /* 光晕透明度，可以调整 */
+    transition: opacity 0.3s ease;
+}
+
+/* 创建内层背景遮罩 */
+.dark .VPHomeFeatures .VPFeature::after {
+    position: absolute;
+    content: '';
+    display: block;
+    inset: 0;
+    background-color: rgba(34, 34, 34, 0.85);
+    /* 半透明背景 */
+    z-index: 0;
+    inset: 2px;
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+/* 确保卡片内容在最上层 */
+.dark .VPHomeFeatures .VPFeature>.box {
+    position: relative;
+    z-index: 1;
+}
+
+/* 响应式调整 - 移动端减少光晕大小 */
+@media (max-width: 768px) {
+    .dark .VPHomeFeatures .VPFeature::before {
+        width: 400px;
+        height: 400px;
+    }
+}

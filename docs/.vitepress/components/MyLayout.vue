@@ -4,6 +4,11 @@
             <!-- Giscus 评论组件 -->
             <slot name="doc-after" />
         </template>
+        
+        <!-- 首页功能卡片前的插槽 -->
+        <template #home-features-before>
+            <slot name="home-features-before" />
+        </template>
     </DefaultTheme.Layout>
 
     <!-- 返回顶部按钮组件 -->
@@ -40,7 +45,7 @@ const showBackToTop = computed(() => {
  * 检查浏览器是否支持 View Transitions API。
  * @returns {boolean} 如果支持则返回 true，否则返回 false。
  * - 'startViewTransition' in document 检查 API 是否存在。
- * - window.matchMedia(...) 检查用户是否开启了“减少动态效果”的辅助功能，如果是，则不启用动画以尊重用户选择。
+ * - window.matchMedia(...) 检查用户是否开启了"减少动态效果"的辅助功能，如果是，则不启用动画以尊重用户选择。
  */
 const enableTransitions = () =>
     'startViewTransition' in document &&
@@ -72,7 +77,7 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
 
     // 启动视图过渡
     await document.startViewTransition(async () => {
-        // 这是解决“闪烁”问题的核心：
+        // 这是解决"闪烁"问题的核心：
         // 我们在 API 捕获新状态截图之前，手动、同步地为 <html> 元素切换 'dark' class。
         // 这样可以确保背景色在截图时已经是正确的颜色。
         document.documentElement.classList.toggle('dark', !wasDark);
@@ -91,11 +96,11 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
             clipPath: clipPath,
         },
         {
-            duration: 300, // 动画持续时间
+            duration: 800, // 动画持续时间
             easing: 'ease-in', // 动画缓动函数
             fill: 'forwards', // 动画完成后保持最后的状态
             // 指定这个动画应用在哪个伪元素上。
-            // 我们希望新主题“覆盖”旧主题，所以动画总是作用在 ::view-transition-new(root) 上。
+            // 我们希望新主题"覆盖"旧主题，所以动画总是作用在 ::view-transition-new(root) 上。
             pseudoElement: '::view-transition-new(root)',
         }
     )
@@ -116,7 +121,7 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
 }
 
 /* 设置过渡视图的堆叠顺序 (z-index)。
-    为了实现新主题“覆盖”旧主题的效果，新视图必须在旧视图的上方。
+    为了实现新主题"覆盖"旧主题的效果，新视图必须在旧视图的上方。
   */
 ::view-transition-old(root) {
     /* 旧视图放在下面 */

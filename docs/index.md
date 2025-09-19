@@ -1,6 +1,5 @@
 ---
 layout: home
-
 hero:
   name: MagicGopher Blog
   text: 编程笔记
@@ -14,12 +13,16 @@ hero:
       link: https://github.com/magicgopher/magicgopher-blog/
     - theme: alt
       text: 更新日志
-      link: /docs/zh/关于我/更新日志
+      link: /zh/关于我/更新日志
     - theme: sponsor
       text: 📮通过邮件联系我
       link: mailto:gopher997@gmail.com
 
 features:
+  - icon: 🧭
+    title: 导航
+    details: 收藏实用网站导航地址
+    link: /zh/导航/
   - icon: 📚
     title: 笔记分享
     details: 包含后端开发、微服务架构、数据库、DevOps等技术栈的学习笔记分享
