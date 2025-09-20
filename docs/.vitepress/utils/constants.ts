@@ -67,6 +67,8 @@ export const SIDEBAR_CONSTANTS = {
 export const SIDEBAR_BLACK_LIST: string[] = [
     // index.md文件在侧边栏不显示
     'index.md',
+    // 将想要忽略的目录名（小写形式）
+    'examples',
 ];
 
 // OhMyLive2D Live2D模型配置

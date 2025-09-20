@@ -86,7 +86,7 @@ export default {
 
         // 在非 SSR（服务器端渲染）环境下加载 Live2D 看板娘
         if (!import.meta.env.SSR) {
-            const { loadOml2d } = await import('oh-my-live2d'); ``
+            const { loadOml2d } = await import('oh-my-live2d');
             loadOml2d({
                 models: LIVE2D_MODELS_PATH, // 加载预定义的 Live2D 模型
                 initialStatus: "sleep", // 设置初始状态为休眠
@@ -99,7 +99,7 @@ export default {
                     nextTick(() => {
                         const stage = document.getElementById('oml2d-stage');
                         if (stage) {
-                            // 【修改】在比较前，移除 HIDE_LIVE2D_PATHS 中每个路径开头的斜杠
+                            // 在比较前，移除 HIDE_LIVE2D_PATHS 中每个路径开头的斜杠
                             const shouldHide = HIDE_LIVE2D_PATHS.some(hidePath => {
                                 const formattedPath = hidePath.startsWith('/') ? hidePath.substring(1) : hidePath;
                                 return path.startsWith(formattedPath);

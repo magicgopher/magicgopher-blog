@@ -1,5 +1,5 @@
-import type MarkdownIt from 'markdown-it';
 import mermaid from 'mermaid';
+import type MarkdownIt from 'markdown-it';
 
 /**
  * 获取当前主题模式

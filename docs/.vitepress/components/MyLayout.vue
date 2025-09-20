@@ -47,7 +47,7 @@ const showBackToTop = computed(() => {
  * - 'startViewTransition' in document 检查 API 是否存在。
  * - window.matchMedia(...) 检查用户是否开启了"减少动态效果"的辅助功能，如果是，则不启用动画以尊重用户选择。
  */
-const enableTransitions = () =>
+const enableTransitions = (): boolean =>
     'startViewTransition' in document &&
     window.matchMedia('(prefers-reduced-motion: no-preference)').matches
 
@@ -96,7 +96,7 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
             clipPath: clipPath,
         },
         {
-            duration: 800, // 动画持续时间
+            duration: 300, // 动画持续时间
             easing: 'ease-in', // 动画缓动函数
             fill: 'forwards', // 动画完成后保持最后的状态
             // 指定这个动画应用在哪个伪元素上。

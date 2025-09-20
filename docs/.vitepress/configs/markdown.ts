@@ -1,5 +1,6 @@
 import mermaidPlugin from './mermaid';
 import type { MarkdownOptions } from 'vitepress';
+import { vitepressDemoPlugin } from 'vitepress-demo-plugin';
 
 // 将路径字符串转换为正则表达式
 const toRegex = (path: string) => new RegExp(path.replace(/\//g, '\\/'));
@@ -25,6 +26,8 @@ export const markdownConfig: MarkdownOptions = {
     config(md) {
         // 使用Mermaid插件
         md.use(mermaidPlugin as any);
+        // vue、html、tsx 预览插件
+        md.use(vitepressDemoPlugin);
     },
     
     // 你可以使用 langAlias 选项注册自定义的语言别名

@@ -2,7 +2,6 @@ import { resolve } from 'path';
 import { defineConfig } from 'vitepress';
 import { themeConfig } from './configs/theme';
 import { markdownConfig } from './configs/markdown';
-import MarkdownPreview from 'vite-plugin-markdown-preview';
 
 export default defineConfig({
 
@@ -50,12 +49,6 @@ export default defineConfig({
       }
     },
 
-    // 插件 
-    plugins: [
-      // 组件预览插件
-      MarkdownPreview(),
-    ],
-    
     // css 配置
     css: {
       // css预处理器

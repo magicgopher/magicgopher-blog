@@ -12,16 +12,18 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
+    "clean": "rimraf node_modules",
     "prepare": "husky install",
     "log": "conventional-changelog -p angular -i ./docs/zh/关于我/更新日志.md -s -r 0 -n ./changelog.ts"
   },
   "dependencies": {
     "@giscus/vue": "^3.1.1",
+    "medium-zoom": "^1.1.0",
+    "mermaid": "^11.10.1",
+    "nprogress-v2": "^1.1.10",
     "oh-my-live2d": "^0.19.3",
     "pixi-live2d-display": "^0.4.0",
     "pixi.js": "^6.4.2",
-    "typescript": "^5.9.2",
-    "vite-plugin-markdown-preview": "^1.1.1",
     "vue": "^3.5.20"
   },
   "devDependencies": {
@@ -31,11 +33,12 @@
     "@types/vue": "^2.0.0",
     "conventional-changelog-cli": "^3.0.0",
     "husky": "^9.1.7",
-    "medium-zoom": "^1.1.0",
-    "mermaid": "^11.10.1",
-    "nprogress-v2": "^1.1.10",
+    "rimraf": "^6.0.1",
     "sass": "^1.91.0",
-    "vitepress": "^1.6.4"
+    "typescript": "^5.9.2",
+    "vite": "^7.1.6",
+    "vitepress": "^1.6.4",
+    "vitepress-demo-plugin": "^1.4.7"
   },
   "volta": {
     "node": "18.20.3"

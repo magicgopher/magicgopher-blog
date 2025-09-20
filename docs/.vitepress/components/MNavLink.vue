@@ -33,19 +33,22 @@ const formatBadge = computed(() => {
     <a v-if="link" class="m-nav-link" :href="link" target="_blank" rel="noreferrer">
         <article class="box" :class="{ 'has-badge': formatBadge }">
             <div class="box-header">
-                <template v-if="!noIcon">
-                    <div v-if="typeof icon === 'object' && icon.svg" class="icon" v-html="icon.svg"></div>
-                    
-                    <div v-else-if="icon" class="icon">
-                        <template v-if="typeof icon === 'object' && icon.light && icon.dark">
-                            <img :src="withBase(icon.light)" :alt="title" class="light-icon" onerror="this.style.display='none'" />
-                            <img :src="withBase(icon.dark)" :alt="title" class="dark-icon" onerror="this.style.display='none'" />
+                <template v-if="!noIcon && icon">
+                    <div class="icon">
+                        <div v-if="typeof icon === 'object' && 'svg' in icon" v-html="icon.svg"></div>
+
+                        <template v-else-if="typeof icon === 'object' && 'light' in icon">
+                            <img :src="withBase(icon.light)" :alt="title" class="light-icon"
+                                onerror="this.style.display='none'" />
+                            <img :src="withBase(icon.dark)" :alt="title" class="dark-icon"
+                                onerror="this.style.display='none'" />
                         </template>
-                        
-                        <img v-else-if="typeof icon === 'string'" :src="withBase(icon)" :alt="title" onerror="this.parentElement.style.display='none'" />
+
+                        <img v-else-if="typeof icon === 'string'" :src="withBase(icon)" :alt="title"
+                            onerror="this.parentElement.style.display='none'" />
                     </div>
                 </template>
-                <h5 v-if="title" :id="formatTitle" class="title" :class="{ 'no-icon': noIcon }">
+                <h5 v-if="title" :id="formatTitle" class="title" :class="{ 'no-icon': noIcon || !icon }">
                     {{ title }}
                 </h5>
             </div>
@@ -116,7 +119,8 @@ const formatBadge = computed(() => {
 .m-nav-link .icon img {
     border-radius: 4px;
     width: var(--m-nav-icon-size);
-    pointer-events: none; /* 禁用图像的指针事件，使其不可点击 */
+    pointer-events: none;
+    /* 禁用图像的指针事件，使其不可点击 */
 }
 
 .m-nav-link .title {
@@ -146,10 +150,13 @@ const formatBadge = computed(() => {
 }
 
 .m-nav-layout {
-    .medium-zoom-overlay,.medium-zoom-image {
+
+    .medium-zoom-overlay,
+    .medium-zoom-image {
         z-index: 0 !important;
     }
 }
+
 /* 下划线 */
 .vp-doc a {
     text-decoration: none;
@@ -172,6 +179,7 @@ const formatBadge = computed(() => {
 :root .dark-icon {
     display: none;
 }
+
 :root .light-icon {
     display: block;
 }
@@ -180,8 +188,8 @@ const formatBadge = computed(() => {
 :root.dark .dark-icon {
     display: block;
 }
+
 :root.dark .light-icon {
     display: none;
 }
-
 </style>
