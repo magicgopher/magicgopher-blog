@@ -1,0 +1,106 @@
+:root {
+    --macos-window-red: #FE5450;
+    --macos-window-yellow: #FFB23B;
+    --macos-window-green: #30C045;
+}
+
+/* 代码块：增加留空边距 增加阴影 */
+.vp-doc *:not(.vp-code-block-title):not(.blocks)>div[class*='language-'] {
+    box-shadow: var(--vp-code-block-shadow);
+    border-radius: var(--vp-code-block-radius);
+    padding-top: 20px;
+
+    /* 代码块：添加macOS风格的小圆点 */
+    &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        width: 12px;
+        height: 12px;
+        background-color: var(--macos-window-red);
+        border-radius: 50%;
+        box-shadow: 20px 0 0 var(--macos-window-yellow), 40px 0 0 var(--macos-window-green);
+        z-index: 1;
+    }
+
+    /* 代码块：下移行号 隐藏右侧竖线 */
+    .line-numbers-wrapper {
+        padding-top: 40px;
+        border-right: none;
+
+        /* 代码块：重建行号右侧竖线 */
+        &::after {
+            content: '';
+            position: absolute;
+            top: 40px;
+            right: 0;
+            border-right: 1px solid var(--vp-code-block-divider-color);
+            height: calc(100% - 60px);
+        }
+    }
+}
+
+.vp-doc {
+    .vp-code-group {
+        box-shadow: var(--vp-code-block-shadow);
+        border-radius: var(--vp-code-block-radius);
+
+        .tabs {
+            padding-top: 20px;
+
+            &::before {
+                content: ' ';
+                position: absolute;
+                top: 12px;
+                left: 12px;
+                height: 12px;
+                width: 12px;
+                background: var(--macos-window-red);
+                border-radius: 50%;
+                box-shadow: 20px 0 var(--macos-window-yellow), 40px 0 var(--macos-window-green);
+            }
+        }
+
+        div[class*='language-'] {
+            box-shadow: none;
+            padding-top: 0;
+
+            &::before {
+                display: none;
+            }
+
+            .line-numbers-wrapper {
+                padding-top: 20px;
+
+                &::after {
+                    top: 20px;
+                    height: calc(100% - 40px);
+                }
+            }
+        }
+    }
+}
+
+// 适配 vitepress-plugin-group-icons 插件
+.vp-doc .vp-code-block-title {
+    box-shadow: var(--vp-code-block-shadow);
+    border-radius: var(--vp-code-block-radius);
+
+    .vp-code-block-title-bar {
+        padding-top: 20px;
+
+        &::before {
+            content: ' ';
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            height: 12px;
+            width: 12px;
+            background: var(--macos-window-red);
+            border-radius: 50%;
+            box-shadow: 20px 0 var(--macos-window-yellow), 40px 0 var(--macos-window-green);
+        }
+    }
+}
