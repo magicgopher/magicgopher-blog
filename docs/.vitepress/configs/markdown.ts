@@ -2,9 +2,6 @@ import mermaidPlugin from './mermaid';
 import type { MarkdownOptions } from 'vitepress';
 import { vitepressDemoPlugin } from 'vitepress-demo-plugin';
 
-// 将路径字符串转换为正则表达式
-const toRegex = (path: string) => new RegExp(path.replace(/\//g, '\\/'));
-
 // markdown配置
 export const markdownConfig: MarkdownOptions = {
     // markdown主题配置

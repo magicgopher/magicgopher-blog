@@ -74,21 +74,21 @@ export const SIDEBAR_BLACK_LIST: string[] = [
 // OhMyLive2D Live2D模型配置
 export const LIVE2D_MODELS_PATH = [
     {
-        path: '/live2d/abeikelongbi_3/abeikelongbi_3.model3.json',
+        path: 'https://fastly.jsdelivr.net/gh/magicgopher/blog-live2d-models/AzurLane/abeikelongbi_3/abeikelongbi_3.model3.json',
         scale: 0.05,
         stageStyle: {
             height: 350
         }
     },
     {
-        path: '/live2d/aijier_3/aijier_3.model3.json',
+        path: 'https://fastly.jsdelivr.net/gh/magicgopher/blog-live2d-models/AzurLane/aijier_3/aijier_3.model3.json',
         scale: 0.05,
         stageStyle: {
             height: 450
         }
     },
     {
-        path: '/live2d/baerdimo_6/baerdimo_6.model3.json',
+        path: 'https://fastly.jsdelivr.net/gh/magicgopher/blog-live2d-models/AzurLane/baerdimo_6/baerdimo_6.model3.json',
         scale: 0.05,
         stageStyle: {
             height: 360
