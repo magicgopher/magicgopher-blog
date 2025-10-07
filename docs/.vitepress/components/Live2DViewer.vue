@@ -1,19 +1,14 @@
 <template>
-    <!-- Live2D模型的容器，包含画布和加载状态提示 -->
     <div ref="container" class="live2d-container">
-        <!-- 用于渲染Live2D模型的画布 -->
         <canvas ref="canvas"></canvas>
 
-        <!-- 加载状态过渡动画 -->
         <Transition name="fade">
             <div v-if="loadingStatus !== 'success'" class="status-overlay">
-                <!-- 加载中提示 -->
                 <div v-if="loadingStatus === 'loading'" class="status-box">
                     <div class="spinner"></div>
                     <span class="status-text">模型加载中...</span>
                 </div>
-                <!-- 加载失败提示 -->
-                <div v-if="loadingStatus === 'error'" class="status-box">
+                <div v-else-if="loadingStatus === 'error'" class="status-box">
                     <div class="error-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -21,28 +16,49 @@
                         </svg>
                     </div>
                     <span class="status-text">模型加载失败 T_T</span>
+                    <button class="retry-button" @click="initModel">重新加载</button>
                 </div>
             </div>
         </Transition>
 
-        <!-- 全屏切换按钮 -->
-        <div class="fullscreen-button" @click="toggleFullscreen" :title="isFullscreen ? '退出全屏' : '进入全屏'">
-            <svg v-if="!isFullscreen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
-            </svg>
-            <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
-            </svg>
+        <div class="controls-container">
+            <div v-if="isFullscreen" class="scale-controls">
+                <button @click="decreaseScale" title="缩小" class="control-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+                <button @click="increaseScale" title="放大" class="control-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <button v-if="!isMobile" class="control-button" @click="toggleFullscreen" :title="isFullscreen ? '退出全屏' : '进入全屏'">
+                <svg v-if="!isFullscreen" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                        d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+                </svg>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                </svg>
+            </button>
         </div>
     </div>
 </template>
-  
-<script setup lang="ts">
-import { ref, onMounted, onUnmounted, toRaw, watch } from 'vue';
 
-// 定义组件接收的属性，用于配置模型路径和显示效果
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, toRaw, watch, nextTick } from 'vue';
+import type { Application } from 'pixi.js';
+
 const props = defineProps({
     modelUrl: { type: String, required: true },
     scale: { type: Number, default: null },
@@ -50,37 +66,43 @@ const props = defineProps({
     offsetY: { type: Number, default: 0 },
 });
 
-// 创建对DOM元素的引用，用于操作容器和画布
 const container = ref<HTMLDivElement | null>(null);
 const canvas = ref<HTMLCanvasElement | null>(null);
-let app: any = null; // 用于存储Pixi.js应用实例
-const isFullscreen = ref(false); // 控制全屏状态
-
-// 管理模型加载状态
+let app: Application | null = null;
+let live2dModel: any = null;
 const loadingStatus = ref<'loading' | 'success' | 'error'>('loading');
-const errorMessage = ref(''); // 存储加载错误信息
+const isFullscreen = ref(false);
+const isMobile = ref(false);
+const currentScale = ref(props.scale ?? 0.1);
 
-// 切换全屏模式
+const increaseScale = () => {
+    currentScale.value = parseFloat((currentScale.value + 0.01).toFixed(2));
+};
+const decreaseScale = () => {
+    currentScale.value = parseFloat(Math.max(0.01, currentScale.value - 0.01).toFixed(2));
+};
+
 const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
         container.value?.requestFullscreen();
-        isFullscreen.value = true;
     } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        }
-        isFullscreen.value = false;
+        document.exitFullscreen();
     }
 };
 
-// 监听全屏状态变化
-const handleFullscreenChange = () => {
-    if (!document.fullscreenElement) {
-        isFullscreen.value = false;
+const handleFullscreenChange = async () => {
+    const isCurrentlyFullscreen = !!document.fullscreenElement;
+    isFullscreen.value = isCurrentlyFullscreen;
+
+    if (!isCurrentlyFullscreen) {
+        currentScale.value = props.scale ?? 0.1;
     }
+    
+    // --- 关键修改：在全屏状态改变后，重新计算模型位置 ---
+    await nextTick();
+    resizeModel();
 };
 
-// 加载Live2D核心脚本
 function loadCubismCore(): Promise<void> {
     if (window.cubismCoreLoaded) return window.cubismCoreLoaded;
     window.cubismCoreLoaded = new Promise<void>((resolve, reject) => {
@@ -93,147 +115,130 @@ function loadCubismCore(): Promise<void> {
     return window.cubismCoreLoaded;
 }
 
-// 初始化Live2D模型
 const initModel = async () => {
     loadingStatus.value = 'loading';
-    errorMessage.value = '';
-
-    // 销毁旧的Pixi.js实例
-    if (app) {
-        app.destroy(true);
-        app = null;
+    await nextTick();
+    if (live2dModel) {
+        app?.stage.removeChild(live2dModel);
+        live2dModel.destroy();
+        live2dModel = null;
     }
 
     try {
         await loadCubismCore();
-        if (!window.Live2DCubismCore) {
-            throw new Error('Cubism Core script loaded but not initialized correctly.');
-        }
+        if (!window.Live2DCubismCore) throw new Error('Cubism Core not available on window.');
 
-        // 动态加载pixi.js和pixi-live2d-display
         const PIXI = await import('pixi.js');
         const { Live2DModel } = await import('pixi-live2d-display/cubism4');
 
+        if (!canvas.value || !container.value) return;
         Live2DModel.registerTicker(PIXI.Ticker);
 
-        if (!canvas.value || !container.value) return;
-
-        // 初始化Pixi.js应用
-        app = new PIXI.Application({
-            view: canvas.value,
-            autoStart: true,
-            resizeTo: container.value,
-            backgroundAlpha: 0,
-            resolution: window.devicePixelRatio || 2,
-            autoDensity: true,
-            antialias: true,
-        });
-
-        // 处理模型路径
-        let modelPath = '';
-        if (props.modelUrl.startsWith('http')) {
-            modelPath = props.modelUrl;
-        } else {
-            modelPath = `${import.meta.env.BASE_URL}${props.modelUrl.startsWith('/')
-                ? props.modelUrl.substring(1)
-                : props.modelUrl
-                }`;
+        if (!app) {
+            app = new PIXI.Application({
+                view: canvas.value,
+                autoStart: true,
+                resizeTo: container.value,
+                backgroundAlpha: 0,
+                resolution: Math.max(window.devicePixelRatio || 1, 2),
+                autoDensity: true,
+                antialias: true,
+            });
+            // 监听PIXI应用的resize事件，自动调整模型
+            app.renderer.on('resize', resizeModel);
         }
 
-        // 加载Live2D模型
+        const modelPath = props.modelUrl.startsWith('http')
+            ? props.modelUrl
+            : `${import.meta.env.BASE_URL}${props.modelUrl.startsWith('/') ? props.modelUrl.slice(1) : props.modelUrl}`;
+
         const model = await Live2DModel.from(modelPath, {
             autoInteract: true,
-            onError: (e: Error) => {
-                console.error('Live2D model loading error:', e);
-                loadingStatus.value = 'error';
-                errorMessage.value = e.message;
+            onError: () => {
+                if (loadingStatus.value !== 'success') {
+                    loadingStatus.value = 'error';
+                }
             },
         });
 
         if (loadingStatus.value === 'error') return;
 
-        app.stage.addChild(toRaw(model));
-
-        // 调整模型大小和位置
-        const resizeModel = () => {
-            if (!container.value || !model) return;
-            const containerWidth = container.value.clientWidth;
-            const containerHeight = container.value.clientHeight;
-
-            model.anchor.set(0.5, 0.5);
-            model.position.set(
-                containerWidth / 2 + props.offsetX,
-                containerHeight / 2 + props.offsetY
-            );
-
-            if (props.scale) {
-                model.scale.set(props.scale);
-            } else {
-                const autoScale = Math.min(
-                    containerHeight / model.height,
-                    containerWidth / model.width
-                ) * 0.8;
-                model.scale.set(autoScale);
-            }
-        };
+        live2dModel = model;
+        app.stage.addChild(toRaw(live2dModel));
 
         resizeModel();
 
-        // 监听容器大小变化以调整模型
-        const resizeObserver = new ResizeObserver(resizeModel);
-        resizeObserver.observe(container.value);
-
-        // 添加模型拖拽交互
-        model.on('pointerdown', (e: any) => {
-            model.dragging = true;
-            model._pointerX = e.data.global.x - model.x;
-            model._pointerY = e.data.global.y - model.y;
+        live2dModel.on('pointerdown', (e: any) => {
+            live2dModel.dragging = true;
+            live2dModel._pointerX = e.data.global.x - live2dModel.x;
+            live2dModel._pointerY = e.data.global.y - live2dModel.y;
         });
-        model.on('pointermove', (e: any) => {
-            if (model.dragging) {
-                model.position.x = e.data.global.x - model._pointerX;
-                model.position.y = e.data.global.y - model._pointerY;
+        live2dModel.on('pointermove', (e: any) => {
+            if (live2dModel.dragging) {
+                live2dModel.position.x = e.data.global.x - live2dModel._pointerX;
+                live2dModel.position.y = e.data.global.y - live2dModel._pointerY;
             }
         });
-        model.on('pointerup', () => (model.dragging = false));
+        live2dModel.on('pointerup', () => (live2dModel.dragging = false));
+        live2dModel.on('pointerupoutside', () => (live2dModel.dragging = false));
 
         loadingStatus.value = 'success';
-
-    } catch (error: any) {
+    } catch (error) {
         console.error('Failed to initialize Live2D model:', error);
         loadingStatus.value = 'error';
-        errorMessage.value = error.message;
     }
 };
 
-// 组件挂载时初始化模型并监听全屏变化
+const resizeModel = () => {
+    if (!container.value || !live2dModel) return;
+    const { clientWidth: cw, clientHeight: ch } = container.value;
+    
+    // 锚点设置在模型中心
+    live2dModel.anchor.set(0.5, 0.5);
+    // 定位到容器中心，并应用偏移
+    live2dModel.position.set(cw / 2 + props.offsetX, ch / 2 + props.offsetY);
+
+    if (props.scale) {
+        live2dModel.scale.set(currentScale.value);
+    } else {
+        live2dModel.scale.set(Math.min(cw / live2dModel.width, ch / live2dModel.height) * 0.9);
+    }
+};
+
 onMounted(() => {
+    isMobile.value = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     initModel();
     document.addEventListener('fullscreenchange', handleFullscreenChange);
 });
 
-// 监听modelUrl变化以重新加载模型
-watch(
-    () => props.modelUrl,
-    (newUrl, oldUrl) => {
-        if (newUrl && newUrl !== oldUrl) {
-            initModel();
-        }
-    }
-);
-
-// 组件卸载时清理资源
 onUnmounted(() => {
     if (app) {
-        app.destroy(true);
+        app.destroy(true, { children: true, texture: true, baseTexture: true });
         app = null;
     }
     document.removeEventListener('fullscreenchange', handleFullscreenChange);
 });
+
+watch(currentScale, (newScale) => {
+    if (live2dModel && props.scale) {
+        live2dModel.scale.set(newScale);
+    }
+});
+
+watch(() => props.scale, (newScale) => {
+    currentScale.value = newScale ?? 0.1;
+});
+
+watch(() => props.modelUrl, (newUrl, oldUrl) => {
+    if (newUrl && newUrl !== oldUrl) {
+        initModel();
+    }
+});
+
 </script>
-  
+
 <style scoped>
-/* Live2D容器样式，定义尺寸和交互效果 */
+/* Live2D容器样式 */
 .live2d-container {
     position: relative;
     width: 100%;
@@ -242,19 +247,14 @@ onUnmounted(() => {
     border: 1px dashed var(--vp-c-divider);
     cursor: grab;
     overflow: hidden;
-    /* 防止内容溢出 */
 }
 
 .live2d-container:active {
     cursor: grabbing;
 }
 
-/* 全屏按钮样式 */
-.fullscreen-button {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 10;
+/* 控制按钮的通用样式 */
+.control-button {
     cursor: pointer;
     color: var(--vp-c-text-2);
     width: 36px;
@@ -265,22 +265,43 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s, color 0.3s;
+    border: none;
+    padding: 0;
 }
 
-.fullscreen-button:hover {
+.control-button:hover {
     background-color: var(--vp-c-bg-mute);
     color: var(--vp-c-text-1);
+}
+
+.control-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* 右上角控制按钮容器 */
+.controls-container {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+/* 缩放控制按钮组 */
+.scale-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .live2d-container:fullscreen {
     border: none;
     border-radius: 0;
     background-color: var(--vp-c-bg);
-}
-
-.fullscreen-button svg {
-    width: 20px;
-    height: 20px;
 }
 
 /* 加载状态覆盖层样式 */
@@ -290,7 +311,7 @@ onUnmounted(() => {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--vp-c-bg-soft-translucent);
+    background-color: rgba(var(--vp-c-bg-rgb), 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -350,6 +371,24 @@ onUnmounted(() => {
     to {
         transform: rotate(360deg);
     }
+}
+
+/* 重新加载按钮样式 */
+.retry-button {
+    margin-top: 8px;
+    padding: 8px 16px;
+    border: 1px solid var(--vp-c-brand-1);
+    background-color: var(--vp-c-brand-soft);
+    color: var(--vp-c-brand-1);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.retry-button:hover {
+    background-color: var(--vp-c-brand-1);
+    color: var(--vp-c-bg-soft);
 }
 
 /* 淡入淡出动画 */
