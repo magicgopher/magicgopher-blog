@@ -397,7 +397,7 @@ docker-compose -f mysql.yaml up -d
 
 MySQL 支持一台主库同时向多台从库进行复制，从库同时也可以作为其他从服务器的主库，实现链状复制。
 
-![image-01](https://mirror.ghproxy.com/https://github.com/MagicGopher/image-repo/blob/main/MagicGopher-Blog/DevOps/01-Docker/02-Docker%E5%BA%94%E7%94%A8%E5%AE%9E%E6%88%98/assets/image-01.png?raw=true)
+![image-02](/images/docs/Docker/Docker应用实战/assets/image-02.png)
 
 MySQL 主从复制的有点主要包含以下三个方面：
 - 主库出现问题，可以快速切换到从库提供服务。
@@ -408,7 +408,7 @@ MySQL 主从复制的有点主要包含以下三个方面：
 
 简单了解一下MySQL数据库的主从复制原理：
 
-![image-02](https://mirror.ghproxy.com/https://github.com/MagicGopher/image-repo/blob/main/MagicGopher-Blog/DevOps/01-Docker/02-Docker%E5%BA%94%E7%94%A8%E5%AE%9E%E6%88%98/assets/image-02.png?raw=true)
+![image-03](/images/docs/Docker/Docker应用实战/assets/image-03.png)
 
 1. 主库 `master` 服务器会将 SQL 记录通过 `dump` 线程写入到二进制日志 `binary log` 中。
 2. 从库 `slave` 服务器开启一个 `io thread` 线程向服务器发送请求，向主库 `master` 请求 `binary log`。主库 `master` 服务器在接收到请求之后，根据偏移量将新的 `binary log` 发送给 `slave` 服务器。
