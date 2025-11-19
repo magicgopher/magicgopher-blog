@@ -47,13 +47,7 @@ mysql -uroot -p12345678
 mkdir mysql && cd mysql
 ```
 
-在 `mysql` 目录下创建一个 `mysql_volumes` 目录，并切换到该目录，该目录是用于存储 mysql 容器持久化的数据的。
-
-```shell
-mkdir mysql_volumes && cd mysql_volumes
-```
-
-在 `mysql_volumes` 目录下创建 `data` 目录【该目录是 mysql 容器持久化数据的目录】。
+在 `mysql` 目录下创建 `data` 目录【该目录是 mysql 容器持久化数据的目录】。
 
 ```shell
 mkdir data
@@ -63,8 +57,7 @@ mkdir data
 
 ```shell
 mysql
-    └── mysql_volumes
-        └── data
+    └── data
 ```
 
 给 `data` 目录分配权限。
@@ -77,7 +70,7 @@ chmod -R 777 data
 
 ```shell
 docker run -p 3306:3306 --name mysql8 \
-        -v $PWD/mysql_volumes/data:/var/lib/mysql \
+        -v $PWD/data:/var/lib/mysql \
         -e MYSQL_ROOT_PASSWORD=12345678 \
         -d mysql:8.4.1
 ```
@@ -85,7 +78,7 @@ docker run -p 3306:3306 --name mysql8 \
 以上 docker run 命令讲解：
 - `-p` 参数用于将主机的端口号 3306 映射到容器的端口号 3306。
 - `--name`：容器名称。
-- `-v`：参数用于将主机的目录映射到容器的目录，这里是将主机的 `mysql_volumes/data` 目录映射到容器的 `/var/lib/mysql` 目录。
+- `-v`：参数用于将主机的目录映射到容器的目录，这里是将主机的 `data` 目录映射到容器的 `/var/lib/mysql` 目录。
 - `-e`：参数用于设置环境变量，这里设置环境变量 `MYSQL_ROOT_PASSWORD` 的值为 `12345678`。
 - `-d`：参数用于将 MySQL 容器设置为后台运行模式。
 - `mysql:8.4.1`：镜像名称。
@@ -93,21 +86,22 @@ docker run -p 3306:3306 --name mysql8 \
 
 将 MySQL 容器的日志目录、配置文件目录、数据数据初始化目录、插件目录持久化到主机上，因此当容器被删除时，数据不会丢失。
 
-在 mysql_volumes 目录下创建 `conf` 目录，该目录是用于存储 MySQL 容器配置文件的目录将 MySQL 容器内的配置文件映射出来到宿主机上的。
+在 `mysql` 目录下创建 `config` 目录，该目录是用于存储 MySQL 容器配置文件的目录将 MySQL 容器内的配置文件映射出来到宿主机上的。
 ```shell
-mkdir conf
+mkdir config
 ```
 
 创建完 `conf` 目录之后，目录结构如下：
 
 ```shell
 mysql
-    └── mysql_volumes
-        ├── conf
-        └── data
+    ├── config
+    └── data
 ```
 
 ### 创建 my.cnf 配置文件
+
+在 `config` 目录下创建 `my.cnf` 配置文件。
 
 具体的 MySQL 数据库 `my.cnf` 配置文件内容如下：
 
@@ -251,9 +245,9 @@ max_heap_table_size = 64M
 
 ### 创建目录和赋予权限
 
-创建 `my.cnf` 配置文件之后，就需要在 `mysql_volumes` 目录下创建 `log` 目录【该目录用于存储 MySQL 容器的日志文件】、`init` 目录【该目录是用于存储 MySQL 容器的初始化脚本文件】。
+创建 `my.cnf` 配置文件之后，就需要在 `mysql` 目录下创建 `log` 目录【该目录用于存储 MySQL 容器的日志文件】、`init` 目录【该目录是用于存储 MySQL 容器的初始化脚本文件】。
 
-在 `mysql_volumes` 目录下创建 `log` 目录、`init` 目录。
+在 `mysql` 目录下创建 `log` 目录、`init` 目录。
 
 ```shell
 mkdir log init
@@ -263,12 +257,11 @@ mkdir log init
 
 ```shell
 mysql
-    └── mysql_volumes
-        ├── conf
-        │   └── my.cnf
-        ├── data
-        ├── init
-        └── log
+    ├── config # 配置文件目录
+    │   └── my.cnf # 配置文件
+    ├── data # 数据目录
+    ├── init # 初始化脚本目录
+    └── log # 日志目录
 ```
 
 切换到 my.cnf 配置文件所在的路径【所在的目录】，给 my.cnf 配置文件添加权限。
@@ -290,10 +283,10 @@ chmod -R 777 data log init
 ```shell
 # 这个命令一定是要在 mysql 目录下执行
 docker run -p 3306:3306 --name mysql8 \
-        -v $(pwd)/mysql_volumes/data:/var/lib/mysql \
-        -v $(pwd)/mysql_volumes/conf:/etc/mysql/conf.d \
-        -v $(pwd)/mysql_volumes/log:/var/log \
-        -v $(pwd)/mysql_volumes/init:/docker-entrypoint-initdb.d \
+        -v $(pwd)/data:/var/lib/mysql \
+        -v $(pwd)/config:/etc/mysql/conf.d \
+        -v $(pwd)/log:/var/log \
+        -v $(pwd)/init:/docker-entrypoint-initdb.d \
         -e MYSQL_ROOT_PASSWORD=12345678 \
         --restart=unless-stopped \
         -d mysql:8.4.1
@@ -308,19 +301,17 @@ docker run -p 3306:3306 --name mysql8 \
 
 ```shell
 mysql
-    ├── mysql.yaml
-    └── mysql_volumes
-        ├── conf
-        │   └── my.cnf
-        ├── data
-        ├── init
-        └── log
+    ├── config # 配置文件目录
+    │   └── my.cnf # 配置文件
+    ├── data # 数据目录
+    ├── init # 初始化脚本目录
+    ├── log # 日志目录
+    └── mysql.yaml # 启动 MySQL 容器的 Docker Compose 配置文件
 ```
 
 目录结构详细说明：
 - `mysql.yaml`：Docker Compose 配置文件，用于启动 MySQL 容器。
-- `mysql_volumes`：MySQL 数据卷目录，用于存储 MySQL 容器映射数据。
-- `conf`：MySQL 配置文件目录，用于存储 MySQL 配置文件。
+- `config`：MySQL 配置文件目录，用于存储 MySQL 配置文件。
 - `data`：MySQL 数据目录，用于存储 MySQL 数据。
 - `init`：MySQL 初始化脚本目录，用于存储 MySQL 初始化脚本。
 - `log`：MySQL 日志目录，用于存储 MySQL 日志。
@@ -328,10 +319,10 @@ mysql
 ### 创建目录和赋予权限
 
 ```shell
-# 创建mysql_volumes并切换到mysql_volumes目录下
-mkdir mysql_volumes && cd mysql_volumes
+# 创建mysql并切换到mysql目录下
+mkdir mysql && cd mysql
 
-# 在 mysql_volumes 目录下创建 conf 目录、data 目录、log 目录、init 目录
+# 在 mysql 目录下创建 conf 目录、data 目录、log 目录、init 目录
 mkdir conf data log init
 
 # 在 conf 目录下创建 my.cnf 配置文件，然后再使用 vim 来编辑 my.cnf 配置文件
@@ -348,7 +339,7 @@ cd conf && touch my.cnf
 chmod 644 my.cnf
 ```
 
-再给 `mysql_volumes` 目录下的 `data`、`log`、`init` 目录添加权限。
+再给 `mysql` 目录下的 `data`、`log`、`init` 目录添加权限。
 ```shell
 chmod -R 777 data log init
 ```
@@ -369,10 +360,10 @@ services:
     ports:
       - 13306:3306
     volumes:
-      - ./mysql_volumes/data:/var/lib/mysql
-      - ./mysql_volumes/conf:/etc/mysql/conf.d
-      - ./mysql_volumes/log:/var/log
-      - ./mysql_volumes/init:/docker-entrypoint-initdb.d
+      - ./data:/var/lib/mysql
+      - ./config:/etc/mysql/conf.d
+      - ./log:/var/log
+      - ./init:/docker-entrypoint-initdb.d
 
 # container network
 networks:
