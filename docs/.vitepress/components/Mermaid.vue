@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 import { render } from '../configs/mermaid';
 
 // 接收来自父组件的数据
@@ -19,6 +19,11 @@ const svgRef = ref('');
 // 渲染函数
 const renderMermaid = async () => {
     if (props.id && props.code) {
+        // 先清空 svgRef 这会触发 Vue 移除页面上的旧 SVG 元素
+        svgRef.value = '';
+        // 等待 DOM 更新完成，确保旧的 ID (mermaid-xxx) 已经从页面上彻底消失
+        await nextTick();
+        // 此时再调用 render，Mermaid 就不会因为 ID 冲突而失败了
         svgRef.value = await render(props.id, decodeURIComponent(props.code));
     }
 };

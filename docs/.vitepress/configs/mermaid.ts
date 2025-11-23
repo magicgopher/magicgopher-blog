@@ -39,9 +39,13 @@ export async function render(id: string, code: string) {
         // 设置 Mermaid 图表主题
         theme: mermaidTheme
     });
+
+    // 生成一个带时间戳的唯一 ID，确保每次渲染都是全新的 ID
+    // 这样 Mermaid 永远不会在这个 ID 上遇到冲突
+    const uniqueId = `${id}-${Date.now()}`;
     
-    // 使用 mermaid.render 方法异步渲染图表，返回 SVG 内容
-    const { svg } = await mermaid.render(id, code);
+    // 使用 uniqueId 进行渲染
+    const { svg } = await mermaid.render(uniqueId, code);
     
     // 返回渲染后的 SVG 字符串
     return svg;
