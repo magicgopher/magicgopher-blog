@@ -910,6 +910,22 @@ cp -rf my-repo rebase1
 cp -rf my-repo rebase2
 ```
 
+这个 `my-repo` 仓库的提交记录图形如下：
+
+```mermaid
+gitGraph
+   commit id: "main:1"
+   commit id: "main:2"
+   commit id: "main:3"
+   branch dev
+   checkout dev
+   commit id: "dev:1"
+   commit id: "dev:2"
+   checkout main
+   commit id: "main:4"
+   commit id: "main:5"
+```
+
 在 dev 分支执行 git rebase 命令。
 
 ```shell
@@ -925,6 +941,8 @@ git rebase main
 # 可以使用 git log 图形的方式查看提交记录
 git log --oneline --graph --decorate --all
 ```
+
+此时 dev 分支的提交记录图形如下：
 
 ![image-18](/images/docs/Git/assets/image-18.png)
 
@@ -942,6 +960,8 @@ git rebase dev
 
 git log --oneline --graph --decorate --all
 ```
+
+此时 main 分支的提交记录图形如下：
 
 ![image-19](/images/docs/Git/assets/image-19.png)
 
