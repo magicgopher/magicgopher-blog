@@ -1,3 +1,11 @@
+---
+title: Git基础
+author: MagicGopher
+keywords: Git, Git基础, Git版本控制
+description: 本文档为Git学习笔记。
+editLink: false
+---
+
 # Git基础
 
 ## 新建仓库
@@ -39,14 +47,14 @@ git clone https://github.com/kubernetes/kubernetes.git k8s
 
 ## 工作区域和文件状态
 
-![三个工作区域](/images/docs/Git/assets/image-12.png)
+![三个工作区域](/images/docs/Git/assets/image-07.png)
 
 Git 仓库中有三个工作区域：
 1. 工作区（Working Directory）*车间*
 2. 暂存区（Staging Area）*运输工具 => 货车*
 3. 本地仓库（Local Repository）*仓库*
 
-![文件5个状态](/images/docs/Git/assets/image-13.png)
+![文件5个状态](/images/docs/Git/assets/image-08.png)
 
 Git 仓库中文件有5个状态：
 1. 未跟踪状态（Untrack）
@@ -55,7 +63,7 @@ Git 仓库中文件有5个状态：
 4. 已暂存（Staged）
 5. 已提交（Committed）
 
-![image-20](/images/docs/Git/assets/image-20.png)
+![image-09](/images/docs/Git/assets/image-09.png)
 
 **举个例子来说明一下Git的这三个区域**：我们可以将仓库理解为工厂里面的仓库，仓库里面有很多的货物（这些货物可以理解为我们的文件，包括代码文件、文本文件、图片文件等），工作区就是生产这些货物的车间，对我们的货物进行生产、加工和修改，车间生产完这些产品之后，就会将这些产品放到仓库里面，那么车间和仓库之间就需要一个运输工具，比如我们使用货车来运输货物，那么这个货车就是暂存区，车间生产完货物之后，将货物放到货车上，然后货车就会将货物从车间运输到仓库中保存起来。当我们的代码完成了一个阶段想存档的时候，就可以把这个版本放到本地仓库中保存起来，在版本控制系统中，这个保存到仓库的过程叫做提交，但是我们不是每次文件修改后都需要进行一次提交操作会比较麻烦，所以Git给我们提供了一种方式，也就是可以先将修改的文件添加到暂存区中，然后再把所有暂存区中的文件统一执行提交操作。联想到车间生产货物的运输到仓库的例子，并不是每次都需要先运送到仓库里面保存起来，而是先将货物都先放到货车上，然后再一次性的运输到仓库中保存起来。
 
@@ -172,7 +180,7 @@ git log --oneline
 
 ## 回退版本
 
-![image-14](/images/docs/Git/assets/image-14.png)
+![image-10](/images/docs/Git/assets/image-10.png)
 
 git reset的三种模式：对应于三种参数。
 - `git reset --soft` 回退到某一个版本，并且保留工作区和暂存区的所有修改内容。
@@ -315,7 +323,7 @@ repo-mixed 仓库示例说明：git提交历史有三条提交记录，然后使
 
 ## 查看差异
 
-![image-15](/images/docs/Git/assets/image-15.png)
+![image-11](/images/docs/Git/assets/image-11.png)
 
 git diff 命令的作用说明：
 1. 查看工作区、暂存区、本地仓库之间的差异。
@@ -412,7 +420,7 @@ git diff比较不同提交ID的信息：
 <i>git diff 比较分支之间的差异后续分支内容时说明！</i>
 :::
 
-![image-16](/images/docs/Git/assets/image-16.png)
+![image-12](/images/docs/Git/assets/image-12.png)
 
 ## 删除文件
 
@@ -668,7 +676,7 @@ git status -s
 
 分支（branch）是 Git 中的一个重要概念，它允许开发者在代码库中创建新的分支，并对这些分支进行独立开发。分支允许开发者在不影响主分支的情况下，安全地 experiment、develop、test 和 merge 代码，从而提高代码管理的效率和协作性。
 
-![image-17](/images/docs/Git/assets/image-17.png)
+![image-13](/images/docs/Git/assets/image-13.png)
 
 我们可以把分支看作是代码库中的不同版本，可以独立存在，并且有自己的提交记录，就像是一棵树的不同枝干，每个枝干都有自己的生长轨迹，所以被形象的称为分支。
 
@@ -944,7 +952,7 @@ git log --oneline --graph --decorate --all
 
 此时 dev 分支的提交记录图形如下：
 
-![image-18](/images/docs/Git/assets/image-18.png)
+![image-14](/images/docs/Git/assets/image-14.png)
 
 在 main 分支执行 git rebase 命令。
 
@@ -963,7 +971,7 @@ git log --oneline --graph --decorate --all
 
 此时 main 分支的提交记录图形如下：
 
-![image-19](/images/docs/Git/assets/image-19.png)
+![image-15](/images/docs/Git/assets/image-15.png)
 
 在两个案例中，无论是 main 分支上还是在 dev 分支上执行 git rebase 命令之后，提交结果都是一条直线，但是中间的顺序会稍微有些不同，这是由于 rebase 的机制导致的，在 Git 中，每个分支都有一个指针指向当前分支的最新提交记录，而在执行 rebase 操作的时候，Git 会先找到当前分支和目标分支的共同提交记录，在案例中也就是 main:3 这个提交节点，再把当前分支上从共同提交记录到最新提交记录的所有提交记录，这里是对于 dev 分支来说的，简单概述就是 git rebase 将当前分支的提交按顺序应用到目标分支上，以重写提交历史，使其看起来像是顺序连续的修改。
 
@@ -985,7 +993,7 @@ rebase
 
 下面介绍一下 GitFlow 工作流模型。
 
-![GitFlow](/images/docs/Git/assets/image-21.png)
+![GitFlow](/images/docs/Git/assets/image-16.png)
 
 **GitFlow 的分支说明**：
 - *生产分支（master 或者 main）*
@@ -1010,23 +1018,23 @@ rebase
 
 当我们新建git仓库之后，默认会创建一个主分支也就是master分支，由于master分支是用于发布生产环境，所有必须保证master上代码的稳定性，所以我们不能直接在master分支上修改提交。我们要基于master分支创建一个develop分支，develop分支用于保存开发好的相对稳定的功能，master分支和develop分支是仓库的常驻分支，一直会保留在仓库中。
 
-![image-22](/images/docs/Git/assets/image-22.png)
+![image-17](/images/docs/Git/assets/image-17.png)
 
 当新的开发任务来了之后，就要编写代码了，我们尽量不要在develop分支上写代码，要保证develop分支的相对稳定，所以这时我要就要基于develop 分支创建一个临时的开发分支，然后在开发分支上编写代码，等功能开发完之后我们再把开发分支合并到develop上。
 
-![image-23](/images/docs/Git/assets/image-23.png)
+![image-18](/images/docs/Git/assets/image-18.png)
 
 新功能合并到develop分支之后，我们想把新功能发布到生产环境，首先基于develop分支创建release分支，然后在release分支测试完成之后，把release分别合并到master分支和develop分支。
 
-![image-24](/images/docs/Git/assets/image-24.png)
+![image-19](/images/docs/Git/assets/image-19.png)
 
 release分支合并到master分支之后，在master分支上打标签用于发布。
 
-![image-25](/images/docs/Git/assets/image-25.png)
+![image-20](/images/docs/Git/assets/image-20.png)
 
 我们把代码发布到了生产环境，用户在使用的时候给我们反馈了一个bug，这时我们需要基于master分支创建一个hotfix 分支，用于修复bug，bug修好之后，把hotfix 分支分别合并到master分支和develop分支。
 
-![image-26](/images/docs/Git/assets/image-26.png)
+![image-21](/images/docs/Git/assets/image-21.png)
 
 **GitFlow工具**
 

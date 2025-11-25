@@ -1,3 +1,11 @@
+---
+title: Git配置
+author: MagicGopher
+keywords: Git, Git配置, Git版本控制
+description: 本文档为Git学习笔记。
+editLink: false
+---
+
 # Git配置
 
 ## 配置用户信息
