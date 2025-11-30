@@ -113,12 +113,11 @@ mysql
 # 默认字符集
 default-character-set = utf8mb4
 
-# MySQL 客户端程序连接 MySQL 服务器时使用的 Unix 域套接字文件的路径
-socket = /tmp/socket/mysql.sock
-
+###########################################################################
+## MySQL 命令行工具参数配置
+###########################################################################
 [mysql]
-# prompt = "\u@mysqldb \R:\m:\s [\d]> "
-#关闭自动补全sql命令功能
+# 关闭自动补全sql命令功能
 no-auto-rehash
 
 ###########################################################################
@@ -128,48 +127,34 @@ no-auto-rehash
 # 设置 MySQL 服务器监听的端口号
 port = 3306
 
-# 设置 MySQL 服务器在网络上的监听地址，0.0.0.0 是一个特殊的 IP 地址，表示服务器上的所有网络接口
+# 设置 MySQL 服务器在网络上的监听地址，0.0.0.0 表示所有网络接口
 bind-address = 0.0.0.0
 
 # 设置 MySQL 服务器存储数据库数据文件的目录路径
 datadir = /var/lib/mysql
 
-# 指定 MySQL 服务器监听的 Unix 域套接字文件的路径
-socket = /tmp/socket/mysql.sock
+# 设置 MySQL 服务器的错误日志文件路径（已调整为标准子目录，需配合yaml挂载）
+log-error = /var/log/mysql/error.log
 
-# 设置 MySQL 服务器进程的 PID (Process ID) 文件的存储路径
-pid-file = /tmp/pid/mysqld.pid
-
-# 设置 MySQL 服务器的错误日志文件路径
-log-error = /var/log/error.log
-
-# 设置 MySQL 服务器是否开启主机缓存功能
-# 0：关闭主机缓存功能
-# 1：开启主机缓存功能
+# 关闭主机缓存功能，避免DNS解析问题
 host-cache-size = 0
 
 # 指定时间存储默认时区
 default_time_zone = "+8:00"
 
-# 数据库默认字符集，主流字符集支持一些特殊表情符号（特殊表情符占用4个字节）
+# 数据库默认字符集
 character-set-server = utf8mb4
 
-# 数据库字符集对应一些排序等规则，注意要和 character-set-server 对应
+# 数据库排序规则
 collation-server = utf8mb4_general_ci
 
-# 设置 client 连接 mysql 时的字符集，防止乱码
-init_connect='SET NAMES utf8mb4'
+# 设置 client 连接 mysql 时的初始化字符集
+init_connect = 'SET NAMES utf8mb4'
 
-# 是否对SQL语句大小写敏感
-# 0：表名和其他数据库对象名称区分大小写，并且在存储时保持原有大小写。这是 Unix/Linux 系统的默认值。
-# 1：表名和其他数据库对象名称不区分大小写，并且存储时转换为小写。这是 Windows 系统的默认值。
-# 2：表名和其他数据库对象名称不区分大小写，但 MySQL 会保留原有的大小写形式。
+# 表名大小写敏感设置 (1:不区分大小写，Windows习惯; 0:区分，Linux默认。注意:仅初始化时生效)
 lower_case_table_names = 1
 
-# 执行 sql 的模式，规定了 sql 的安全等级, 暂时屏蔽，my.cnf 文件中配置报错
-# sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
-
-# 设置 MySQL 服务器的事务隔离级别，默认事务隔离级别为 REPEATABLE-READ
+# 设置 MySQL 服务器的事务隔离级别
 transaction_isolation = READ-COMMITTED
 
 # 设置 MySQL 服务器的默认存储引擎
@@ -178,8 +163,7 @@ default-storage-engine = INNODB
 # TIMESTAMP 如果没有显示声明 NOT NULL，允许NULL值
 explicit_defaults_for_timestamp = true
 
-# 控制 mysqld 进程能使用的最大文件描述(FD)符数量。
-# 需要注意的是这个变量的值并不一定是你设定的值，mysqld 会在系统允许的情况下尽量获取更多的 FD 数量
+# 控制 mysqld 进程能使用的最大文件描述符数量
 open_files_limit = 65535
 
 # 允许连接的最大客户端数量
@@ -188,54 +172,49 @@ max_connections = 500
 # 允许连接失败的最大次数
 max_connect_errors = 300
 
-# MySQL 暂时停止响应新请求之前的短时间内多少个请求可以被存在堆栈中
-# 官方建议 back_log = 50 + (max_connections / 5), 封顶数为 65535, 默认值 = max_connections
+# 暂时停止响应新请求之前的短时间内多少个请求可以被存在堆栈中
 back_log = 110
 
-# 为所有线程打开的表的数量
-# 例如，对于200个并发运行的连接，指定表缓存大小至少为 200 * N
-# 其中N是您执行的任何查询中每个连接的最大表数
+# 为所有线程打开的表的数量缓存
 table_open_cache = 600
 
-# 可以存储在定义缓存中的表定义数量, MIN(400 + table_open_cache / 2, 2000)
+# 可以存储在定义缓存中的表定义数量
 table_definition_cache = 700
 
-# 为了减少会话之间的争用，可以将 opentables 缓存划分为 table_open_cache/table_open_cache_instances个小缓存
+# opentables 缓存实例数量，减少争用
 table_open_cache_instances = 64
 
-# 每个线程的堆栈大小 如果线程堆栈太小，则会限制执行复杂 SQL 语句
-# 这里设置为512K，即 512 * 1024 = 524288 字节
+# 每个线程的堆栈大小
 thread_stack = 512K
 
 # 禁止外部系统锁
 external-locking = FALSE
 
-# SQL 数据包发送的大小，如果有 BLOB 对象建议修改成 1G
+# SQL 数据包发送的最大大小
 max_allowed_packet = 128M
 
-# order by / group by 时用到, 建议先调整为4M，后期观察调整
+# order by 或 group by 时用到的缓存大小
 sort_buffer_size = 4M
 
-# inner left / right join 时用到, 建议先调整为4M，后期观察调整
+# inner left 或 right join 时用到的缓存大小
 join_buffer_size = 4M
 
-# 如果您的服务器每秒达到数百个连接，则通常应将 thread_cache_size 设置得足够高，以便大多数新连接使用缓存线程
-# default value = 8 + ( max_connections / 100) 上限为 100
+# 缓存空闲线程的数量，以便新连接复用
 thread_cache_size = 20
 
-# MySQL 连接闲置超过一定时间后(单位：秒)将会被强行关闭
-# MySQL 默认的 wait_timeout 值为8个小时, interactive_timeout 参数需要同时配置才能生效
+# 交互式连接的超时时间（秒）
 interactive_timeout = 1800
+
+# 非交互式连接的超时时间（秒）
 wait_timeout = 1800
 
-# Metadata Lock最大时长（秒），一般用于控制 alter 操作的最大时长 sine mysql5.6
-# 执行 DML 操作时除了增加innodb事务锁外还增加 Metadata Lock，其他 alter（DDL）session 将阻塞
+# Metadata Lock 最大时长（秒）
 lock_wait_timeout = 3600
 
-# 内部内存临时表的最大值。
-# 比如大数据量的 group by / order by 时可能用到临时表，
-# 超过了这个值将写入磁盘，系统IO压力增大
+# 内部内存临时表的最大值
 tmp_table_size = 64M
+
+# 内部内存临时表的最大值（需与 tmp_table_size 一致）
 max_heap_table_size = 64M
 
 # 有需要加入其他配置，后续加入即可
@@ -353,7 +332,7 @@ services:
   mysql:
     image: mysql:8.4.1
     container_name: mysql8
-    restart: unless-stopped
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 12345678
       TZ: Asia/Shanghai
