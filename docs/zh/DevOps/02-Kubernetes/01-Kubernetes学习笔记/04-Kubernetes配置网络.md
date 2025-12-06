@@ -66,11 +66,11 @@ mkdir -p /usr/local/calico && cd /usr/local/calico
 
 ::: code-group
 ```yaml [tigera-operator.yaml]
-wget https://raw.githubusercontent.com/projectcalico/calico/v3.29.0/manifests/tigera-operator.yaml
+wget https://raw.githubusercontent.com/projectcalico/calico/v3.31.2/manifests/tigera-operator.yaml
 ```
 
 ```yaml [custom-resources.yaml]
-wget https://raw.githubusercontent.com/projectcalico/calico/v3.29.0/manifests/custom-resources.yaml
+wget https://raw.githubusercontent.com/projectcalico/calico/v3.31.2/manifests/custom-resources.yaml
 ```
 :::
 
@@ -111,6 +111,15 @@ spec: {}
 
 ```shell
 kubectl create -f tigera-operator.yaml
+
+# 输出如下
+namespace/tigera-operator created
+serviceaccount/tigera-operator created
+clusterrole.rbac.authorization.k8s.io/tigera-operator-secrets created
+clusterrole.rbac.authorization.k8s.io/tigera-operator created
+clusterrolebinding.rbac.authorization.k8s.io/tigera-operator created
+rolebinding.rbac.authorization.k8s.io/tigera-operator-secrets created
+deployment.apps/tigera-operator created
 ```
 
 查看 namespace 会发现 tigera-operator 的命名空间。
@@ -120,11 +129,11 @@ kubectl get namespaces
 
 # 输出如下
 NAME              STATUS   AGE
-default           Active   46m
-kube-node-lease   Active   46m
-kube-public       Active   46m
-kube-system       Active   46m
-tigera-operator   Active   65s
+default           Active   13h
+kube-node-lease   Active   13h
+kube-public       Active   13h
+kube-system       Active   13h
+tigera-operator   Active   7m27s
 ```
 
 查看 tigera-operator 的 pod 的状态是否是 Running。
@@ -133,14 +142,20 @@ tigera-operator   Active   65s
 kubectl get pod -n tigera-operator
 
 # 输出如下
-NAME                              READY   STATUS    RESTARTS   AGE
-tigera-operator-f8bc97d4c-bnnx4   1/1     Running   0          78s
+NAME                               READY   STATUS    RESTARTS   AGE
+tigera-operator-675679649b-dmxxz   1/1     Running   0          7m48s
 ```
 
 tigera-operator 是 Running 状态才能继续后面的步骤，应用自定义资源定义，配置 Calico 网络插件的具体设置。
 
 ```shell
 kubectl create -f custom-resources.yaml
+
+# 输出如下
+installation.operator.tigera.io/default created
+apiserver.operator.tigera.io/default created
+goldmane.operator.tigera.io/default created
+whisker.operator.tigera.io/default created
 ```
 
 ## 查看 Calico 状态
@@ -151,17 +166,22 @@ kubectl create -f custom-resources.yaml
 watch kubectl get pods -n calico-system
 
 # 输出如下
-Every 2.0s: kubectl get pods -n calico-system                                                                 kubernetes-master-01: Sat Nov 30 11:04:55 2024
+Every 2.0s: kubectl get pods -n calico-system                                                   kubernetes-master: Sat Dec  6 14:59:36 2025
+
 NAME                                       READY   STATUS    RESTARTS   AGE
-calico-kube-controllers-5b7b5c6879-q797c   1/1     Running   0          10m
-calico-node-4l9hm                          1/1     Running   0          10m
-calico-node-8pvl8                          1/1     Running   0          10m
-calico-node-qmzpb                          1/1     Running   0          10m
-calico-typha-687b7c794-6ttjl               1/1     Running   0          10m
-calico-typha-687b7c794-kzxfq               1/1     Running   0          10m
-csi-node-driver-dvsdr                      2/2     Running   0          10m
-csi-node-driver-jlgzc                      2/2     Running   0          10m
-csi-node-driver-t7lxq                      2/2     Running   0          10m
+calico-apiserver-75fb9d7749-k5bmr          1/1     Running   0          10m
+calico-apiserver-75fb9d7749-tfx97          1/1     Running   0          10m
+calico-kube-controllers-8689f7db6b-gx6lq   1/1     Running   0          10m
+calico-node-4mhpv                          1/1     Running   0          10m
+calico-node-9j49x                          1/1     Running   0          10m
+calico-node-mkj92                          1/1     Running   0          10m
+calico-typha-5d74465f56-5cvns              1/1     Running   0          10m
+calico-typha-5d74465f56-7zcbl              1/1     Running   0          10m
+csi-node-driver-4njms                      2/2     Running   0          10m
+csi-node-driver-6ps77                      2/2     Running   0          10m
+csi-node-driver-vrsmf                      2/2     Running   0          10m
+goldmane-76cd845459-krf54                  1/1     Running   0          10m
+whisker-7874575947-8pdcc                   2/2     Running   0          7m46s
 ```
 
 - 查看 Calico 网络插件处于 **Running** 状态即表示安装成功。
@@ -171,15 +191,19 @@ kubectl get pods -n calico-system
 
 # 输出如下
 NAME                                       READY   STATUS    RESTARTS   AGE
-calico-kube-controllers-5b7b5c6879-q797c   1/1     Running   0          11m
-calico-node-4l9hm                          1/1     Running   0          11m
-calico-node-8pvl8                          1/1     Running   0          11m
-calico-node-qmzpb                          1/1     Running   0          11m
-calico-typha-687b7c794-6ttjl               1/1     Running   0          11m
-calico-typha-687b7c794-kzxfq               1/1     Running   0          11m
-csi-node-driver-dvsdr                      2/2     Running   0          11m
-csi-node-driver-jlgzc                      2/2     Running   0          11m
-csi-node-driver-t7lxq                      2/2     Running   0          11m
+calico-apiserver-75fb9d7749-k5bmr          1/1     Running   0          11m
+calico-apiserver-75fb9d7749-tfx97          1/1     Running   0          11m
+calico-kube-controllers-8689f7db6b-gx6lq   1/1     Running   0          11m
+calico-node-4mhpv                          1/1     Running   0          11m
+calico-node-9j49x                          1/1     Running   0          11m
+calico-node-mkj92                          1/1     Running   0          11m
+calico-typha-5d74465f56-5cvns              1/1     Running   0          11m
+calico-typha-5d74465f56-7zcbl              1/1     Running   0          11m
+csi-node-driver-4njms                      2/2     Running   0          11m
+csi-node-driver-6ps77                      2/2     Running   0          11m
+csi-node-driver-vrsmf                      2/2     Running   0          11m
+goldmane-76cd845459-krf54                  1/1     Running   0          11m
+whisker-7874575947-8pdcc                   2/2     Running   0          8m5s
 ```
 
 - 查看节点状态处于 **Ready** 即表示安装成功（在 master 节点操作）
@@ -189,9 +213,9 @@ kubectl get nodes
 
 # 输出如下
 NAME                   STATUS   ROLES           AGE   VERSION
-kubernetes-master-01   Ready    control-plane   19h   v1.31.3
-kubernetes-worker-01   Ready    <none>          19h   v1.31.3
-kubernetes-worker-02   Ready    <none>          18h   v1.31.3
+kubernetes-master      Ready    control-plane   13h   v1.34.2
+kubernetes-worker-01   Ready    <none>          13h   v1.34.2
+kubernetes-worker-02   Ready    <none>          13h   v1.34.2
 ```
 
 ## 参考资料

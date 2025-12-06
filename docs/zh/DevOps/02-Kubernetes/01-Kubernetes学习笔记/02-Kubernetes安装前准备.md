@@ -1,12 +1,12 @@
 ---
 title: Kubernetes
 author: MagicGopher
-keywords: Kubernetes, Kubernetes安装前的准备
-description: 介绍 Kubernetes 安装前的准备
+keywords: Kubernetes, Kubernetes安装前准备
+description: 介绍 Kubernetes 安装前准备
 editLink: false
 ---
 
-# Kubernetes安装前的准备
+# Kubernetes安装前准备
 
 ## 安装环境概述
 
@@ -21,19 +21,19 @@ editLink: false
 
 | 主机名称             | IP地址         | 角色      | OS                  | CPU/内存 | 硬盘 |
 | -------------------- | -------------- | --------- | ------------------- | -------- | ---- |
-| kubernetes-master-01 | 192.168.56.100 | master    | Ubuntu Server 22.04 | 2核心/4G | 20G  |
-| kubernetes-worker-01 | 192.168.56.121 | worker-01 | Ubuntu Server 22.04 | 2核心/4G | 20G  |
-| kubernetes-worker-02 | 192.168.56.122 | worker-02 | Ubuntu Server 22.04 | 2核心/4G | 20G  |
+| kubernetes-master | 192.168.52.100 | master    | Ubuntu Server 22.04 | 2核心/4G | 20G  |
+| kubernetes-worker-01 | 192.168.52.121 | worker-01 | Ubuntu Server 22.04 | 2核心/4G | 20G  |
+| kubernetes-worker-02 | 192.168.52.122 | worker-02 | Ubuntu Server 22.04 | 2核心/4G | 20G  |
 
 
 
 ## 统一环境配置
 
-本教程安装 Kubernetes 版本为 v1.31.3 版本。
+本教程安装 Kubernetes 版本为 v1.34.2 版本。
 
 注意：以下步骤请在制作 VMWare 镜像时一并完成，避免逐台安装的痛苦！
 
-本次安装采用的方式是：安装一台虚拟机，使用的操作系统是Ubuntu Server 22.04，虚拟机上安装 Docker 以及kubeadm、kubectl、kubelet、时间同步服务器，然后在基于这台虚拟机克隆kubernetes-master-01、kubernetes-worker-01、kubernetes-worker-02。
+本次安装采用的方式是：安装一台虚拟机，使用的操作系统是Ubuntu Server 22.04，虚拟机上安装 Docker 以及 `kubeadm`、`kubectl`、`kubelet`、时间同步服务器，然后在基于这台虚拟机克隆 `kubernetes-master`、`kubernetes-worker-01`、`kubernetes-worker-02`。
 
 ### 配置 root 用户
 
@@ -314,33 +314,55 @@ vi /etc/systemd/resolved.conf
 apt-get update
 ```
 
-安装所需依赖，这里会出现【Do you want to continue? [Y/n]】直接回车【Enter】。
+安装必要的前置依赖，这里会出现【Do you want to continue? [Y/n]】直接回车【Enter】。
 
 ```shell
-apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+apt-get install -y apt-transport-https ca-certificates curl gnupg
+```
+
+创建 keyrings 目录（新版 apt 要求）
+
+```shell
+install -m 0755 -d /etc/apt/keyrings
 ```
 
 安装 GPG 证书。
 
 ::: code-group
 ```shell [阿里云的GPG密钥]
-curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | \
+  sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 ```
 
 ```shell [Docker的官方GPG密钥]
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
+  sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 ```
 :::
+
+给密钥添加读取权限
+
+```shell
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+```
 
 新增数据源，这里会出现【Press [ENTER] to continue or Ctrl-c to cancel.】直接回车【Enter】。
 
 ::: code-group
 ```shell [阿里云数据源]
-add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+cat <<EOF | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+https://mirrors.aliyun.com/docker-ce/linux/ubuntu \
+$(lsb_release -cs) stable
+EOF
 ```
 
 ```shell [Docker官方数据源]
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+cat <<EOF | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) stable
+EOF
 ```
 :::
 
@@ -353,7 +375,7 @@ apt-get -y update
 安装 `Docker CE`。
 
 ```shell
-apt-get -y install docker-ce
+apt-get -y install docker-ce docker-ce-cli
 ```
 
 验证 `Docker` 是否安装成功。
@@ -397,10 +419,14 @@ Server: Docker Engine - Community
 systemctl enable --now docker
 ```
 
-系统执行此命令以确保 `Docker` 服务能够与 `systemd` 兼容并正确启动，确保 `Docker` 服务可以与 `systemd` 的启动机制集成。
+验证 Docker 是否设置为开机启动。
 
 ```shell
-/lib/systemd/systemd-sysv-install enable docker
+# 是否已开机自启（enabled 表示开机自动启动，disabled 表示不会自启）
+systemctl is-enabled docker
+
+# 当前是否正在运行（active 表示正在运行，inactive 表示已停止）
+systemctl is-active docker
 ```
 
 ### 配置 daemon.json
@@ -411,8 +437,16 @@ systemctl enable --now docker
 tee /etc/docker/daemon.json <<-'EOF'
 {
   "registry-mirrors": [
+    "https://docker.1ms.run",
+    "https://docker.cattt.net",
+    "https://docker.xuanyuan.me",
+    "https://hub.mirrorify.net",
+    "https://proxy.vvvv.ee",
+    "https://docker.etcd.fun",
+    "https://docker.m.ixdev.cn",
+    "https://docker.kejilion.pro",
     "https://dockerproxy.net",
-    "https://fp7j9ykk.mirror.aliyuncs.com"
+    "https://2a6bf1988cb6428c877f723ec7530dbc.mirror.swr.myhuaweicloud.com"
   ],
   "exec-opts": [
     "native.cgroupdriver=systemd"
@@ -420,6 +454,10 @@ tee /etc/docker/daemon.json <<-'EOF'
 }
 EOF
 ```
+
+::: tip 提示
+Docker镜像加速可在此镜像站获取：https://mirror.kentxxq.com
+:::
 
 重新加载配置文件。
 
@@ -433,16 +471,16 @@ systemctl daemon-reload
 systemctl restart docker
 ```
 
-查看 Docker 是否正常运行，Active: active (running)表示正在运行。
+查看 Docker 是否正常运行。
 
 ```shell
-# Q键退出
-systemctl status docker
+# 当前是否正在运行（active 表示正在运行，inactive 表示已停止）
+systemctl is-active docker
 ```
 
 ### 安装 cri-dockerd
 
-下载 cri-dockerd 安装包，这里我使用的是 Ubuntu 22.04 版本，所以选择 jammy。
+下载 cri-dockerd 安装包，这里我使用的是 Ubuntu 22.04 版本【机器是x86的】，所以选择 jammy_amd64；机器是arm版本的就选arm版本的。
 
 关于 ubuntu 版本的代号可以使用 `lsb_release -a` 命令查看。
 
@@ -450,9 +488,20 @@ systemctl status docker
 
 cri-dockerd仓库地址：[https://github.com/Mirantis/cri-dockerd](https://github.com/Mirantis/cri-dockerd)
 
-```shell
-wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.15/cri-dockerd_0.3.15.3-0.ubuntu-jammy_amd64.deb
+::: code-group
+```shell [GitHub下载]
+wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.21/cri-dockerd_0.3.21.3-0.ubuntu-jammy_amd64.deb
 ```
+
+```[GitHub代理下载]
+wget https://ghfast.top/https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.21/cri-dockerd_0.3.21.3-0.ubuntu-jammy_amd64.deb
+```
+:::
+
+::: tip 提示
+wget下载GitHub上的东西慢，可以使用GitHub代理。
+GitHub代理：https://ghfast.top/
+:::
 
 使用 dpkg 的方式安装 deb 安装包。
 
@@ -461,14 +510,14 @@ dpkg -i <安装包名称>
 
 
 # 安装
-dpkg -i cri-dockerd_0.3.15.3-0.ubuntu-jammy_amd64.deb
+dpkg -i cri-dockerd_0.3.21.3-0.ubuntu-jammy_amd64.deb
 
 # 输出如下
 Selecting previously unselected package cri-dockerd.
-(Reading database ... 75102 files and directories currently installed.)
-Preparing to unpack cri-dockerd_0.3.15.3-0.ubuntu-jammy_amd64.deb ...
-Unpacking cri-dockerd (0.3.15~3-0~ubuntu-jammy) ...
-Setting up cri-dockerd (0.3.15~3-0~ubuntu-jammy) ...
+(Reading database ... 111155 files and directories currently installed.)
+Preparing to unpack cri-dockerd_0.3.21.3-0.ubuntu-jammy_amd64.deb ...
+Unpacking cri-dockerd (0.3.21~3-0~ubuntu-jammy) ...
+Setting up cri-dockerd (0.3.21~3-0~ubuntu-jammy) ...
 Created symlink /etc/systemd/system/multi-user.target.wants/cri-docker.service → /lib/systemd/system/cri-docker.service.
 Created symlink /etc/systemd/system/sockets.target.wants/cri-docker.socket → /lib/systemd/system/cri-docker.socket.
 ```
@@ -479,11 +528,17 @@ Created symlink /etc/systemd/system/sockets.target.wants/cri-docker.socket → /
 systemctl enable --now cri-docker
 ```
 
-检查 `cri-dockerd` 状态，查看 cri-dockerd 是否正常运行，Active: active (running) 表示正在运行。
+验证 `cri-dockerd` 是否设置为开机启动。
 
 ```shell
-# Q键退出
-systemctl status cri-docker
+# 是否已开机自启（enabled 表示开机自动启动，disabled 表示不会自启）
+systemctl is-enabled cri-docker
+
+# 当前是否正在运行（active 表示正在运行，inactive 表示已停止）
+systemctl is-active cri-docker
+
+# 查看版本
+cri-dockerd --version
 ```
 
 ### 安装 Kubernetes 必备工具
@@ -499,13 +554,13 @@ Kubernetes 阿里云镜像地址：[https://mirrors.aliyun.com/kubernetes-new/co
 安装阿里云 GPG 证书。
 
 ```shell
-curl -fsSL https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.31/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+curl -fsSL https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.34/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 ```
 
 写入软件源
 
 ```shell
-echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.31/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.34/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 ```
 
 再次更新软件源
@@ -520,10 +575,10 @@ apt-get -y update
 apt-cache madison kubelet kubeadm kubectl
 ```
 
-指定安装kubeadm、kubelet、kubectl工具，指定安装版本为 `1.31.3-1.1` 版本。
+指定安装kubeadm、kubelet、kubectl工具，指定安装版本为 `1.34.2-1.1` 版本。
 
 ```shell
-apt-get update && apt-get install -y kubelet=1.31.3-1.1 kubeadm=1.31.3-1.1 kubectl=1.31.3-1.1
+apt-get update && apt-get install -y kubelet=1.34.2-1.1 kubeadm=1.34.2-1.1 kubectl=1.34.2-1.1
 ```
 
 锁定安装kubeadm、kubelet、kubectl工具的版本，防止后期自动更新。
@@ -543,6 +598,16 @@ KUBELET_EXTRA_ARGS="--cgroup-driver=systemd"
 
 ```shell
 systemctl enable kubelet
+```
+
+验证kubelet是否开启启动以及正常运行。
+
+```shell
+# 是否已开机自启（enabled 表示开机自动启动，disabled 表示不会自启）
+systemctl is-enabled kubelet
+
+# 当前是否正在运行（active 表示正在运行，inactive 表示已停止）
+systemctl is-active kubelet
 ```
 
 ### 设置同步时间
@@ -603,15 +668,17 @@ shutdown -h now
 
 ### 单独节点配置说明
 
-将上面表格中的信息分别用配置好的基础机器再基于基础机器完整克隆出 kubernetes-master-01、kubernetes-worker-01、kubernetes-worker-02 机器。需要为 kubernetes-master-01 和 kubernetes-worker-01、kubernetes-worker-02 节点单独配置对应的IP地址和主机名称，[上面表格中有说明](#各个节点配置说明)。
+将上面表格中的信息分别用配置好的基础机器再基于基础机器完整克隆出 `kubernetes-master`、`kubernetes-worker-01`、`kubernetes-worker-02` 机器。
+
+需要为 `kubernetes-master` 和 `kubernetes-worker-01`、`kubernetes-worker-02` 节点单独配置对应的IP地址和主机名称，[上面表格中有说明](#各个节点配置说明)。
 
 ### 配置主机名称
 
 修改主机名称，具体内容如下所示：
 
 ::: code-group
-```shell [master-01]
-hostnamectl set-hostname kubernetes-master-01
+```shell [master]
+hostnamectl set-hostname kubernetes-master
 ```
 
 ```shell [worker-01]
@@ -628,21 +695,21 @@ hostnamectl set-hostname kubernetes-worker-02
 修改相关hosts域名的配置，具体内容如下所示：
 
 ::: code-group
-```shell [master-01]
+```shell [master]
 cat >> /etc/hosts << EOF
-192.168.56.100 kubernetes-master-01
+192.168.52.100 kubernetes-master
 EOF
 ```
 
 ```shell [worker-01]
 cat >> /etc/hosts << EOF
-192.168.56.121 kubernetes-worker-01
+192.168.52.121 kubernetes-worker-01
 EOF
 ```
 
 ```shell [worker-02]
 cat >> /etc/hosts << EOF
-192.168.56.122 kubernetes-worker-02
+192.168.52.122 kubernetes-worker-02
 EOF
 ```
 :::
@@ -652,7 +719,7 @@ EOF
 编辑 `/etc/netplan/01-network-manager-all.yaml` 配置文件（没有该文件就创建），内容如下：
 
 ::: code-group
-```yaml [master-01]
+```yaml [master]
 network:
   version: 2
   renderer: networkd
@@ -660,10 +727,10 @@ network:
     ens33:
       dhcp4: no
       addresses:
-        - 192.168.56.100/24
+        - 192.168.52.100/24
       routes:
         - to: default
-          via: 192.168.56.2
+          via: 192.168.52.2
       nameservers:
         addresses: [114.114.114.114,8.8.8.8]
 ```
@@ -676,10 +743,10 @@ network:
     ens33:
       dhcp4: no
       addresses:
-        - 192.168.56.121/24
+        - 192.168.52.121/24
       routes:
         - to: default
-          via: 192.168.56.2
+          via: 192.168.52.2
       nameservers:
         addresses: [114.114.114.114,8.8.8.8]
 ```
@@ -692,16 +759,16 @@ network:
     ens33:
       dhcp4: no
       addresses:
-        - 192.168.56.122/24
+        - 192.168.52.122/24
       routes:
         - to: default
-          via: 192.168.56.2
+          via: 192.168.52.2
       nameservers:
         addresses: [114.114.114.114,8.8.8.8]
 ```
 :::
 
-routes 部分用于指定网络路由。via 后面的地址 192.168.56.2 是默认网关（gateway）的 IP 地址，可以通过以下命令获取到默认网关。
+routes 部分用于指定网络路由。via 后面的地址 192.168.52.2 是默认网关（gateway）的 IP 地址，可以通过以下命令获取到默认网关。
 
 ```shell
 ip route show | grep "default"
