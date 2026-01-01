@@ -57,7 +57,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, toRaw, watch, nextTick } from 'vue';
-import type { Application } from 'pixi.js';
+import PIXI from 'pixi.js';
 
 const props = defineProps({
     modelUrl: { type: String, required: true },
@@ -68,7 +68,7 @@ const props = defineProps({
 
 const container = ref<HTMLDivElement | null>(null);
 const canvas = ref<HTMLCanvasElement | null>(null);
-let app: Application | null = null;
+let app: PIXI.Application | null = null;
 let live2dModel: any = null;
 const loadingStatus = ref<'loading' | 'success' | 'error'>('loading');
 const isFullscreen = ref(false);
@@ -161,7 +161,7 @@ const initModel = async () => {
             },
         });
 
-        if (loadingStatus.value === 'error') return;
+        if ((loadingStatus.value as string) === 'error') return;
 
         live2dModel = model;
         app.stage.addChild(toRaw(live2dModel));
