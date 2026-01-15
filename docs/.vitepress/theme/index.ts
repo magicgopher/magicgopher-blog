@@ -149,37 +149,12 @@ export default {
 }
 
 /**
- * 检查浏览器是否为不受支持的浏览器（Safari、Edge 或 Firefox）
- * 
- * @returns boolean - 返回 true 表示当前浏览器不受支持（Safari、Edge 或 Firefox），返回 false 表示支持
- */
-function isUnsupportedBrowser(): boolean {
-    const ua = navigator.userAgent.toLowerCase();
-    return (
-        // 检测 Safari（排除 Chrome，因为 Chrome 的 UA 可能包含 Safari）
-        (ua.includes('safari') && !ua.includes('chrome')) ||
-        // 检测 Firefox
-        ua.includes('firefox')
-    );
-}
-
-/**
  * 更新首页的彩虹背景动画样式
  * 
  * @param value - boolean，表示当前是否为首页（true 表示首页，false 表示非首页）
  * @returns void
  */
 function updateHomePageStyle(value: boolean) {
-    // 如果是 Safari、Edge 或 Firefox 浏览器，直接移除样式并返回
-    if (isUnsupportedBrowser()) {
-        if (homePageStyle) {
-            // 如果 homePageStyle 存在，则移除样式元素并清空变量
-            homePageStyle.remove();
-            homePageStyle = undefined;
-        }
-        return;
-    }
-
     // 如果 value 为 true（表示当前是首页）且 homePageStyle 不存在，则添加彩虹动画样式
     if (value) {
         if (homePageStyle) return; // 避免重复添加样式

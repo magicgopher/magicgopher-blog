@@ -68,3 +68,47 @@ h6 {
 .VPHome .VPHero.has-image .image-src {
     pointer-events: none;
 }
+
+/* 注册自定义属性 --blur，用于动态控制模糊度 */
+@property --blur {
+    /* 接受长度单位（如 px、rem 等） */
+    syntax: '<length>';
+    /* 不允许继承给子元素 */
+    inherits: false;
+    /* 默认初始值：30px 模糊 */
+    initial-value: 30px;
+}
+
+/* 定义呼吸式模糊动画：从 30px → 80px 来回变化 */
+@keyframes filter_blur {
+    /* 起始模糊度 */
+    0% {
+        --blur: 30px;
+    }
+    /* 结束模糊度 */
+    100% {
+        --blur: 80px;
+    }
+}
+
+/* 主页背景图基本样式 */
+.VPHome .image-bg {
+    /* 背景图片完全圆形 */
+    border-radius: 50%;
+    /* 居中定位 + 开启硬件加速 */
+    transform: translate(-50%, -50%) translateZ(0);
+    /* 提前告知浏览器将频繁变化 filter 属性 */
+    will-change: filter;
+}
+
+/* 暗色模式下的特殊处理 - 增加呼吸式模糊动画效果 */
+.dark .VPHome .image-bg {
+    /* 重复呼吸效果：1.8秒一次，来回无限循环 */
+    animation: filter_blur 1.8s ease-in infinite alternate-reverse;
+    /* 应用动态变化的模糊值（通过自定义属性 --blur 控制） */
+    filter: blur(var(--blur));
+    /* 保持圆形（与亮色模式一致） */
+    border-radius: 50%;
+    /* 性能设置 */
+    will-change: filter;
+}

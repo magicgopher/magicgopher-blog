@@ -50,61 +50,6 @@ const showBackToTop = computed(() => {
 const enableTransitions = (): boolean =>
     'startViewTransition' in document &&
     window.matchMedia('(prefers-reduced-motion: no-preference)').matches
-
-// 使用 provide API 来覆盖默认主题中名为 'toggle-appearance' 的函数。
-// 这样，当用户点击导航栏的主题切换按钮时，就会执行我们这里的自定义逻辑。
-provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
-    // 如果浏览器不支持过渡动画，则执行原始的、无动画的切换逻辑
-    if (!enableTransitions()) {
-        isDark.value = !isDark.value
-        return
-    }
-
-    // 计算剪裁路径（clip-path）的起始和结束状态
-    const clipPath = [
-        // 1. 起始状态：一个半径为 0px 的圆，圆心在鼠标点击的位置 (x, y)
-        `circle(0px at ${x}px ${y}px)`,
-        // 2. 结束状态：一个足够大的圆，能够完全覆盖整个屏幕。
-        //    我们通过计算点击点到屏幕最远角落的距离（使用勾股定理 Math.hypot）来得到这个圆的半径。
-        `circle(${Math.hypot(
-            Math.max(x, innerWidth - x),
-            Math.max(y, innerHeight - y)
-        )}px at ${x}px ${y}px)`
-    ]
-
-    // 捕获切换前的状态，这对于解决闪烁问题和判断动画逻辑至关重要
-    const wasDark = isDark.value;
-
-    // 启动视图过渡
-    await document.startViewTransition(async () => {
-        // 这是解决"闪烁"问题的核心：
-        // 我们在 API 捕获新状态截图之前，手动、同步地为 <html> 元素切换 'dark' class。
-        // 这样可以确保背景色在截图时已经是正确的颜色。
-        document.documentElement.classList.toggle('dark', !wasDark);
-
-        // 更新 VitePress 的 isDark 状态，这将触发 Vue 组件和其他内部逻辑的更新
-        isDark.value = !wasDark;
-
-        // 等待 Vue 完成 DOM 的更新
-        await nextTick();
-    }).ready // .ready 会在过渡动画的准备阶段完成后 resolve
-
-    // 当过渡准备好后，我们为它添加自定义的 clip-path 动画
-    document.documentElement.animate(
-        {
-            // 动画的关键帧：从 clipPath 数组的第一个值（小圆）变化到第二个值（大圆）
-            clipPath: clipPath,
-        },
-        {
-            duration: 300, // 动画持续时间
-            easing: 'ease-in', // 动画缓动函数
-            fill: 'forwards', // 动画完成后保持最后的状态
-            // 指定这个动画应用在哪个伪元素上。
-            // 我们希望新主题"覆盖"旧主题，所以动画总是作用在 ::view-transition-new(root) 上。
-            pseudoElement: '::view-transition-new(root)',
-        }
-    )
-})
 </script>
 
 <style>
